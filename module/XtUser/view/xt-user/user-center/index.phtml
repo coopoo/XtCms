@@ -1,0 +1,37 @@
+<?php
+/**
+ * @Created by PhpStorm.
+ * @Project: XtCms
+ * @User: Coopoo
+ * @Copy Right: 2014
+ * @Date: 2014-07-24
+ * @Time: 13:33
+ * @QQ: 259522
+ * @FileName: index.phtml
+ */
+
+$this->headTitle('用户中心');
+echo 'user center';
+?>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>登录时间</th>
+        <th>登录IP</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($userLogger as $key => $logger): ?>
+        <tr>
+            <td><?= $key + 1 ?></td>
+            <td><?= $logger->getLoginTime() ?></td>
+            <td><?= $logger->getLoginIp() ?></td>
+            <td></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+

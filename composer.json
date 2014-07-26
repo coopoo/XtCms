@@ -1,0 +1,6 @@
+{
+    "name": "Xt/xt-cms",
+    "require": {
+        "zendframework/zendframework": "2.4.*@dev"
+    }
+}

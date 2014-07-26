@@ -1,0 +1,95 @@
+<?php echo $this->doctype() . PHP_EOL; ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('ZF2 ' . $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) . PHP_EOL ?>
+
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') . PHP_EOL ?>
+    <!-- style -->
+    <?php
+    echo $this->headlink()->prependStylesheet($this->basepath() . '/vendor/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css')
+            ->prependStylesheet($this->basepath() . '/vendor/bootstrap-3.2.0-dist/css/bootstrap.min.css') . PHP_EOL;
+    ?>
+
+    <!-- script -->
+    <?php
+    echo $this->headscript()->prependFile($this->basepath() . '/vendor/bootstrap-3.2.0-dist/js/bootstrap.min.js')
+            ->prependFile($this->basepath() . '/vendor/jquery/jquery-1.11.1.min.js')
+            ->prependFile($this->basePath() . '/vendor/js/respond-1.4.2.min.js', 'text/javascript', [
+                'conditional' => 'lt IE 9'])
+            ->prependFile($this->basePath() . '/vendor/js/html5shiv-3.7.0.js', 'text/javascript', [
+                'conditional' => 'lt IE 9']) . PHP_EOL
+    ?>
+    <!--[if lte IE 7 ]>
+    <div class="alert alert-warning">我们注意到您使用的是过时的 Internet Explorer 版本。某些功能可能无法正常工作。对于完整的网站体验，请更新您的 Internet Explorer 8
+        或以上版本，或安装 <a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome Frame</a>。
+    </div>
+    <div class="alert alert-warning">我们注意到, 你使用的Internet
+        Explorer浏览器已设置为兼容性视图模式，而导致您可能未能使用本网站之功能，建议您把浏览器的兼容性视图模式关闭以便使用本网站。
+    </div>
+    <![endif]-->
+</head>
+<body>
+<!-- /nav -->
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="<?= $this->url('home') ?>">Brand</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="<?= $this->url('home') ?>">home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">One more separated link</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <?php if ($this->Identity()): ?>
+                <li class="active"><a href="#">欢迎 <?= $this->Identity()->display_name ?></a></li>
+                <li>
+                    <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'logout']) ?>">注销</a>
+                </li>
+            <?php else: ?>
+                <li class="active"><a
+                        href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'login']) ?>">登录</a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'register']) ?>">注册</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>
+
+<div class="container">
+    <?php echo $this->content; ?>
+    <hr>
+    <footer>
+        <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies
+            Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+    </footer>
+</div>
+<!-- /container -->
+<?php echo $this->inlineScript() ?>
+</body>
+</html>
