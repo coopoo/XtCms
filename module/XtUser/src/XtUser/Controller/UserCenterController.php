@@ -82,7 +82,15 @@ class UserCenterController extends AbstractActionController
     {
         $userId = $this->Authentication()->getUserId();
         $form = $this->FormElementManager()->get('XtUser\Form\ChangePasswordForm');
-
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isVolid()) {
+                var_dump($form->getData());
+            } else {
+                var_dump($form->getMessages());
+            }
+        }
         return ['form' => $form];
     }
 
