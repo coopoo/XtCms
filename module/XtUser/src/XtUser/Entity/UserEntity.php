@@ -34,6 +34,10 @@ class UserEntity
     /**
      * @var
      */
+    protected $oldPassword;
+    /**
+     * @var
+     */
     protected $displayName;
     /**
      * @var
@@ -224,6 +228,24 @@ class UserEntity
     public function getUniqid()
     {
         return $this->uniqid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * @param mixed $oldPassword
+     * @return $this
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
+        return $this;
     }
 
     /**

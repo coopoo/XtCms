@@ -13,13 +13,17 @@
 namespace XtUser\Form;
 
 
+use XtUser\InputFilter\ChangePasswordInputFilter;
+
 class ChangePasswordForm extends RegisterForm
 {
 
     public function __construct()
     {
         parent::__construct();
+        $this->setAttribute('class', 'form-horizontal');
         $this->remove('username')->remove('email');
+        $this->setInputFilter(new ChangePasswordInputFilter());
         $this->add([
             'type' => 'password',
             'name' => 'old_password',

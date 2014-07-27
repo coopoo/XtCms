@@ -64,13 +64,30 @@
 
         <ul class="nav navbar-nav navbar-right">
             <?php if ($this->Identity()): ?>
-                <li class="active"><a href="#">欢迎 <?= $this->Identity()->display_name ?></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎 <?= $this->Identity()->display_name ?>
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_CENTER_ROUTE) ?>">个人中心</a>
+                            <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_CENTER_ROUTE, ['action' => 'edit']) ?>">修改信息</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_CENTER_ROUTE, ['action' => 'detail']) ?>">详细资料</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_CENTER_ROUTE, ['action' => 'change-password']) ?>">修改密码</a>
+                        </li>
+                    </ul>
+                </li>
                 <li>
                     <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'logout']) ?>">注销</a>
                 </li>
             <?php else: ?>
-                <li class="active"><a
-                        href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'login']) ?>">登录</a>
+                <li class="active">
+                    <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'login']) ?>">登录</a>
                 </li>
                 <li>
                     <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'register']) ?>">注册</a>

@@ -63,7 +63,10 @@ class Module implements AutoloaderProviderInterface,
 
         $whiteList = [
             'XtUser\Controller\User-index',
-            'XtUser\Controller\User-login'
+            'XtUser\Controller\User-login',
+            'XtUser\Controller\User-disabledLogin',
+            'XtUser\Controller\User-register',
+            'XtUser\Controller\User-disabledRegister',
         ];
         if (!in_array($requestedResourse, $whiteList)) {
             if (!$authentication->hasIdentity()) {

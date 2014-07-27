@@ -52,6 +52,9 @@ class UserEvent extends Event implements UserModuleOptionsAwareInterFace
      */
     const USER_LOGIN_FAIL = 'user.login.fail';
 
+    const USER_CHANGE_PASSWORD_PRE = 'user.change.password.pre';
+    const USER_CHANGE_PASSWORD_POST = 'user.change.password.post';
+    const USER_CHANGE_PASSWORD_FAIL = 'user.change.password.fail';
     /**
      * 默认用户身份数据库字段
      */

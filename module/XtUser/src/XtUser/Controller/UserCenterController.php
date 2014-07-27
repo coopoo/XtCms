@@ -13,11 +13,16 @@
 namespace XtUser\Controller;
 
 use XtUser\Entity\UserDetailEntity;
+use XtUser\Event\UserEvent;
 use XtUser\Model\UserDetailTable;
 use XtUser\InputFilter\EditInputFilter;
 use XtUser\Model\UserModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
+/**
+ * Class UserCenterController
+ * @package XtUser\Controller
+ */
 class UserCenterController extends AbstractActionController
 {
     /**
@@ -25,6 +30,9 @@ class UserCenterController extends AbstractActionController
      */
     protected $userDetailTable;
 
+    /**
+     * @return array
+     */
     public function indexAction()
     {
         //$user = $this->UserTable()->getUserById($this->getLoginUserId());
@@ -34,6 +42,9 @@ class UserCenterController extends AbstractActionController
         return ['userLogger' => $userLogger];
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function editAction()
     {
         $form = $this->FormElementManager()->get('XtUser\Form\EditForm');
@@ -55,6 +66,9 @@ class UserCenterController extends AbstractActionController
         return ['form' => $form];
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function detailAction()
     {
         $userId = $this->Authentication()->getUserId();
@@ -78,6 +92,9 @@ class UserCenterController extends AbstractActionController
         return ['form' => $form];
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function changePasswordAction()
     {
         $userId = $this->Authentication()->getUserId();
@@ -85,15 +102,32 @@ class UserCenterController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
-            if ($form->isVolid()) {
-                var_dump($form->getData());
-            } else {
-                var_dump($form->getMessages());
+            if ($form->isValid()) {
+                $userEntity = $form->getData();
+                $userEntity->setId($userId);
+                $userEvent = new UserEvent();
+                $userEvent->setUserEntity($userEntity)->setServiceLocator($this->getServiceLocator());
+                $eventManager = $this->getEventManager();
+                $responseCollection = $eventManager->trigger(UserEvent::USER_CHANGE_PASSWORD_PRE, $this, $userEvent, function ($response) {
+                    return $response === false;
+                });
+                if ($responseCollection->last() !== false) {
+                    try {
+                        $this->UserTable()->save($userEntity);
+                    } catch (\Exception $e) {
+                        echo $e->getMessage();
+                        return ['form' => $form];
+                    }
+                    return $this->redirect()->toRoute();
+                }
             }
         }
         return ['form' => $form];
     }
 
+    /**
+     * @return UserDetailTable
+     */
     protected function getUserDetailTable()
     {
         if (!$this->userDetailTable) {

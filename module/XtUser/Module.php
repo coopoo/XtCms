@@ -13,6 +13,7 @@
 namespace XtUser;
 
 
+use XtUser\Listener\ChangePasswordListener;
 use XtUser\Listener\LoginListener;
 use XtUser\Listener\RegisterListener;
 use Zend\Crypt\Symmetric\Exception\RuntimeException;
@@ -48,6 +49,7 @@ class Module implements AutoloaderProviderInterface,
         $eventManager = $application->getEventManager();
         $eventManager->attach(new RegisterListener());
         $eventManager->attach(new LoginListener());
+        $eventManager->attach(new ChangePasswordListener());
     }
 
     /**
