@@ -68,10 +68,7 @@ class UserInputFilter extends InputFilter
                     'name' => 'CallBack',
                     'options' => [
                         'callback' => function ($password) {
-                            if (!empty($password)) {
                                 return UserModel::encryption($password);
-                            }
-                            return null;
                         }
                     ],
                 ]

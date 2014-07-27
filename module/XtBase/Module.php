@@ -69,7 +69,7 @@ class Module implements AutoloaderProviderInterface,
             'XtUser\Controller\User-disabledRegister',
         ];
         if (!in_array($requestedResourse, $whiteList)) {
-            if (!$authentication->hasIdentity()) {
+            if (!$authentication->isAlive()) {
                 $url = '/user/login.html';
                 return $response->sendHeaders($response->getHeaders()->addHeaderLine('Location', $url));
             }

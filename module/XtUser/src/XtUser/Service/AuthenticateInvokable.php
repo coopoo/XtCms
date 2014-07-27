@@ -218,7 +218,7 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
         if ($userObj && ($userObj->EXPIRE > microtime(true) - $this->userModuleOptions->getRememberMe())) {
             $userTable = $this->serviceLocator->get(UserModel::USER_TABLE_CLASS);
             $userEntity = $userTable->getOneByColumn($userObj->id, 'id', ['display_name', 'status']);
-            if ((int)$userEntity->getStatus() === UserModel::ALLOW_STATUS) {
+            if ($userEntity && (int)$userEntity->getStatus() === UserModel::ALLOW_STATUS) {
                 $userObj->display_name = $userEntity->getDisplayName();
                 $userObj->EXPIRE = microtime(true);
                 return true;

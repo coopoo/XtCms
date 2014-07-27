@@ -131,6 +131,11 @@ class UserController extends AbstractActionController implements UserModuleOptio
         return ['form' => $form];
     }
 
+    public function findPasswordAction()
+    {
+
+    }
+
     /**
      * @return \Zend\Http\Response
      */
