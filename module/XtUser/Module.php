@@ -13,6 +13,7 @@
 namespace XtUser;
 
 
+use XtUser\Listener\AuthenticationListener;
 use XtUser\Listener\ChangePasswordListener;
 use XtUser\Listener\LoginListener;
 use XtUser\Listener\RegisterListener;
@@ -50,6 +51,7 @@ class Module implements AutoloaderProviderInterface,
         $eventManager->attach(new RegisterListener());
         $eventManager->attach(new LoginListener());
         $eventManager->attach(new ChangePasswordListener());
+        $eventManager->attach(new AuthenticationListener());
     }
 
     /**

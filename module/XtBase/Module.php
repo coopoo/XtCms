@@ -20,7 +20,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
-use Zend\Mvc\MvcEvent;
+
 
 class Module implements AutoloaderProviderInterface,
     ConfigProviderInterface,
@@ -40,40 +40,8 @@ class Module implements AutoloaderProviderInterface,
         $eventManager = $application->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        $eventManager->attach(MvcEvent::EVENT_DISPATCH, [$this, 'preDispatch'], 999);
-        $serviceLocate = $application->getServiceManager();
-        $dbAdapter = $serviceLocate->get('Zend\Db\Adapter\Adapter');
+        $dbAdapter = $application->getServiceManager()->get('Zend\Db\Adapter\Adapter');
         \Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($dbAdapter);
-    }
-
-    public function preDispatch(MvcEvent $event)
-    {
-
-        $request = $event->getRequest();
-        $response = $event->getResponse();
-        $target = $event->getTarget();
-
-        $serviceManager = $event->getApplication()->getServiceManager();
-
-        $authentication = $serviceManager->get('XtUser\Service\Authenticate');
-
-        $controller = $event->getRouteMatch()->getParam('controller');
-        $action = $event->getRouteMatch()->getParam('action');
-        $requestedResourse = $controller . '-' . $action;
-
-        $whiteList = [
-            'XtUser\Controller\User-index',
-            'XtUser\Controller\User-login',
-            'XtUser\Controller\User-disabledLogin',
-            'XtUser\Controller\User-register',
-            'XtUser\Controller\User-disabledRegister',
-        ];
-        if (!in_array($requestedResourse, $whiteList)) {
-            if (!$authentication->isAlive()) {
-                $url = '/user/login.html';
-                return $response->sendHeaders($response->getHeaders()->addHeaderLine('Location', $url));
-            }
-        }
     }
 
     /**

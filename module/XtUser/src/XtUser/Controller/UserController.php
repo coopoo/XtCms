@@ -17,6 +17,7 @@ use XtUser\Model\UserModel;
 use XtUser\Options\UserModuleOptionsAwareInterFace;
 use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Session\Container;
 
 /**
  * Class UserController
@@ -72,7 +73,13 @@ class UserController extends AbstractActionController implements UserModuleOptio
                     if ($authenticate->isValid()) {
                         $userEvent->setUserEntity($authenticate->getUserEntity());
                         $eventManager->trigger(UserEvent::USER_LOGIN_POST, $this, $userEvent);
-                        return $this->redirect()->toRoute(UserModel::USER_CENTER_ROUTE);
+                        $container = new Container('redirect');
+                        $routeMatch = $container->offsetGet('routeMatch');
+                        if (!$routeMatch) {
+                            return $this->redirect()->toRoute('home');
+                        }
+                        $container->offsetSet('routeMatch', null);
+                        return $this->redirect()->toRoute($routeMatch->getMatchedRouteName(), $routeMatch->getParams());
                     }
 
                     $element = $form->get('username');

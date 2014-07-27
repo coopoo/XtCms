@@ -15,20 +15,45 @@ namespace XtUser\Options;
 
 use Zend\Stdlib\AbstractOptions;
 
+/**
+ * Class UserModuleOptions
+ * @package XtUser\Options
+ */
 class UserModuleOptions extends AbstractOptions
 {
+    /**
+     * @var bool
+     */
     protected $disabledRegister = false;
 
+    /**
+     * @var bool
+     */
     protected $disabledLogin = false;
 
+    /**
+     * @var string
+     */
     protected $table = 'xt-user';
 
+    /**
+     * @var string \Zend\Authentication\Storage\Session
+     */
     protected $authenticationStorage = 'Zend\Authentication\Storage\Session';
 
+    /**
+     * @var int
+     */
     protected $passwordFailLimit = 5;
 
+    /**
+     * @var int
+     */
     protected $passwordFailTime = 3600;
 
+    /**
+     * @var int
+     */
     protected $rememberMe = 1440;
 
     /**
