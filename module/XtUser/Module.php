@@ -27,6 +27,8 @@ use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceManager;
 
 
 class Module implements AutoloaderProviderInterface,
@@ -94,9 +96,10 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Model\UserLoggerTable' => 'XtUser\Model\UserLoggerTable',
                 'XtUser\Model\UserDetailTable' => 'XtUser\Model\UserDetailTable',
                 'XtUser\Service\Authenticate' => 'XtUser\Service\AuthenticateInvokable',
+//                'XtUser\Service\Authenticate' => 'XtUser\Service\Authentication',
             ],
             'factories' => [
-                'XtUser\Service\UserModuleOptions' => 'XtUser\Service\UserModuleOptionsFactory'
+                'XtUser\Service\UserModuleOptions' => 'XtUser\Service\UserModuleOptionsFactory',
             ],
             'initializers' => [
                 'XtUser\Service\UserModuleOptionsInitializer'

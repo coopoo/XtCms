@@ -53,6 +53,7 @@ class UserTable extends AbstractBaseTableGateway implements ServiceLocatorAwareI
         $userData = array_filter((array)$this->resultSetPrototype->getHydrator()->extract($userEntity), function ($value) {
             return $value !== null;
         });
+        unset($userData['remember_me']);
         if (!$id) {
             return $this->insert($userData) ? $this->lastInsertValue : 0;
         }

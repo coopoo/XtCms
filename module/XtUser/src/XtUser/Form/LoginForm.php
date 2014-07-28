@@ -25,5 +25,28 @@ class LoginForm extends UserBaseForm
         $this->get('username')->setOption('tips', '');
         $this->get('user_password')->setOption('tips', '');
         $this->get('submit')->setValue('登录网站');
+
+        $this->add([
+            'type' => 'checkBox',
+            'name' => 'rememberMe',
+            'options' => [
+                'label' => 'rememberMe',
+                'tips' => '2周内免登录'
+            ]
+        ]);
+
+//        $this->add([
+//            'type'=>'captcha',
+//            'name'=>'captcha',
+//            'options'=>[
+//                'label'=>'请输入验证码',
+//                'captcha'=>[
+//                    'class'=>'image',
+//                    'font'=>__DIR__.'/World_Colors.ttf',
+//                    'wordlen'=>4
+//                ]
+//            ]
+//        ]);
+
     }
 } 

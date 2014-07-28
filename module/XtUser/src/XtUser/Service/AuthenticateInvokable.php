@@ -13,6 +13,7 @@
 namespace XtUser\Service;
 
 
+use XtUser\Authentication\Storage\DbSession;
 use XtUser\Entity\UserEntity;
 use XtUser\Model\UserModel;
 use XtUser\Options\UserModuleOptionsAwareInterFace;
@@ -92,14 +93,14 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
 
         /**
          * ZF-7546 - prevent multiple successive calls from storing inconsistent results
-         * Ensure storage has clean state
+         * Ensure Storage has clean state
          */
         if ($this->hasIdentity()) {
             $this->clearIdentity();
         }
         if ($result->isValid()) {
             $userObj = $adapter->getResultRowObject(array('id', 'display_name'));
-            $userObj->EXPIRE = microtime(true);
+
             $this->getStorage()->write($userObj);
         }
         return $result;
@@ -191,8 +192,7 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     public function getStorage()
     {
         if (empty($this->storage)) {
-            $authenticationStorageClass = $this->userModuleOptions->getAuthenticationStorage();
-            $this->storage = new $authenticationStorageClass($this->userModuleOptions->getTable());
+            $this->storage = new DbSession($this->userModuleOptions->getTable());
         }
         return $this->storage;
     }
@@ -215,14 +215,17 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     public function isAlive()
     {
         $userObj = $this->getStorage()->read();
-        if ($userObj && ($userObj->EXPIRE > microtime(true) - $this->userModuleOptions->getRememberMe())) {
-            $userTable = $this->serviceLocator->get(UserModel::USER_TABLE_CLASS);
-            $userEntity = $userTable->getOneByColumn($userObj->id, 'id', ['display_name', 'status']);
-            if ($userEntity && (int)$userEntity->getStatus() === UserModel::ALLOW_STATUS) {
+        if (!$userObj) {
+            return false;
+        }
+        $userTable = $this->serviceLocator->get(UserModel::USER_TABLE_CLASS);
+        $userEntity = $userTable->getOneByColumn($userObj->id, 'id', ['display_name', 'status']);
+        if ($userEntity && $userEntity->getStatus() === UserModel::ALLOW_STATUS) {
+            if ($userObj->display_name != $userEntity->getDisplayName()) {
                 $userObj->display_name = $userEntity->getDisplayName();
-                $userObj->EXPIRE = microtime(true);
-                return true;
+                $this->getStorage()->write($userObj);
             }
+            return true;
         }
         $this->clearIdentity();
         return false;

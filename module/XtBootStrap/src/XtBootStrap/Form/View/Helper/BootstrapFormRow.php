@@ -73,10 +73,12 @@ class BootstrapFormRow extends FormRow
          * @除submit 以外的元素增加class
          */
 
-        if (!in_array($element->getAttribute('type'), ['submit'])) {
+        if (!in_array($element->getAttribute('type'), ['submit', 'checkbox'])) {
             $this->addElementClass($element, ['form-control']);
-        } else {
+        } elseif ($element->getAttribute('type') == 'submit') {
             $this->addLabelClass($element, ['sr-only']);
+        } else {
+            $this->addElementClass($element, ['checkbox']);
         }
 
         $wrapClass = '';

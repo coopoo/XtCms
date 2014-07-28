@@ -18,6 +18,7 @@ use XtUser\Options\UserModuleOptionsAwareInterFace;
 use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
+use Zend\Session\SessionManager;
 
 /**
  * Class UserController
@@ -70,6 +71,9 @@ class UserController extends AbstractActionController implements UserModuleOptio
                 });
                 if ($responseCollection->last() !== false) {
                     $authenticate->setUserEvent($userEvent);
+                    if ($userEntity->getRememberMe() === 1) {
+                        $authenticate->getStorage()->getSessionManager()->rememberMe();
+                    }
                     if ($authenticate->isValid()) {
                         $userEvent->setUserEntity($authenticate->getUserEntity());
                         $eventManager->trigger(UserEvent::USER_LOGIN_POST, $this, $userEvent);
@@ -91,6 +95,7 @@ class UserController extends AbstractActionController implements UserModuleOptio
                 }
             }
         }
+
         return ['form' => $form];
     }
 

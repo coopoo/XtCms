@@ -78,6 +78,26 @@ class UserEntity
      */
     protected $errorCount;
 
+    protected $rememberMe;
+
+    /**
+     * @return mixed
+     */
+    public function getRememberMe()
+    {
+        return (int)$this->rememberMe;
+    }
+
+    /**
+     * @param mixed $rememberMe
+     * @return $this
+     */
+    public function setRememberMe($rememberMe)
+    {
+        $this->rememberMe = $rememberMe;
+        return $this;
+    }
+
     /**
      * @return mixed
      */
@@ -209,7 +229,7 @@ class UserEntity
      */
     public function getStatus()
     {
-        return $this->status;
+        return (int)$this->status;
     }
 
     /**
