@@ -59,13 +59,23 @@ class DbSession implements StorageInterface
         $this->tableGateway = new TableGateway($this->table, GlobalAdapterFeature::getStaticAdapter());
 
         $dbTableGatewayOptions = new DbTableGatewayOptions();
+
         $dbTableGateway = new DbTableGateway($this->tableGateway, $dbTableGatewayOptions);
-
         $dbTableGateway->open(null, $this->namespace);
-
         $this->getSessionManager()->setSaveHandler($dbTableGateway);
+
     }
 
+    public function hasIdentity($data)
+    {
+        if ($data && !is_string($data)) {
+            $data = json_encode($data);
+        }
+        $rows = $this->tableGateway->select(['data' => $data]);
+        if ($row = $rows->current()) {
+            $this->getSessionManager()->getSaveHandler()->destroy($row->id);
+        }
+    }
     /**
      * @return mixed
      */

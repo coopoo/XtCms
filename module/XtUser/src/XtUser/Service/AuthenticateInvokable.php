@@ -119,11 +119,22 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
         }
         if ($result->isValid()) {
             $userObj = $adapter->getResultRowObject(['id', 'display_name']);
+            $this->checkIdentity($userObj);
             $this->getStorage()->write($userObj);
         }
         return $result;
     }
 
+    /**
+     * @检查用户是否已经登录,如果登录则踢出,实现唯一登录
+     *
+     * @param $data
+     * @return mixed
+     */
+    public function checkIdentity($data)
+    {
+        return $this->getStorage()->hasIdentity($data);
+    }
     /**
      * Returns true if and only if an identity is available
      *
@@ -250,10 +261,7 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
         $userTable = $this->serviceLocator->get(UserModel::USER_TABLE_CLASS);
         $userEntity = $userTable->getOneByColumn($userObj->id, 'id', ['display_name', 'status']);
         if ($userEntity && $userEntity->getStatus() === UserModel::ALLOW_STATUS) {
-            if ($userObj->display_name != $userEntity->getDisplayName()) {
-                $userObj->display_name = $userEntity->getDisplayName();
                 $this->getStorage()->write($userObj);
-            }
             return true;
         }
         $this->clearIdentity();
