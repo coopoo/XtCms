@@ -128,12 +128,12 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     /**
      * @检查用户是否已经登录,如果登录则踢出,实现唯一登录
      *
-     * @param $data
+     * @param $userObject
      * @return mixed
      */
-    public function checkIdentity($data)
+    public function checkIdentity($userObject)
     {
-        return $this->getStorage()->hasIdentity($data);
+        return $this->getStorage()->hasIdentity($userObject);
     }
     /**
      * Returns true if and only if an identity is available

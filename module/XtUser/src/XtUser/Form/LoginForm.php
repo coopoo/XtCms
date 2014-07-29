@@ -31,7 +31,7 @@ class LoginForm extends UserBaseForm
             'name' => 'rememberMe',
             'options' => [
                 'label' => 'rememberMe',
-                'tips' => '2周内免登录'
+                'tips' => '两周内免登录'
             ]
         ]);
 
