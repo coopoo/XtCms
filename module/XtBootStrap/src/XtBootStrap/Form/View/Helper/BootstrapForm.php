@@ -17,8 +17,16 @@ use Zend\Form\FieldsetInterface;
 use Zend\Form\FormInterface;
 use Zend\Form\View\Helper\Form;
 
+/**
+ * Class BootstrapForm
+ * @package XtBootstrap\Form\View\Helper
+ */
 class BootstrapForm extends Form
 {
+    /**
+     * @param FormInterface $form
+     * @return string
+     */
     public function render(FormInterface $form)
     {
         if (method_exists($form, 'prepare')) {

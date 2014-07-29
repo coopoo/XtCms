@@ -18,7 +18,6 @@ use XtUser\Options\UserModuleOptionsAwareInterFace;
 use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
-use Zend\Session\SessionManager;
 
 /**
  * Class UserController

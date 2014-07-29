@@ -21,13 +21,33 @@ use Zend\Session\SaveHandler\DbTableGateway;
 use Zend\Session\SaveHandler\DbTableGatewayOptions;
 use Zend\Session\SessionManager;
 
+/**
+ * Class DbSession
+ * @package XtUser\Authentication\Storage
+ */
 class DbSession implements StorageInterface
 {
+    /**
+     * @var null
+     */
     protected $namespace;
+    /**
+     * @var Container
+     */
     protected $session;
+    /**
+     * @var string
+     */
     protected $table = 'xt_user_session';
+    /**
+     * @var TableGateway
+     */
     protected $tableGateway;
 
+    /**
+     * @param null $namespace
+     * @param SessionManager $sessionManager
+     */
     public function __construct($namespace = null, SessionManager $sessionManager = null)
     {
         if ($namespace !== null) {
@@ -79,6 +99,9 @@ class DbSession implements StorageInterface
         return json_decode($this->getSessionManager()->getSaveHandler()->read($this->getId()));
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->getSessionManager()->getId();

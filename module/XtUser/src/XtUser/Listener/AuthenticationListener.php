@@ -60,7 +60,6 @@ class AuthenticationListener implements ListenerAggregateInterface
         ];
         if (!in_array($requestedResourse, $whiteList)) {
             if (!$authentication->isAlive()) {
-
                 $container = new Container('redirect');
                 $container->offsetSet('routeMatch', $routeMatch);
                 $router = $event->getRouter();

@@ -53,6 +53,55 @@ return [
                     ]
                 ]
             ],
+            'Xt_Role' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/role[/]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[a-zA-Z0-9_-]*',
+                        'page' => '[0-9]+'
+                    ],
+                    'defaults' => [
+                        '__NAMESPACE__' => 'XtUser\Controller',
+                        'controller' => 'Role',
+                        'action' => 'index'
+                    ]
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'default' => [
+                        'type' => 'segment',
+                        'options' => [
+                            'route' => '[:action[/:id]].html',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*',
+                                'page' => '[0-9]+'
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'XtUser\Controller',
+                                'controller' => 'Role',
+                                'action' => 'index'
+                            ]
+                        ]
+                    ],
+                    'page' => [
+                        'type' => 'segment',
+                        'options' => [
+                            'route' => '[:action[/page/:page]].html',
+                            'constraints' => [
+                                'page' => '[0-9]+'
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'XtUser\Controller',
+                                'controller' => 'Role',
+                                'action' => 'index'
+                            ]
+                        ]
+                    ]
+                ]
+            ],
         ]
     ],
     'view_manager' => [

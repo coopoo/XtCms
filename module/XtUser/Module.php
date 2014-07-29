@@ -96,7 +96,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Model\UserLoggerTable' => 'XtUser\Model\UserLoggerTable',
                 'XtUser\Model\UserDetailTable' => 'XtUser\Model\UserDetailTable',
                 'XtUser\Service\Authenticate' => 'XtUser\Service\AuthenticateInvokable',
-//                'XtUser\Service\Authenticate' => 'XtUser\Service\Authentication',
+                'XtUser\Model\RoleTable' => 'XtUser\Model\RoleTable',
             ],
             'factories' => [
                 'XtUser\Service\UserModuleOptions' => 'XtUser\Service\UserModuleOptionsFactory',
@@ -157,6 +157,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Form\EditForm' => 'XtUser\Form\EditForm',
                 'XtUser\Form\DetailForm' => 'XtUser\Form\DetailForm',
                 'XtUser\Form\ChangePasswordForm' => 'XtUser\Form\ChangePasswordForm',
+                'XtUser\Form\RoleForm' => 'XtUser\Form\RoleForm',
             ]
         ];
     }

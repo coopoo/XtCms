@@ -13,6 +13,7 @@
 namespace XtBase;
 
 
+use XtBase\Listener\PaginationListener;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -38,6 +39,7 @@ class Module implements AutoloaderProviderInterface,
     {
         $application = $e->getApplication();
         $eventManager = $application->getEventManager();
+        $eventManager->attach(new PaginationListener());
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         $dbAdapter = $application->getServiceManager()->get('Zend\Db\Adapter\Adapter');

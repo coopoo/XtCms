@@ -28,6 +28,10 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Stdlib\Hydrator\ClassMethods;
 
 
+/**
+ * Class AuthenticateInvokable
+ * @package XtUser\Service
+ */
 class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     AuthenticationServiceInterface,
     ServiceLocatorAwareInterface
@@ -35,10 +39,25 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     use UserModuleOptionsTrait;
     use ServiceLocatorAwareTrait;
 
+    /**
+     * @var
+     */
     protected $userEvent;
+    /**
+     * @var
+     */
     protected $userEntity;
+    /**
+     * @var
+     */
     protected $result;
+    /**
+     * @var
+     */
     protected $storage;
+    /**
+     * @var
+     */
     protected $adapter;
 
     /**
@@ -99,8 +118,7 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
             $this->clearIdentity();
         }
         if ($result->isValid()) {
-            $userObj = $adapter->getResultRowObject(array('id', 'display_name'));
-
+            $userObj = $adapter->getResultRowObject(['id', 'display_name']);
             $this->getStorage()->write($userObj);
         }
         return $result;
@@ -124,11 +142,9 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     public function getIdentity()
     {
         $storage = $this->getStorage();
-
         if ($storage->isEmpty()) {
             return null;
         }
-
         return $storage->read();
     }
 
@@ -149,8 +165,15 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     {
         if (empty($this->adapter)) {
             $dbAdapter = GlobalAdapterFeature::getStaticAdapter();
-            $this->adapter = new CredentialTreatmentAdapter($dbAdapter, $this->userModuleOptions->getTable(), $this->userEvent->getIdentityKey(), 'user_password', "md5(CONCAT(?,uniqid))");
-            $this->adapter->setIdentity($this->userEvent->getUserEntity()->getUsername())->setCredential($this->userEvent->getUserEntity()->getUserPassword());
+            $this->adapter = new CredentialTreatmentAdapter(
+                $dbAdapter,
+                $this->userModuleOptions->getTable(),
+                $this->userEvent->getIdentityKey(),
+                'user_password',
+                "md5(CONCAT(?,uniqid))"
+            );
+            $this->adapter->setIdentity($this->userEvent->getUserEntity()->getUsername())
+                ->setCredential($this->userEvent->getUserEntity()->getUserPassword());
         }
         return $this->adapter;
     }
@@ -207,11 +230,17 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function isValid()
     {
         return $this->getResult()->isValid();
     }
 
+    /**
+     * @return bool
+     */
     public function isAlive()
     {
         $userObj = $this->getStorage()->read();
@@ -231,6 +260,9 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
         return false;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUserId()
     {
         return $this->getStorage()->read()->id;
