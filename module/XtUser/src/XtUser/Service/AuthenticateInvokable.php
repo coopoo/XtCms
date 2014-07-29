@@ -172,8 +172,8 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
                 'user_password',
                 "md5(CONCAT(?,uniqid))"
             );
-            $this->adapter->setIdentity($this->userEvent->getUserEntity()->getUsername())
-                ->setCredential($this->userEvent->getUserEntity()->getUserPassword());
+            $this->adapter->setIdentity($this->getUserEvent()->getUserEntity()->getUsername())
+                ->setCredential($this->getUserEvent()->getUserEntity()->getUserPassword());
         }
         return $this->adapter;
     }
@@ -215,7 +215,7 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     public function getStorage()
     {
         if (empty($this->storage)) {
-            $this->storage = new DbSession($this->userModuleOptions->getTable());
+            $this->storage = new DbSession($this->getUserModuleOptions()->getTable());
         }
         return $this->storage;
     }
