@@ -66,6 +66,9 @@ class DbSession implements StorageInterface
 
     }
 
+    /**
+     * @param $data
+     */
     public function hasIdentity($data)
     {
         if ($data && !is_string($data)) {
