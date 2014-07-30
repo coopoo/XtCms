@@ -13,11 +13,6 @@
 namespace XtUser;
 
 
-use XtUser\Listener\AuthenticationListener;
-use XtUser\Listener\ChangePasswordListener;
-use XtUser\Listener\LoginListener;
-use XtUser\Listener\RegisterListener;
-use Zend\Crypt\Symmetric\Exception\RuntimeException;
 use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
@@ -28,8 +23,6 @@ use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Zend\ModuleManager\Feature\InputFilterProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceManager;
 
 
 class Module implements AutoloaderProviderInterface,
@@ -52,10 +45,10 @@ class Module implements AutoloaderProviderInterface,
     {
         $application = $e->getApplication();
         $eventManager = $application->getEventManager();
-        $eventManager->attach(new RegisterListener());
-        $eventManager->attach(new LoginListener());
-        $eventManager->attach(new ChangePasswordListener());
-        $eventManager->attach(new AuthenticationListener());
+        $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\AuthenticationListener'));
+        $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\ChangePasswordListener'));
+        $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\LoginListener'));
+        $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\RegisterListener'));
     }
 
     /**
@@ -99,6 +92,11 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Model\UserDetailTable' => 'XtUser\Model\UserDetailTable',
                 'XtUser\Service\Authenticate' => 'XtUser\Service\AuthenticateInvokable',
                 'XtUser\Model\RoleTable' => 'XtUser\Model\RoleTable',
+                'XtUser\Listener\AuthenticationListener' => 'XtUser\Listener\AuthenticationListener',
+                'XtUser\Listener\ChangePasswordListener' => 'XtUser\Listener\ChangePasswordListener',
+                'XtUser\Listener\LoginListener' => 'XtUser\Listener\LoginListener',
+                'XtUser\Listener\RegisterListener' => 'XtUser\Listener\RegisterListener',
+
             ],
             'factories' => [
                 'XtUser\Service\UserModuleOptions' => 'XtUser\Service\UserModuleOptionsFactory',

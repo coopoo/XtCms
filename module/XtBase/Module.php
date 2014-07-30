@@ -40,10 +40,10 @@ class Module implements AutoloaderProviderInterface,
         $application = $e->getApplication();
         $eventManager = $application->getEventManager();
         $eventManager->attach(new PaginationListener());
+        $eventManager->attach($application->getServiceManager()->get('XtBase\Listener\GlobalAdapterListener'));
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        $dbAdapter = $application->getServiceManager()->get('Zend\Db\Adapter\Adapter');
-        \Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($dbAdapter);
+
     }
 
     /**
@@ -96,6 +96,10 @@ class Module implements AutoloaderProviderInterface,
     public function getServiceConfig()
     {
         return [
+            'invokables' => [
+                'XtBase\Listener\GlobalAdapterListener' => 'XtBase\Listener\GlobalAdapterListener',
+                'XtBase\Listener\PaginationListener' => 'XtBase\Listener\PaginationListener',
+            ],
             'initializers' => [
                 'XtBase\Service\AdapterInitializer' => 'XtBase\Service\AdapterInitializer'
             ]

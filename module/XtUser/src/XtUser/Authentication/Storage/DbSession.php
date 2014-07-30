@@ -16,6 +16,8 @@ namespace XtUser\Authentication\Storage;
 use Zend\Authentication\Storage\StorageInterface;
 use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Session\Container;
 use Zend\Session\SaveHandler\DbTableGateway;
 use Zend\Session\SaveHandler\DbTableGatewayOptions;
@@ -25,8 +27,9 @@ use Zend\Session\SessionManager;
  * Class DbSession
  * @package XtUser\Authentication\Storage
  */
-class DbSession implements StorageInterface
+class DbSession implements StorageInterface, ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
     /**
      * @var null
      */

@@ -13,13 +13,14 @@
 namespace XtUser\InputFilter;
 
 
+use XtUser\Entity\UserEntity;
 use Zend\Validator\ValidatorChain;
 
 class LoginInputFilter extends UserInputFilter
 {
-    public function __invoke()
+    public function __invoke(UserEntity $userEntity = null)
     {
-        parent::__invoke();
+        parent::__invoke($userEntity);
 
         $this->remove('email');
 

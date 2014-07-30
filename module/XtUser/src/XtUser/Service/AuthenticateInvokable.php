@@ -176,7 +176,7 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     public function getAdapter()
     {
         if (empty($this->adapter)) {
-            $dbAdapter = GlobalAdapterFeature::getStaticAdapter();
+            $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
             $this->adapter = new CredentialTreatmentAdapter(
                 $dbAdapter,
                 $this->userModuleOptions->getTable(),

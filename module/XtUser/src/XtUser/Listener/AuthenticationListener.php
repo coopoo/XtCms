@@ -37,7 +37,7 @@ class AuthenticationListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'checkAuth'], -999);
+        $this->listeners[] = $events->getSharedManager()->attach('Zend\Mvc\Application', MvcEvent::EVENT_ROUTE, [$this, 'checkAuth'], -999);
     }
 
     public function checkAuth(EventInterface $event)

@@ -4,26 +4,28 @@
  * @Project: XtCms
  * @User: Coopoo
  * @Copy Right: 2014
- * @Date: 2014-07-29
- * @Time: 10:49
+ * @Date: 2014-07-30
+ * @Time: 14:15
  * @QQ: 259522
- * @FileName: PaginationListener.php
+ * @FileName: GlobalAdapterListener.php
  */
 
 namespace XtBase\Listener;
 
 
+use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\Mvc\MvcEvent;
-use Zend\Paginator\Paginator;
-use Zend\View\Helper\PaginationControl;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-class PaginationListener implements ListenerAggregateInterface
+class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocatorAwareInterface
 {
     use ListenerAggregateTrait;
+    use ServiceLocatorAwareTrait;
 
     /**
      * Attach one or more listeners
@@ -37,14 +39,13 @@ class PaginationListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->getSharedManager()->attach('Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH, [$this, 'setPagination']);
+        $this->listeners[] = $events->getSharedManager()->attach('Zend\Mvc\Application', MvcEvent::EVENT_ROUTE, [$this, 'setGlobalAdapter'], 100);
     }
 
-    public function setPagination(EventInterface $event)
+    public function setGlobalAdapter(EventInterface $event)
     {
-        Paginator::setDefaultItemCountPerPage(15);
-        PaginationControl::setDefaultScrollingStyle('Sliding');
-        PaginationControl::setDefaultViewPartial('pagination/pagination.phtml');
+        $adapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        GlobalAdapterFeature::setStaticAdapter($adapter);
     }
 
 } 
