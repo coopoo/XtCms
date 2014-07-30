@@ -14,7 +14,6 @@ namespace XtUser\Form;
 
 
 use XtUser\Entity\UserDetailEntity;
-use XtUser\InputFilter\DetailInputFilter;
 use Zend\Form\Form;
 use Zend\Stdlib\Hydrator\ClassMethods;
 
@@ -26,7 +25,6 @@ class DetailForm extends Form
 
         $this->setHydrator(new ClassMethods())->setObject(new UserDetailEntity());
         $this->setAttributes(['role' => 'form', 'class' => 'form-horizontal']);
-        $this->setInputFilter(new DetailInputFilter());
         $this->add([
             'type' => 'csrf',
             'name' => 'csrf'

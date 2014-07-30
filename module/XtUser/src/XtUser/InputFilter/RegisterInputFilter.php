@@ -17,9 +17,9 @@ use XtUser\Entity\UserEntity;
 
 class RegisterInputFilter extends UserInputFilter
 {
-    public function __construct(UserEntity $userEntity = null)
+    public function __invoke(UserEntity $userEntity = null)
     {
-        parent::__construct($userEntity);
+        parent::__invoke($userEntity);
 
         $this->get('user_password')->setRequired(true);
 
@@ -46,5 +46,6 @@ class RegisterInputFilter extends UserInputFilter
                 ]
             ]
         ]);
+        return $this;
     }
 } 

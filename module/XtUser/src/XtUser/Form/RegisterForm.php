@@ -13,14 +13,12 @@
 namespace XtUser\Form;
 
 
-use XtUser\InputFilter\RegisterInputFilter;
-
 class RegisterForm extends UserBaseForm
 {
     public function __construct()
     {
         parent::__construct();
-        $this->setInputFilter(new RegisterInputFilter())->setAttribute('class', 'form-horizontal');
+        $this->setAttribute('class', 'form-horizontal');
         $this->add([
             'type' => 'password',
             'name' => 'confirm_password',

@@ -18,9 +18,9 @@ use XtUser\Model\UserModel;
 
 class ChangePasswordInputFilter extends RegisterInputFilter
 {
-    public function __construct(UserEntity $userEntity = null)
+    public function __invoke(UserEntity $userEntity = null)
     {
-        parent::__construct($userEntity);
+        parent::__invoke($userEntity);
         $this->remove('username')->remove('email');
         $this->add([
             'name' => 'old_password',
@@ -41,5 +41,6 @@ class ChangePasswordInputFilter extends RegisterInputFilter
                 ]
             ]
         ]);
+        return $this;
     }
 } 

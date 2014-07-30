@@ -59,6 +59,8 @@ class UserController extends AbstractActionController implements UserModuleOptio
         $form = $this->FormElementManager()->get('XtUser\Form\LoginForm');
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\LoginInputFilter');
+            $form->setInputFilter($inputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $userEntity = $form->getData();
@@ -119,6 +121,8 @@ class UserController extends AbstractActionController implements UserModuleOptio
         $form = $this->FormElementManager()->get('XtUser\Form\RegisterForm');
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\RegisterInputFilter');
+            $form->setInputFilter($inputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $userEntity = $form->getData();

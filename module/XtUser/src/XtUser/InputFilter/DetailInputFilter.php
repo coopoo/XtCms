@@ -13,14 +13,11 @@
 namespace XtUser\InputFilter;
 
 
-use XtUser\Entity\UserEntity;
-use XtUser\Model\UserModel;
-use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Zend\InputFilter\InputFilter;
 
 class DetailInputFilter extends InputFilter
 {
-    public function __construct(UserEntity $userEntity = null)
+    public function __invoke()
     {
         $this->add([
             'name' => 'csrf',
@@ -117,5 +114,6 @@ class DetailInputFilter extends InputFilter
                 ]
             ]
         ]);
+        return $this;
     }
 }

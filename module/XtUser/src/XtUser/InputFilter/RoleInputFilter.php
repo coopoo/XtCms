@@ -20,7 +20,7 @@ use Zend\InputFilter\InputFilter;
 
 class RoleInputFilter extends InputFilter
 {
-    public function __construct(RoleEntity $roleEntity = null)
+    public function __invoke(RoleEntity $roleEntity = null)
     {
         $this->add([
             'name' => 'csrf',
@@ -65,5 +65,6 @@ class RoleInputFilter extends InputFilter
                 ['name' => 'int'],
             ]
         ]);
+        return $this;
     }
 } 

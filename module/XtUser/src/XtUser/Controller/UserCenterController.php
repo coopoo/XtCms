@@ -15,7 +15,6 @@ namespace XtUser\Controller;
 use XtUser\Entity\UserDetailEntity;
 use XtUser\Event\UserEvent;
 use XtUser\Model\UserDetailTable;
-use XtUser\InputFilter\EditInputFilter;
 use XtUser\Model\UserModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
@@ -52,8 +51,9 @@ class UserCenterController extends AbstractActionController
         $form->bind($userEntity);
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setData($request->getPost());
-            $form->setInputFilter(new EditInputFilter($userEntity));
+            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\EditInputFilter');
+            $form->setInputFilter($inputFilter());
+            $form->setData($request->getPost($userEntity));
             if ($form->isValid()) {
                 try {
                     $this->UserTable()->save($userEntity);
@@ -77,6 +77,8 @@ class UserCenterController extends AbstractActionController
         $form->bind($userDetail);
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\DetailInputFilter');
+            $form->setInputFilter($inputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $userDetail->setUserId($userId);
@@ -101,6 +103,8 @@ class UserCenterController extends AbstractActionController
         $form = $this->FormElementManager()->get('XtUser\Form\ChangePasswordForm');
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\ChangePasswordInputFilter');
+            $form->setInputFilter($inputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $userEntity = $form->getData();

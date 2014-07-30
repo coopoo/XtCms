@@ -26,6 +26,7 @@ use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ModuleManager\Feature\FormElementProviderInterface;
+use Zend\ModuleManager\Feature\InputFilterProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceManager;
@@ -38,6 +39,7 @@ class Module implements AutoloaderProviderInterface,
     ControllerProviderInterface,
     FormElementProviderInterface,
     BootstrapListenerInterface,
+    InputFilterProviderInterface,
     DependencyIndicatorInterface
 {
     /**
@@ -122,7 +124,8 @@ class Module implements AutoloaderProviderInterface,
             'invokables' => [
                 'Authentication' => 'XtUser\Controller\Plugin\AuthenticationPlugin',
                 'UserTable' => 'XtUser\Controller\Plugin\UserTablePlugin',
-                'FormElementManager' => 'XtUser\Controller\Plugin\FormElementManagerPlugin'
+                'FormElementManager' => 'XtUser\Controller\Plugin\FormElementManagerPlugin',
+                'InputFilterManager' => 'XtUser\Controller\Plugin\InputFilterManagerPlugin'
             ]
         ];
     }
@@ -158,6 +161,27 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Form\DetailForm' => 'XtUser\Form\DetailForm',
                 'XtUser\Form\ChangePasswordForm' => 'XtUser\Form\ChangePasswordForm',
                 'XtUser\Form\RoleForm' => 'XtUser\Form\RoleForm',
+            ]
+        ];
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getInputFilterConfig()
+    {
+        return [
+            'invokables' => [
+                'XtUser\InputFilter\ChangePasswordInputFilter' => 'XtUser\InputFilter\ChangePasswordInputFilter',
+                'XtUser\InputFilter\DetailInputFilter' => 'XtUser\InputFilter\DetailInputFilter',
+                'XtUser\InputFilter\EditInputFilter' => 'XtUser\InputFilter\EditInputFilter',
+                'XtUser\InputFilter\LoginInputFilter' => 'XtUser\InputFilter\LoginInputFilter',
+                'XtUser\InputFilter\RegisterInputFilter' => 'XtUser\InputFilter\RegisterInputFilter',
+                'XtUser\InputFilter\RoleInputFilter' => 'XtUser\InputFilter\RoleInputFilter',
+                'XtUser\InputFilter\UserInputFilter' => 'XtUser\InputFilter\UserInputFilter'
             ]
         ];
     }

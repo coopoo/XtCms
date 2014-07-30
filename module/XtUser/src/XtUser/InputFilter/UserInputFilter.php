@@ -20,7 +20,7 @@ use Zend\InputFilter\InputFilter;
 
 class UserInputFilter extends InputFilter
 {
-    public function __construct(UserEntity $userEntity = null)
+    public function __invoke(UserEntity $userEntity = null)
     {
         $this->add([
             'name' => 'csrf',
@@ -106,6 +106,6 @@ class UserInputFilter extends InputFilter
                 ]
             ]
         ]);
-
+        return $this;
     }
 }

@@ -17,14 +17,17 @@ use Zend\Validator\ValidatorChain;
 
 class LoginInputFilter extends UserInputFilter
 {
-    public function __construct()
+    public function __invoke()
     {
-        parent::__construct();
+        parent::__invoke();
 
         $this->remove('email');
 
         $this->get('user_password')->setRequired(true);
 
         $this->get('username')->setValidatorChain(new ValidatorChain());
+
+        return $this;
+
     }
 } 

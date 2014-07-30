@@ -13,15 +13,13 @@
 namespace XtUser\Form;
 
 
-use XtUser\InputFilter\LoginInputFilter;
-
 class LoginForm extends UserBaseForm
 {
     public function __construct()
     {
         parent::__construct();
 
-        $this->setInputFilter(new LoginInputFilter())->setAttribute('class', 'form-horizontal')->remove('email');
+        $this->setAttribute('class', 'form-horizontal')->remove('email');
         $this->get('username')->setOption('tips', '');
         $this->get('user_password')->setOption('tips', '');
         $this->get('submit')->setValue('登录网站');

@@ -13,7 +13,6 @@
 namespace XtUser\Controller;
 
 
-use XtUser\InputFilter\RoleInputFilter;
 use Zend\Mvc\Controller\AbstractActionController;
 
 /**
@@ -36,7 +35,8 @@ class RoleController extends AbstractActionController
         $form->get('submit')->setValue('增加角色');
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setInputFilter(new RoleInputFilter());
+            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\RoleInputFilter');
+            $form->setInputFilter($inputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 try {
@@ -64,7 +64,8 @@ class RoleController extends AbstractActionController
         $form->bind($role);
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setInputFilter(new RoleInputFilter($role));
+            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\RoleInputFilter');
+            $form->setInputFilter($inputFilter($role));
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 try {
@@ -74,8 +75,6 @@ class RoleController extends AbstractActionController
                     return ['form' => $form];
                 }
                 $this->redirect()->toRoute();
-            } else {
-                var_dump($form->getMessages());
             }
         }
         return ['form' => $form];
