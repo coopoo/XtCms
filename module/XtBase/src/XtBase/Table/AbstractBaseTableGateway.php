@@ -36,6 +36,8 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 abstract class AbstractBaseTableGateway extends AbstractTableGateway implements AdapterAwareInterface,
     TableGatewayInitAwareInterface
 {
+    const DEFAULT_DISABLED_STATUS = 0;
+    const DEFAULT_ENABLED_STATUS = 99;
     /**
      * @var
      */
@@ -144,16 +146,19 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
      * @param array $columns
      * @return Paginator
      */
-    public function getPaginator($where = null, $order = 'DESC', $columns = ['*'])
+    public function getPaginator($page, $where = null, $order = null, $columns = ['*'])
     {
         $select = $this->sql->select();
         $select->columns($columns);
         if ($where !== null) {
             $select->where($where);
         }
-        $select->order([$this->primaryKey => $order]);
+        $order = ($order) ?: [$this->primaryKey => $order];
+        $select->order($order);
         $dbAdapter = new DbSelect($select, $this->adapter, $this->resultSetPrototype);
-        return new Paginator($dbAdapter);
+        $paginator = new Paginator($dbAdapter);
+        $paginator->setCurrentPageNumber((int)$page);
+        return $paginator;
     }
 
     /**
@@ -162,5 +167,21 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
     public function getConnection()
     {
         return $this->adapter->getDriver()->getConnection();
+    }
+
+    public function disabledById($id, $status = null)
+    {
+        $status = ($status) ?: static::DEFAULT_DISABLED_STATUS;
+        if ($this->getOneByColumn($id)) {
+            $this->update(['status' => $status], [$this->primaryKey => $id]);
+        }
+    }
+
+    public function enabledById($id, $status = null)
+    {
+        $status = ($status) ?: static::DEFAULT_ENABLED_STATUS;
+        if ($this->getOneByColumn($id)) {
+            $this->update(['status' => $status], [$this->primaryKey => $id]);
+        }
     }
 } 

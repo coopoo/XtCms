@@ -25,6 +25,12 @@ class RoleForm extends Form
         parent::__construct('role_form');
         $this->setHydrator(new ClassMethods())->setObject(new RoleEntity());
         $this->setAttributes(['role' => 'form', 'class' => 'form-horizontal']);
+
+        $this->add([
+            'type' => 'csrf',
+            'name' => 'csrf'
+        ]);
+
         $this->add([
             'type' => 'text',
             'name' => 'name',
@@ -41,11 +47,11 @@ class RoleForm extends Form
                 'label' => '角色状态',
                 'value_options' => [
                     0 => '禁用',
-                    1 => '启用'
+                    99 => '启用'
                 ]
             ],
             'attributes' => [
-                'value' => 1
+                'value' => 99
             ]
         ]);
 

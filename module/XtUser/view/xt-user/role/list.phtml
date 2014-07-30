@@ -27,11 +27,25 @@ $this->headTitle('角色列表');
         <tr>
             <td><?= $role->getId() ?></td>
             <td><?= $role->getName() ?></td>
-            <td><?= ($role->getStatus() === 1) ? '正常' : '禁用' ?></td>
+            <td>
+                <?php if ($role->getStatus() === 99): ?>
+                    <a class="btn btn-primary">正常</a> <a
+                        href="<?php echo $this->url('Xt_Role/default', ['action' => 'disabled', 'id' => $role->getId()]) ?>"
+                        class="btn btn-default">点击禁用</a>
+                <?php else: ?>
+                    <a class="btn btn-primary">禁用</a> <a
+                        href="<?php echo $this->url('Xt_Role/default', ['action' => 'enabled', 'id' => $role->getId()]) ?>"
+                        class="btn btn-default">点击启用</a>
+                <?php endif; ?>
+            </td>
             <td><?= $role->getModifyTime() ?></td>
             <td><?= $role->getModifyIp() ?></td>
             <td>
-                <a href="<?php echo $this->url('Xt_Role/default', ['action' => 'edit', 'id' => $role->getId()]) ?>">编辑</a>
+                <a href="<?php echo $this->url('Xt_Role/default', ['action' => 'edit', 'id' => $role->getId()]) ?>"
+                   class="btn btn-default">编辑</a>
+                <a href="<?php echo $this->url('Xt_Role/default', ['action' => 'delete', 'id' => $role->getId()]) ?>"
+                   class="btn btn-primary"
+                   onclick="JavaScript:return confirm('警告: 确定要删除角色 <?= $role->getName() ?> ?该操作不可还原!')">删除</a>
             </td>
         </tr>
     <?php endforeach; ?>
@@ -39,7 +53,7 @@ $this->headTitle('角色列表');
     <tfoot>
     <tr>
         <td colspan="6">
-            <?= $this->paginationControl($roles, null, null, ['actionArray' => ['action' => 'list']]) ?>
+            <?= $this->paginationControl($roles) ?>
         </td>
     </tr>
     </tfoot>

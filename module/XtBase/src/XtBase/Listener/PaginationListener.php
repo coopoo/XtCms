@@ -42,7 +42,7 @@ class PaginationListener implements ListenerAggregateInterface
 
     public function setPagination(EventInterface $event)
     {
-        Paginator::setDefaultItemCountPerPage(2);
+        Paginator::setDefaultItemCountPerPage(15);
         PaginationControl::setDefaultScrollingStyle('Sliding');
         PaginationControl::setDefaultViewPartial('pagination/pagination.phtml');
     }

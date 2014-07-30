@@ -96,5 +96,9 @@ class UserModel
         return static::TABLE . '_logger';
     }
 
+    public static function RoleTable()
+    {
+        return 'xt_role';
+    }
 
 }
