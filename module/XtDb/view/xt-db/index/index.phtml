@@ -16,7 +16,7 @@
         <thead>
         <tr>
             <th>选择</th>
-            <th>表名</th>
+            <th>表名(别名)</th>
             <th>行数</th>
             <th>类型</th>
             <th>排序规则</th>
@@ -28,7 +28,7 @@
         <?php foreach ($dbState as $table): ?>
             <tr>
                 <td><input type="checkbox" name="tables[]" value="<?= $table['Name'] ?>"/></td>
-                <td><?= $table['Name'] ?></td>
+                <td><?= $table['Name'] . '(' . $table['Comment'] . ')' ?></td>
                 <td><?= $table['Rows'] ?></td>
                 <td><?= $table['Engine'] ?></td>
                 <td><?= $table['Collation'] ?></td>
