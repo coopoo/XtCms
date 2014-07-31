@@ -52,29 +52,35 @@ class AuthenticationListener implements ListenerAggregateInterface,
         }
         $controller = $routeMatch->getParam('controller');
         $action = $routeMatch->getParam('action');
-        $requestedResourse = $controller . '-' . $action;
+        $requestedResource = $controller . '-' . $action;
         $whiteList = [
             'XtUser\Controller\User-index',
-            'XtUser\Controller\User-login',
             'XtUser\Controller\User-disabledLogin',
             'XtUser\Controller\User-register',
-            'XtUser\Controller\User-disabledRegister',
+            'XtUser\Controller\User-disabledRegister'
         ];
-        if (in_array($requestedResourse, $whiteList)) {
+        if (in_array($requestedResource, $whiteList)) {
             return;
         }
-
         $response = $event->getResponse();
+        $response->setStatusCode(302);
         $authentication = $this->getServiceLocator()->get('XtUser\Service\Authenticate');
+        $router = $event->getRouter();
+        if ($requestedResource === 'XtUser\Controller\User-login') {
+            if (!$authentication->isAlive()) {
+                return;
+            }
+            $url = $router->assemble([], ['name' => UserModel::USER_ROUTE]);
+            $response->getHeaders()->addHeaderLine('Location', $url);
+            return $response;
+        }
         if ($authentication->isAlive()) {
             return;
         }
         $container = new Container('redirect');
         $container->offsetSet('routeMatch', $routeMatch);
-        $router = $event->getRouter();
         $url = $router->assemble(['action' => 'login'], ['name' => UserModel::USER_ROUTE]);
         $response->getHeaders()->addHeaderLine('Location', $url);
-        $response->setStatusCode(302);
         return $response;
     }
 

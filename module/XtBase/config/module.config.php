@@ -16,7 +16,7 @@ return [
         ],
     ],
     'translator' => [
-        'locale' => 'en_US',
+        'locale' => 'zh_CN',
         'translation_file_patterns' => [
             [
                 'type' => 'gettext',

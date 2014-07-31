@@ -52,10 +52,6 @@ class UserController extends AbstractActionController implements UserModuleOptio
         if ($this->userModuleOptions->isDisabledLogin()) {
             return $this->redirect()->toRoute(null, ['action' => 'disabledLogin']);
         }
-        $authenticate = $this->Authentication();
-        if ($authenticate->isAlive()) {
-            return $this->redirect()->toRoute(UserModel::USER_CENTER_ROUTE);
-        }
         $form = $this->FormElementManager()->get('XtUser\Form\LoginForm');
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -71,6 +67,7 @@ class UserController extends AbstractActionController implements UserModuleOptio
                     return $response === false;
                 });
                 if ($responseCollection->last() !== false) {
+                    $authenticate = $this->Authentication();
                     $authenticate->setUserEvent($userEvent);
                     if ($userEntity->getRememberMe() === 1) {
                         $authenticate->getStorage()->getSessionManager()->rememberMe();

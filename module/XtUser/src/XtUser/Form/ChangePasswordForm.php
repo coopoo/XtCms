@@ -24,12 +24,12 @@ class ChangePasswordForm extends RegisterForm
             'type' => 'password',
             'name' => 'old_password',
             'options' => [
-                'label' => '确认密码'
+                'label' => '旧密码'
             ],
             'attributes' => [
                 'id' => 'old_password',
                 'required' => 'required',
-                'placeholder' => '请再次输入登录密码'
+                'placeholder' => '请输入旧密码'
             ],
         ], ['priority' => 99]);
         $this->get('submit')->setValue('修改密码');

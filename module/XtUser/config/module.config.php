@@ -22,7 +22,7 @@ return [
                         'action' => 'index'
                     ]
                 ]
-            ],
+            ], //end home
             'Xt_User' => [
                 'type' => 'segment',
                 'options' => [
@@ -37,7 +37,7 @@ return [
                         'action' => 'index'
                     ]
                 ]
-            ],
+            ], //end user
             'Xt_User_Center' => [
                 'type' => 'segment',
                 'options' => [
@@ -52,16 +52,11 @@ return [
                         'action' => 'index'
                     ]
                 ]
-            ],
+            ], //end user center
             'Xt_Role' => [
                 'type' => 'segment',
                 'options' => [
                     'route' => '/role[/]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[a-zA-Z0-9_-]*',
-                        'page' => '[0-9]+'
-                    ],
                     'defaults' => [
                         '__NAMESPACE__' => 'XtUser\Controller',
                         'controller' => 'Role',
@@ -76,32 +71,57 @@ return [
                             'route' => '[:action[/:id]].html',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'id' => '[a-zA-Z0-9_-]*',
-                                'page' => '[0-9]+'
-                            ],
-                            'defaults' => [
-                                '__NAMESPACE__' => 'XtUser\Controller',
-                                'controller' => 'Role',
-                                'action' => 'index'
+                                'id' => '[a-zA-Z0-9_-]*'
                             ]
                         ]
-                    ],
+                    ], //end role default
                     'page' => [
                         'type' => 'segment',
                         'options' => [
                             'route' => '[:action[/page/:page]].html',
                             'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'page' => '[0-9]+'
-                            ],
-                            'defaults' => [
-                                '__NAMESPACE__' => 'XtUser\Controller',
-                                'controller' => 'Role',
-                                'action' => 'index'
                             ]
                         ]
+                    ]//end role page
+                ]//end role child
+            ], //end role
+
+            'Xt_Resource' => [
+                'type' => 'segment',
+                'options' => [
+                    'route' => '/resource[/]',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'XtUser\Controller',
+                        'controller' => 'Resource',
+                        'action' => 'index'
                     ]
-                ]
-            ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'default' => [
+                        'type' => 'segment',
+                        'options' => [
+                            'route' => '[:action[/:id]].html',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[a-zA-Z0-9_-]*'
+                            ]
+                        ]
+                    ], //end Resource default
+                    'page' => [
+                        'type' => 'segment',
+                        'options' => [
+                            'route' => '[:action[/page/:page]].html',
+                            'constraints' => [
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'page' => '[0-9]+'
+                            ]
+                        ]
+                    ]//end Resource page
+                ]//end Resource child
+            ], //end Resource
         ]
     ],
     'view_manager' => [
