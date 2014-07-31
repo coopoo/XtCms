@@ -21,7 +21,7 @@ class RoleTable extends AbstractBaseTableGateway
 {
     public function init()
     {
-        $this->table = 'xt_role';
+        $this->table = UserModel::RoleTable();
     }
 
     public function save(RoleEntity $roleEntity)
@@ -33,11 +33,6 @@ class RoleTable extends AbstractBaseTableGateway
             'modify_ip' => IpAddress::getIp()
         ];
         $id = (int)$roleEntity->getId();
-        if ($id == 0) {
-            return $this->insert($data) ? $this->lastInsertValue : 0;
-        }
-        if ($this->getOneByColumn($id)) {
-            return $this->update($data, [$this->primaryKey => $id]);
-        }
+        return $this->insertOrUpdate($data, $id);
     }
 } 

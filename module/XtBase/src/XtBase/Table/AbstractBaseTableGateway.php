@@ -184,4 +184,14 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
             $this->update(['status' => $status], [$this->primaryKey => $id]);
         }
     }
+
+    public function insertOrUpdate($data, $id)
+    {
+        if ((int)$id === 0) {
+            return $this->insert($data) ? $this->lastInsertValue : 0;
+        }
+        if ($this->getOneByColumn($id)) {
+            return $this->update($data, [$this->primaryKey => $id]);
+        }
+    }
 } 

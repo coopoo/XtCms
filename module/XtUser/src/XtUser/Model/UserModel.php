@@ -101,4 +101,9 @@ class UserModel
         return 'xt_role';
     }
 
+    public static function ResourceTable()
+    {
+        return 'xt_resource';
+    }
+
 }
