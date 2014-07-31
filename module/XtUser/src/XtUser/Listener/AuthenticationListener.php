@@ -19,12 +19,16 @@ use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Router\RouteMatch;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Session\Container;
 
-class AuthenticationListener implements ListenerAggregateInterface
+class AuthenticationListener implements ListenerAggregateInterface,
+    ServiceLocatorAwareInterface
 {
     use ListenerAggregateTrait;
-
+    use ServiceLocatorAwareTrait;
     /**
      * Attach one or more listeners
      *
@@ -37,20 +41,18 @@ class AuthenticationListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->getSharedManager()->attach('Zend\Mvc\Application', MvcEvent::EVENT_ROUTE, [$this, 'checkAuth'], -999);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'checkAuth'], -100);
     }
 
     public function checkAuth(EventInterface $event)
     {
-        $response = $event->getResponse();
-        $serviceManager = $event->getApplication()->getServiceManager();
-        $authentication = $serviceManager->get('XtUser\Service\Authenticate');
         $routeMatch = $event->getRouteMatch();
-
+        if (!$routeMatch instanceof RouteMatch) {
+            return;
+        }
         $controller = $routeMatch->getParam('controller');
         $action = $routeMatch->getParam('action');
         $requestedResourse = $controller . '-' . $action;
-
         $whiteList = [
             'XtUser\Controller\User-index',
             'XtUser\Controller\User-login',
@@ -58,17 +60,22 @@ class AuthenticationListener implements ListenerAggregateInterface
             'XtUser\Controller\User-register',
             'XtUser\Controller\User-disabledRegister',
         ];
-        if (!in_array($requestedResourse, $whiteList)) {
-            if (!$authentication->isAlive()) {
-                $container = new Container('redirect');
-                $container->offsetSet('routeMatch', $routeMatch);
-                $router = $event->getRouter();
-                $url = $router->assemble(['action' => 'login'], ['name' => UserModel::USER_ROUTE]);
-                $response->getHeaders()->addHeaderLine('Location', $url);
-                $response->setStatusCode(302);
-                return $response;
-            }
+        if (in_array($requestedResourse, $whiteList)) {
+            return;
         }
+
+        $response = $event->getResponse();
+        $authentication = $this->getServiceLocator()->get('XtUser\Service\Authenticate');
+        if ($authentication->isAlive()) {
+            return;
+        }
+        $container = new Container('redirect');
+        $container->offsetSet('routeMatch', $routeMatch);
+        $router = $event->getRouter();
+        $url = $router->assemble(['action' => 'login'], ['name' => UserModel::USER_ROUTE]);
+        $response->getHeaders()->addHeaderLine('Location', $url);
+        $response->setStatusCode(302);
+        return $response;
     }
 
 } 

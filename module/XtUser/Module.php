@@ -96,7 +96,6 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Listener\ChangePasswordListener' => 'XtUser\Listener\ChangePasswordListener',
                 'XtUser\Listener\LoginListener' => 'XtUser\Listener\LoginListener',
                 'XtUser\Listener\RegisterListener' => 'XtUser\Listener\RegisterListener',
-
             ],
             'factories' => [
                 'XtUser\Service\UserModuleOptions' => 'XtUser\Service\UserModuleOptionsFactory',

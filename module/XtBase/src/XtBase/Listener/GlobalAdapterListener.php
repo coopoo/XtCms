@@ -39,7 +39,7 @@ class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocato
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->getSharedManager()->attach('Zend\Mvc\Application', MvcEvent::EVENT_ROUTE, [$this, 'setGlobalAdapter'], 100);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'setGlobalAdapter'], -99);
     }
 
     public function setGlobalAdapter(EventInterface $event)
