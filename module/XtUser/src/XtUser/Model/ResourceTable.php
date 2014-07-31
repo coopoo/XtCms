@@ -19,6 +19,12 @@ use XtUser\Entity\ResourceEntity;
 
 class ResourceTable extends AbstractBaseTableGateway
 {
+    public function init()
+    {
+        $this->table = UserModel::ResourceTable();
+        $this->addDateTimeStrategy(['modify_time']);
+    }
+
     public function save(ResourceEntity $resourceEntity)
     {
         $data = [
@@ -30,4 +36,6 @@ class ResourceTable extends AbstractBaseTableGateway
         $id = (int)$resourceEntity->getId();
         return $this->insertOrUpdate($data, $id);
     }
+
+
 } 

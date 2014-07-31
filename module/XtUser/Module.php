@@ -92,6 +92,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Model\UserDetailTable' => 'XtUser\Model\UserDetailTable',
                 'XtUser\Service\Authenticate' => 'XtUser\Service\AuthenticateInvokable',
                 'XtUser\Model\RoleTable' => 'XtUser\Model\RoleTable',
+                'XtUser\Model\ResourceTable' => 'XtUser\Model\ResourceTable',
                 'XtUser\Listener\AuthenticationListener' => 'XtUser\Listener\AuthenticationListener',
                 'XtUser\Listener\ChangePasswordListener' => 'XtUser\Listener\ChangePasswordListener',
                 'XtUser\Listener\LoginListener' => 'XtUser\Listener\LoginListener',
@@ -158,6 +159,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Form\DetailForm' => 'XtUser\Form\DetailForm',
                 'XtUser\Form\ChangePasswordForm' => 'XtUser\Form\ChangePasswordForm',
                 'XtUser\Form\RoleForm' => 'XtUser\Form\RoleForm',
+                'XtUser\Form\ResourceForm' => 'XtUser\Form\ResourceForm',
             ]
         ];
     }
@@ -178,7 +180,8 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\InputFilter\LoginInputFilter' => 'XtUser\InputFilter\LoginInputFilter',
                 'XtUser\InputFilter\RegisterInputFilter' => 'XtUser\InputFilter\RegisterInputFilter',
                 'XtUser\InputFilter\RoleInputFilter' => 'XtUser\InputFilter\RoleInputFilter',
-                'XtUser\InputFilter\UserInputFilter' => 'XtUser\InputFilter\UserInputFilter'
+                'XtUser\InputFilter\UserInputFilter' => 'XtUser\InputFilter\UserInputFilter',
+                'XtUser\InputFilter\ResourceInputFilter' => 'XtUser\InputFilter\ResourceInputFilter'
             ]
         ];
     }

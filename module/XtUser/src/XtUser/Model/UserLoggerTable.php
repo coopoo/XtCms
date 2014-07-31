@@ -31,6 +31,7 @@ class UserLoggerTable extends AbstractBaseTableGateway
     {
         $this->table = UserModel::LoggerTable();
         $this->primaryKey = 'user_id';
+        $this->addDateTimeStrategy('login_time');
     }
 
     /**
@@ -54,4 +55,6 @@ class UserLoggerTable extends AbstractBaseTableGateway
             $select->order(['login_time' => 'DESC'])->limit($times);
         });
     }
+
+
 } 

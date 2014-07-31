@@ -12,7 +12,6 @@
 
 namespace XtBase\Table;
 
-
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\Adapter\AdapterAwareInterface;
 use Zend\Db\ResultSet\HydratingResultSet;
@@ -28,6 +27,8 @@ use Zend\EventManager\EventManager;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Stdlib\Hydrator\Strategy\ClosureStrategy;
 
 /**
  * Class AbstractBaseTableGateway
@@ -36,7 +37,13 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 abstract class AbstractBaseTableGateway extends AbstractTableGateway implements AdapterAwareInterface,
     TableGatewayInitAwareInterface
 {
+    /**
+     *
+     */
     const DEFAULT_DISABLED_STATUS = 0;
+    /**
+     *
+     */
     const DEFAULT_ENABLED_STATUS = 99;
     /**
      * @var
@@ -47,6 +54,11 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
      * @var string
      */
     protected $primaryKey = 'id';
+
+    /**
+     * @var null|HydratorInterface $hydrator
+     */
+    protected $hydrator;
 
     /**
      * @return mixed
@@ -69,12 +81,29 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
     {
         $entityClass = $this->getEntityClass();
         $this->adapter = $adapter;
-        $this->resultSetPrototype = new HydratingResultSet(new ClassMethods(), new $entityClass());
         $this->init();
+        $hydrator = ($this->hydrator) ?: new ClassMethods();
+        $this->resultSetPrototype = new HydratingResultSet($hydrator, new $entityClass());
         $this->getSqlString();
         $this->initialize();
     }
 
+    public function addDateTimeStrategy($columns)
+    {
+        if (!$this->hydrator) {
+            $this->hydrator = new ClassMethods();
+        }
+        if (is_array($columns)) {
+            foreach ($columns as $column) {
+                $this->{__FUNCTION__}($column);
+            }
+            return $this;
+        }
+        $this->hydrator->addStrategy($columns, new ClosureStrategy(null, function ($data) {
+            return date('Y-m-d H:i:s', $data);
+        }));
+        return $this;
+    }
 
     /**
      *
@@ -169,6 +198,10 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         return $this->adapter->getDriver()->getConnection();
     }
 
+    /**
+     * @param $id
+     * @param null $status
+     */
     public function disabledById($id, $status = null)
     {
         $status = ($status) ?: static::DEFAULT_DISABLED_STATUS;
@@ -177,6 +210,10 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         }
     }
 
+    /**
+     * @param $id
+     * @param null $status
+     */
     public function enabledById($id, $status = null)
     {
         $status = ($status) ?: static::DEFAULT_ENABLED_STATUS;
@@ -185,6 +222,11 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         }
     }
 
+    /**
+     * @param $data
+     * @param $id
+     * @return int
+     */
     public function insertOrUpdate($data, $id)
     {
         if ((int)$id === 0) {

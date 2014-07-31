@@ -24,7 +24,7 @@ class NavigationFactory extends AbstractNavigationFactory
     /**
      * @var
      */
-    protected $name = 'default';
+    protected $name = 'manager_navigation';
 
     /**
      * @return mixed
@@ -35,10 +35,11 @@ class NavigationFactory extends AbstractNavigationFactory
     }
 
     /**
-     * @param null $name
+     * @param $name
+     *
      * @return $this
      */
-    public function setName($name)
+    public function __invoke($name)
     {
         $this->name = $name;
         return $this;

@@ -49,7 +49,7 @@ class ResourceForm extends Form
             'name' => 'action',
             'options' => [
                 'label' => '资源action',
-                'tips' => '2-50字符',
+                'tips' => '2-100字符',
             ],
             'attributes' => [
                 'id' => 'name',

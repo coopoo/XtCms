@@ -22,6 +22,7 @@ class RoleTable extends AbstractBaseTableGateway
     public function init()
     {
         $this->table = UserModel::RoleTable();
+        $this->addDateTimeStrategy('modify_time');
     }
 
     public function save(RoleEntity $roleEntity)
@@ -35,4 +36,6 @@ class RoleTable extends AbstractBaseTableGateway
         $id = (int)$roleEntity->getId();
         return $this->insertOrUpdate($data, $id);
     }
+
+
 } 

@@ -111,7 +111,7 @@ class UserDetailEntity
      */
     public function getModifyTime()
     {
-        return date('Y-m-d H:i:s', $this->modifyTime);
+        return $this->modifyTime;
     }
 
     /**

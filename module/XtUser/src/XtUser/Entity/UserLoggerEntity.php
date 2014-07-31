@@ -55,7 +55,7 @@ class UserLoggerEntity
      */
     public function getLoginTime()
     {
-        return date('Y-m-d H:i:s', $this->loginTime);
+        return $this->loginTime;
     }
 
     /**

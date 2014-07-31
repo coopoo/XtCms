@@ -54,7 +54,7 @@ class UserTable extends AbstractBaseTableGateway implements ServiceLocatorAwareI
             return $value !== null;
         });
         unset($userData['remember_me']);
-        return $this->insertOrUpdate($data, $id);
+        return $this->insertOrUpdate($userData, $id);
     }
 
     /**
