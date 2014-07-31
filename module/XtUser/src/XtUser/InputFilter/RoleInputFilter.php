@@ -50,8 +50,8 @@ class RoleInputFilter extends InputFilter
                         'field' => 'name',
                         'adapter' => GlobalAdapterFeature::getStaticAdapter(),
                         'exclude' => [
-                            'field' => 'name',
-                            'value' => $roleEntity && $roleEntity->getName() ? $roleEntity->getName() : ''
+                            'field' => 'id',
+                            'value' => $roleEntity && $roleEntity->getId() ? $roleEntity->getId() : 0
                         ],
                     ],
                 ]

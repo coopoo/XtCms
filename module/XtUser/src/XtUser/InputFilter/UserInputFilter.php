@@ -50,8 +50,8 @@ class UserInputFilter extends InputFilter
                         'field' => 'username',
                         'adapter' => GlobalAdapterFeature::getStaticAdapter(),
                         'exclude' => [
-                            'field' => 'username',
-                            'value' => $userEntity && $userEntity->getUsername() ? $userEntity->getUsername() : ''
+                            'field' => 'id',
+                            'value' => $userEntity && $userEntity->getId() ? $userEntity->getId() : 0
                         ],
                     ],
                 ]
@@ -99,8 +99,8 @@ class UserInputFilter extends InputFilter
                         'field' => 'email',
                         'adapter' => GlobalAdapterFeature::getStaticAdapter(),
                         'exclude' => [
-                            'field' => 'email',
-                            'value' => $userEntity && $userEntity->getEmail() ? $userEntity->getEmail() : ''
+                            'field' => 'id',
+                            'value' => $userEntity && $userEntity->getId() ? $userEntity->getId() : 0
                         ],
                     ],
                 ]
