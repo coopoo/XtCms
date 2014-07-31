@@ -12,17 +12,6 @@
 return [
     'router' => [
         'routes' => [
-            'home' => [
-                'type' => 'Literal',
-                'options' => [
-                    'route' => '/',
-                    'defaults' => [
-                        '__NAMESPACE__' => 'XtUser\Controller',
-                        'controller' => 'User',
-                        'action' => 'index'
-                    ]
-                ]
-            ], //end home
             'Xt_User' => [
                 'type' => 'segment',
                 'options' => [

@@ -10,6 +10,21 @@
  * @FileName: module.config.php
  */
 return [
+    'router' => [
+        'routes' => [
+            'home' => [
+                'type' => 'Literal',
+                'options' => [
+                    'route' => '/',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'XtBase\Controller',
+                        'controller' => 'Index',
+                        'action' => 'index'
+                    ]
+                ]
+            ], //end home
+        ]
+    ],
     'service_manager' => [
         'factories' => [
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',

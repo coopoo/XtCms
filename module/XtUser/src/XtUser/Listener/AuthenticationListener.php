@@ -54,7 +54,6 @@ class AuthenticationListener implements ListenerAggregateInterface,
         $action = $routeMatch->getParam('action');
         $requestedResource = $controller . '-' . $action;
         $whiteList = [
-            'XtUser\Controller\User-index',
             'XtUser\Controller\User-disabledLogin',
             'XtUser\Controller\User-register',
             'XtUser\Controller\User-disabledRegister'

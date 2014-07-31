@@ -88,8 +88,15 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         $this->initialize();
     }
 
+    /**
+     * @param string|array $columns
+     * @return $this
+     */
     public function addDateTimeStrategy($columns)
     {
+        if (empty($columns)) {
+            return $this;
+        }
         if (!$this->hydrator) {
             $this->hydrator = new ClassMethods();
         }
