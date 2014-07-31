@@ -45,6 +45,11 @@ class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocato
     public function setGlobalAdapter(EventInterface $event)
     {
         $adapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        try {
+            $adapter->getDriver()->getConnection()->connect();
+        } catch (\Exception $e) {
+            exit('数据库连接失败!');
+        }
         GlobalAdapterFeature::setStaticAdapter($adapter);
     }
 

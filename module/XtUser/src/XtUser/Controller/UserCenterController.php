@@ -52,8 +52,8 @@ class UserCenterController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\EditInputFilter');
-            $form->setInputFilter($inputFilter());
-            $form->setData($request->getPost($userEntity));
+            $form->setInputFilter($inputFilter($userEntity));
+            $form->setData($request->getPost());
             if ($form->isValid()) {
                 try {
                     $this->UserTable()->save($userEntity);
