@@ -16,12 +16,16 @@ namespace XtUser\Model;
 use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
 use XtUser\Entity\RoleEntity;
+use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 
-class RoleTable extends AbstractBaseTableGateway
+class RoleTable extends AbstractBaseTableGateway implements UserModuleOptionsAwareInterFace
 {
+    use UserModuleOptionsTrait;
+
     public function init()
     {
-        $this->table = UserModel::RoleTable();
+        $this->table = $this->userModuleOptions->getRoleTable();
         $this->addDateTimeStrategy('modify_time');
     }
 

@@ -15,11 +15,15 @@ namespace XtUser\InputFilter;
 
 use XtUser\Entity\RoleEntity;
 use XtUser\Model\UserModel;
+use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Zend\InputFilter\InputFilter;
 
-class RoleInputFilter extends InputFilter
+class RoleInputFilter extends InputFilter implements UserModuleOptionsAwareInterFace
 {
+    use UserModuleOptionsTrait;
+
     public function __invoke(RoleEntity $roleEntity = null)
     {
         $this->add([
@@ -46,7 +50,7 @@ class RoleInputFilter extends InputFilter
                 [
                     'name' => 'Db\NoRecordExists',
                     'options' => [
-                        'table' => UserModel::RoleTable(),
+                        'table' => $this->userModuleOptions->getRoleTable(),
                         'field' => 'name',
                         'adapter' => GlobalAdapterFeature::getStaticAdapter(),
                         'exclude' => [

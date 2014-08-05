@@ -14,7 +14,6 @@ namespace XtBase\Service;
 
 
 use Zend\Navigation\Service\AbstractNavigationFactory;
-
 /**
  * Class NavigationFactory
  * @package XtBase\Service
@@ -34,14 +33,4 @@ class NavigationFactory extends AbstractNavigationFactory
         return $this->name;
     }
 
-    /**
-     * @param $name
-     *
-     * @return $this
-     */
-    public function __invoke($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
 } 

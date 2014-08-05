@@ -15,6 +15,8 @@ namespace XtUser\Model;
 
 use XtBase\Table\AbstractBaseTableGateway;
 use XtUser\Entity\UserEntity;
+use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
@@ -22,9 +24,11 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Class UserTable
  * @package XtUser\Model
  */
-class UserTable extends AbstractBaseTableGateway implements ServiceLocatorAwareInterface
+class UserTable extends AbstractBaseTableGateway implements ServiceLocatorAwareInterface,
+    UserModuleOptionsAwareInterFace
 {
     use ServiceLocatorAwareTrait;
+    use UserModuleOptionsTrait;
 
     /**
      * @var UserDetailTable
@@ -40,7 +44,7 @@ class UserTable extends AbstractBaseTableGateway implements ServiceLocatorAwareI
      */
     public function init()
     {
-        $this->table = UserModel::TABLE;
+        $this->table = $this->userModuleOptions->getUserTable();
     }
 
     /**

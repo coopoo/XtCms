@@ -121,13 +121,20 @@ return [
             __DIR__ . '/../view',
         ]
     ],
-    'Xt_user' => [
-        'disabled_register' => false,
+    'Xt_User' => [
+        'user_table' => 'user',
+        'detail_table' => 'user_detail',
+        'logger_table' => 'user_logger',
+        'role_table' => 'role',
+        'resource_table' => 'resource',
+        'permission_table' => 'permission',
+        'user_role_table' => 'user_role',
+        'role_permission_table' => 'role_permission',
         'disabled_login' => false,
-        'table' => 'xt_user',
-        'authentication_storage' => 'Zend\Authentication\Storage\Session',
+        'disabled_register' => false,
         'password_fail_limit' => 5,
         'password_fail_time' => 3600,
-        'remember_me' => 1440
+        'credential_column' => 'user_password',
+        'credential_type' => 'md5(CONCAT(?,uniqid))',
     ]
 ];

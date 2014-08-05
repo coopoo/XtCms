@@ -9,9 +9,13 @@
  * @QQ: 259522
  * @FileName: pagination.phtml
  */
+
+if ($this->pageCount < 2) {
+    return;
+}
 $routeMatch = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
 $action = $routeMatch->getParam('action');
-if ($this->pageCount): ?>
+?>
     <div class="paginationControl pull-right">
         <ul class="pagination">
             <!-- First page link -->
@@ -67,4 +71,3 @@ if ($this->pageCount): ?>
             <?php endif; ?>
         </ul>
     </div>
-<?php endif;

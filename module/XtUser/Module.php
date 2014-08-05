@@ -182,6 +182,9 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\InputFilter\RoleInputFilter' => 'XtUser\InputFilter\RoleInputFilter',
                 'XtUser\InputFilter\UserInputFilter' => 'XtUser\InputFilter\UserInputFilter',
                 'XtUser\InputFilter\ResourceInputFilter' => 'XtUser\InputFilter\ResourceInputFilter'
+            ],
+            'initializers' => [
+                'XtUser\Service\UserModuleOptionsInitializer'
             ]
         ];
     }

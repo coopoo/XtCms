@@ -23,11 +23,6 @@ class UserModel
     /**
      *
      */
-    const TABLE = 'xt_user';
-
-    /**
-     *
-     */
     const SALT = 'cOOpoO';
 
     /**
@@ -84,26 +79,6 @@ class UserModel
     public static function encryption($password)
     {
         return md5(sha1($password) . self::SALT);
-    }
-
-    public static function DetailTable()
-    {
-        return static::TABLE . '_detail';
-    }
-
-    public static function LoggerTable()
-    {
-        return static::TABLE . '_logger';
-    }
-
-    public static function RoleTable()
-    {
-        return 'xt_role';
-    }
-
-    public static function ResourceTable()
-    {
-        return 'xt_resource';
     }
 
 }

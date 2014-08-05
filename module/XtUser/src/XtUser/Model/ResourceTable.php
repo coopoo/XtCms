@@ -16,12 +16,16 @@ namespace XtUser\Model;
 use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
 use XtUser\Entity\ResourceEntity;
+use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 
-class ResourceTable extends AbstractBaseTableGateway
+class ResourceTable extends AbstractBaseTableGateway implements UserModuleOptionsAwareInterFace
 {
+    use UserModuleOptionsTrait;
+
     public function init()
     {
-        $this->table = UserModel::ResourceTable();
+        $this->table = $this->userModuleOptions->getResourceTable();
         $this->addDateTimeStrategy(['modify_time']);
     }
 

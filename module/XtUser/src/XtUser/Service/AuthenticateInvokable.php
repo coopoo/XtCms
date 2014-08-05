@@ -179,10 +179,10 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
             $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
             $this->adapter = new CredentialTreatmentAdapter(
                 $dbAdapter,
-                $this->userModuleOptions->getTable(),
+                $this->userModuleOptions->getUserTable(),
                 $this->userEvent->getIdentityKey(),
-                'user_password',
-                "md5(CONCAT(?,uniqid))"
+                $this->userModuleOptions->getCredentialColumn(),
+                $this->userModuleOptions->getCredentialType()
             );
             $this->adapter->setIdentity($this->getUserEvent()->getUserEntity()->getUsername())
                 ->setCredential($this->getUserEvent()->getUserEntity()->getUserPassword());
@@ -227,7 +227,7 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     public function getStorage()
     {
         if (empty($this->storage)) {
-            $this->storage = new DbSession($this->getUserModuleOptions()->getTable());
+            $this->storage = new DbSession($this->userModuleOptions->getUserTable());
         }
         return $this->storage;
     }

@@ -16,20 +16,23 @@ namespace XtUser\Model;
 use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
 use XtUser\Entity\UserEntity;
+use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Db\Sql\Select;
 
 /**
  * Class UserLoggerTable
  * @package XtUser\Model
  */
-class UserLoggerTable extends AbstractBaseTableGateway
+class UserLoggerTable extends AbstractBaseTableGateway implements UserModuleOptionsAwareInterFace
 {
+    use UserModuleOptionsTrait;
     /**
      *
      */
     public function init()
     {
-        $this->table = UserModel::LoggerTable();
+        $this->table = $this->userModuleOptions->getLoggerTable();
         $this->primaryKey = 'user_id';
         $this->addDateTimeStrategy('login_time');
     }

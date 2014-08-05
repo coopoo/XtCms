@@ -189,7 +189,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         if ($where !== null) {
             $select->where($where);
         }
-        $order = ($order) ?: [$this->primaryKey => $order];
+        $order = ($order) ?: [$this->primaryKey => 'DESC'];
         $select->order($order);
         $dbAdapter = new DbSelect($select, $this->adapter, $this->resultSetPrototype);
         $paginator = new Paginator($dbAdapter);

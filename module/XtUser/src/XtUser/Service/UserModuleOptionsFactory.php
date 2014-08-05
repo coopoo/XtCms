@@ -19,7 +19,7 @@ class UserModuleOptionsFactory implements FactoryInterface
 {
     protected $userModuleOptionsKey = 'Xt_user';
     protected $userModuleOptionClass = 'XtUser\Options\UserModuleOptions';
-
+    protected $tablePreConfigKey = 'pre';
     /**
      * Create service
      *
@@ -29,7 +29,12 @@ class UserModuleOptionsFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('config');
-        return new $this->userModuleOptionClass((isset($config[$this->userModuleOptionsKey])) ? $config[$this->userModuleOptionsKey] : []);
+        $userModuleOptions = new $this->userModuleOptionClass(
+            (isset($config[$this->userModuleOptionsKey])) ? $config[$this->userModuleOptionsKey] : []
+        );
+        $tablePre = (isset($config['db'][$this->tablePreConfigKey])) ? $config['db'][$this->tablePreConfigKey] : '';
+        $userModuleOptions->setTablePre($tablePre);
+        return $userModuleOptions;
     }
 
 

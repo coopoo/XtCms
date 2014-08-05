@@ -21,40 +21,76 @@ use Zend\Stdlib\AbstractOptions;
  */
 class UserModuleOptions extends AbstractOptions
 {
-    /**
-     * @var bool
-     */
-    protected $disabledRegister = false;
-
-    /**
-     * @var bool
-     */
+    protected $__strictMode__ = false;
+    protected $tablePre = '';
+    protected $userTable = 'user';
+    protected $detailTable = 'user_detail';
+    protected $loggerTable = 'user_logger';
+    protected $roleTable = 'role';
+    protected $resourceTable = 'resource';
+    protected $permissionTable = 'permission';
+    protected $userRoleTable = 'user_role';
+    protected $rolePermissionTable = 'role_permission';
     protected $disabledLogin = false;
-
-    /**
-     * @var string
-     */
-    protected $table = 'xt-user';
-
-    /**
-     * @var string \Zend\Authentication\Storage\Session
-     */
-    protected $authenticationStorage = 'Zend\Authentication\Storage\Session';
-
-    /**
-     * @var int
-     */
+    protected $disabledRegister = false;
     protected $passwordFailLimit = 5;
-
-    /**
-     * @var int
-     */
     protected $passwordFailTime = 3600;
+    protected $credentialColumn = 'user_password';
+    protected $credentialType = 'md5(CONCAT(?,uniqid))';
 
     /**
-     * @var int
+     * @return string
      */
-    protected $rememberMe = 1440;
+    public function getCredentialColumn()
+    {
+        return $this->credentialColumn;
+    }
+
+    /**
+     * @param string $credentialColumn
+     * @return $this
+     */
+    public function setCredentialColumn($credentialColumn)
+    {
+        $this->credentialColumn = $credentialColumn;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCredentialType()
+    {
+        return $this->credentialType;
+    }
+
+    /**
+     * @param string $credentialType
+     * @return $this
+     */
+    public function setCredentialType($credentialType)
+    {
+        $this->credentialType = $credentialType;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDetailTable()
+    {
+        return $this->tablePre . $this->detailTable;
+    }
+
+    /**
+     * @param string $detailTable
+     * @return $this
+     */
+    public function setDetailTable($detailTable)
+    {
+        $this->detailTable = $detailTable;
+        return $this;
+    }
 
     /**
      * @return boolean
@@ -95,36 +131,18 @@ class UserModuleOptions extends AbstractOptions
     /**
      * @return string
      */
-    public function getTable()
+    public function getLoggerTable()
     {
-        return $this->table;
+        return $this->tablePre . $this->loggerTable;
     }
 
     /**
-     * @param string $table
+     * @param string $loggerTable
      * @return $this
      */
-    public function setTable($table)
+    public function setLoggerTable($loggerTable)
     {
-        $this->table = $table;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAuthenticationStorage()
-    {
-        return $this->authenticationStorage;
-    }
-
-    /**
-     * @param string $authenticationStorage
-     * @return $this
-     */
-    public function setAuthenticationStorage($authenticationStorage)
-    {
-        $this->authenticationStorage = $authenticationStorage;
+        $this->loggerTable = $loggerTable;
         return $this;
     }
 
@@ -165,20 +183,130 @@ class UserModuleOptions extends AbstractOptions
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getRememberMe()
+    public function getPermissionTable()
     {
-        return $this->rememberMe;
+        return $this->tablePre . $this->permissionTable;
     }
 
     /**
-     * @param int $rememberMe
+     * @param string $permissionTable
      * @return $this
      */
-    public function setRememberMe($rememberMe)
+    public function setPermissionTable($permissionTable)
     {
-        $this->rememberMe = $rememberMe;
+        $this->permissionTable = $permissionTable;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getResourceTable()
+    {
+        return $this->tablePre . $this->resourceTable;
+    }
+
+    /**
+     * @param string $resourceTable
+     * @return $this
+     */
+    public function setResourceTable($resourceTable)
+    {
+        $this->resourceTable = $resourceTable;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRolePermissionTable()
+    {
+        return $this->tablePre . $this->rolePermissionTable;
+    }
+
+    /**
+     * @param string $rolePermissionTable
+     * @return $this
+     */
+    public function setRolePermissionTable($rolePermissionTable)
+    {
+        $this->rolePermissionTable = $rolePermissionTable;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoleTable()
+    {
+        return $this->tablePre . $this->roleTable;
+    }
+
+    /**
+     * @param string $roleTable
+     * @return $this
+     */
+    public function setRoleTable($roleTable)
+    {
+        $this->roleTable = $roleTable;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTablePre()
+    {
+        return $this->tablePre;
+    }
+
+    /**
+     * @param string $tablePre
+     * @return $this
+     */
+    public function setTablePre($tablePre)
+    {
+        $this->tablePre = $tablePre;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserRoleTable()
+    {
+        return $this->tablePre . $this->userRoleTable;
+    }
+
+    /**
+     * @param string $userRoleTable
+     * @return $this
+     */
+    public function setUserRoleTable($userRoleTable)
+    {
+        $this->userRoleTable = $userRoleTable;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserTable()
+    {
+        return $this->tablePre . $this->userTable;
+    }
+
+    /**
+     * @param string $userTable
+     * @return $this
+     */
+    public function setUserTable($userTable)
+    {
+        $this->userTable = $userTable;
+        return $this;
+    }
+
+
 } 

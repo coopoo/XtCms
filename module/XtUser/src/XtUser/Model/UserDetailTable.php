@@ -16,19 +16,22 @@ namespace XtUser\Model;
 use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
 use XtUser\Entity\UserDetailEntity;
+use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 
 /**
  * Class UserDetailTable
  * @package XtUser\Model
  */
-class UserDetailTable extends AbstractBaseTableGateway
+class UserDetailTable extends AbstractBaseTableGateway implements UserModuleOptionsAwareInterFace
 {
+    use UserModuleOptionsTrait;
     /**
      *
      */
     public function init()
     {
-        $this->table = UserModel::DetailTable();
+        $this->table = $this->userModuleOptions->getDetailTable();
         $this->primaryKey = 'user_id';
     }
 

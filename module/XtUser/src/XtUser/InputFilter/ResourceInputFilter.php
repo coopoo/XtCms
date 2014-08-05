@@ -15,11 +15,15 @@ namespace XtUser\InputFilter;
 
 use XtUser\Entity\ResourceEntity;
 use XtUser\Model\UserModel;
+use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Zend\InputFilter\InputFilter;
 
-class ResourceInputFilter extends InputFilter
+class ResourceInputFilter extends InputFilter implements UserModuleOptionsAwareInterFace
 {
+    use UserModuleOptionsTrait;
+
     public function __invoke(ResourceEntity $resourceEntity = null)
     {
         $this->add([
@@ -46,7 +50,7 @@ class ResourceInputFilter extends InputFilter
                 [
                     'name' => 'Db\NoRecordExists',
                     'options' => [
-                        'table' => UserModel::ResourceTable(),
+                        'table' => $this->userModuleOptions->getResourceTable(),
                         'field' => 'name',
                         'adapter' => GlobalAdapterFeature::getStaticAdapter(),
                         'exclude' => [
@@ -77,7 +81,7 @@ class ResourceInputFilter extends InputFilter
                 [
                     'name' => 'Db\NoRecordExists',
                     'options' => [
-                        'table' => UserModel::ResourceTable(),
+                        'table' => $this->userModuleOptions->getResourceTable(),
                         'field' => 'action',
                         'adapter' => GlobalAdapterFeature::getStaticAdapter(),
                         'exclude' => [
