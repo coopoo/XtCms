@@ -10,10 +10,10 @@
  * @FileName: ResourceForm.php
  */
 
-namespace XtUser\Form;
+namespace XtAuth\Form;
 
 
-use XtUser\Entity\ResourceEntity;
+use XtAuth\Entity\ResourceEntity;
 use Zend\Form\Form;
 use Zend\Stdlib\Hydrator\ClassMethods;
 

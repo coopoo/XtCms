@@ -10,7 +10,7 @@
  * @FileName: ResourceController.php
  */
 
-namespace XtUser\Controller;
+namespace XtAuth\Controller;
 
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -26,11 +26,11 @@ class ResourceController extends AbstractActionController
 
     public function addAction()
     {
-        $form = $this->FormElementManager()->get('XtUser\Form\ResourceForm');
+        $form = $this->FormElementManager()->get('XtAuth\Form\ResourceForm');
         $form->get('submit')->setValue('增加资源');
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\ResourceInputFilter');
+            $inputFilter = $this->InputFilterManager()->get('XtAuth\InputFilter\ResourceInputFilter');
             $form->setInputFilter($inputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
@@ -41,8 +41,6 @@ class ResourceController extends AbstractActionController
                     return ['form' => $form];
                 }
                 $this->redirect()->toRoute();
-            } else {
-                var_dump($form->getMessages());
             }
         }
 
@@ -52,13 +50,13 @@ class ResourceController extends AbstractActionController
     public function editAction()
     {
         $id = $this->params('id');
-        $resource = $this->getRoleTable()->getOneByColumn($id);
-        $form = $this->FormElementManager()->get('XtUser\Form\ResourceForm');
+        $resource = $this->getResourceTable()->getOneByColumn($id);
+        $form = $this->FormElementManager()->get('XtAuth\Form\ResourceForm');
         $form->get('submit')->setValue('编辑资源');
         $form->bind($resource);
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\ResourceInputFilter');
+            $inputFilter = $this->InputFilterManager()->get('XtAuth\InputFilter\ResourceInputFilter');
             $form->setInputFilter($inputFilter($resource));
             $form->setData($request->getPost());
             if ($form->isValid()) {
@@ -91,7 +89,7 @@ class ResourceController extends AbstractActionController
     protected function getResourceTable()
     {
         if (!$this->resourceTable) {
-            $this->resourceTable = $this->getServiceLocator()->get('XtUser\Model\ResourceTable');
+            $this->resourceTable = $this->getServiceLocator()->get('XtAuth\Table\ResourceTable');
         }
         return $this->resourceTable;
     }

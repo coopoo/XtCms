@@ -44,17 +44,17 @@ class UserModel
     /**
      *
      */
-    const USER_TABLE_CLASS = 'XtUser\Model\UserTable';
+    const USER_TABLE_CLASS = 'XtUser\Table\UserTable';
 
     /**
      *
      */
-    const USER_LOGGER_TABLE_CLASS = 'XtUser\Model\UserLoggerTable';
+    const USER_LOGGER_TABLE_CLASS = 'XtUser\Table\UserLoggerTable';
 
     /**
      *
      */
-    const USER_DETAIL_TABLE_CLASS = 'XtUser\Model\UserDetailTable';
+    const USER_DETAIL_TABLE_CLASS = 'XtUser\Table\UserDetailTable';
 
     /**
      *

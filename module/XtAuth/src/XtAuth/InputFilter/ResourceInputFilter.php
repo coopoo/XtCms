@@ -10,11 +10,10 @@
  * @FileName: ResourceInputFilter.php
  */
 
-namespace XtUser\InputFilter;
+namespace XtAuth\InputFilter;
 
 
-use XtUser\Entity\ResourceEntity;
-use XtUser\Model\UserModel;
+use XtAuth\Entity\ResourceEntity;
 use XtUser\Options\UserModuleOptionsAwareInterFace;
 use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;

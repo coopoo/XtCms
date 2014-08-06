@@ -10,11 +10,10 @@
  * @FileName: RoleInputFilter.php
  */
 
-namespace XtUser\InputFilter;
+namespace XtAuth\InputFilter;
 
 
-use XtUser\Entity\RoleEntity;
-use XtUser\Model\UserModel;
+use XtAuth\Entity\RoleEntity;
 use XtUser\Options\UserModuleOptionsAwareInterFace;
 use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;

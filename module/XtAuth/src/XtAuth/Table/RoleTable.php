@@ -10,12 +10,12 @@
  * @FileName: RoleTable.php
  */
 
-namespace XtUser\Model;
+namespace XtAuth\Table;
 
 
 use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
-use XtUser\Entity\RoleEntity;
+use XtAuth\Entity\RoleEntity;
 use XtUser\Options\UserModuleOptionsAwareInterFace;
 use XtUser\Service\UserModuleOptionsTrait;
 

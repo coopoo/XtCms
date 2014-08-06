@@ -10,12 +10,12 @@
  * @FileName: ResourceTable.php
  */
 
-namespace XtUser\Model;
+namespace XtAuth\Table;
 
 
 use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
-use XtUser\Entity\ResourceEntity;
+use XtAuth\Entity\ResourceEntity;
 use XtUser\Options\UserModuleOptionsAwareInterFace;
 use XtUser\Service\UserModuleOptionsTrait;
 

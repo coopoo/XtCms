@@ -10,10 +10,10 @@
  * @FileName: RoleForm.php
  */
 
-namespace XtUser\Form;
+namespace XtAuth\Form;
 
 
-use XtUser\Entity\RoleEntity;
+use XtAuth\Entity\RoleEntity;
 use Zend\Form\Form;
 use Zend\Stdlib\Hydrator\ClassMethods;
 

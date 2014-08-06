@@ -4,22 +4,40 @@
  * @Project: XtCms
  * @User: Coopoo
  * @Copy Right: 2014
- * @Date: 2014-07-28
- * @Time: 14:26
+ * @Date: 2014-07-31
+ * @Time: 19:40
  * @QQ: 259522
- * @FileName: RoleEntity.php
+ * @FileName: ResourceEntity.php
  */
 
-namespace XtUser\Entity;
+namespace XtAuth\Entity;
 
 
-class RoleEntity
+class ResourceEntity
 {
     protected $id;
     protected $name;
-    protected $status;
+    protected $action;
     protected $modifyTime;
     protected $modifyIp;
+
+    /**
+     * @return mixed
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param mixed $action
+     * @return $this
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -93,22 +111,5 @@ class RoleEntity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return (int)$this->status;
-    }
-
-    /**
-     * @param mixed $status
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-        return $this;
-    }
 
 } 

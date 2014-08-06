@@ -10,7 +10,7 @@
  * @FileName: RoleController.php
  */
 
-namespace XtUser\Controller;
+namespace XtAuth\Controller;
 
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -31,11 +31,11 @@ class RoleController extends AbstractActionController
      */
     public function addAction()
     {
-        $form = $this->FormElementManager()->get('XtUser\Form\RoleForm');
+        $form = $this->FormElementManager()->get('XtAuth\Form\RoleForm');
         $form->get('submit')->setValue('增加角色');
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\RoleInputFilter');
+            $inputFilter = $this->InputFilterManager()->get('XtAuth\InputFilter\RoleInputFilter');
             $form->setInputFilter($inputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
@@ -59,12 +59,12 @@ class RoleController extends AbstractActionController
     {
         $id = $this->params('id');
         $role = $this->getRoleTable()->getOneByColumn($id);
-        $form = $this->FormElementManager()->get('XtUser\Form\RoleForm');
+        $form = $this->FormElementManager()->get('XtAuth\Form\RoleForm');
         $form->get('submit')->setValue('编辑角色');
         $form->bind($role);
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\RoleInputFilter');
+            $inputFilter = $this->InputFilterManager()->get('XtAuth\InputFilter\RoleInputFilter');
             $form->setInputFilter($inputFilter($role));
             $form->setData($request->getPost());
             if ($form->isValid()) {
@@ -134,7 +134,7 @@ class RoleController extends AbstractActionController
     protected function getRoleTable()
     {
         if (!$this->roleTable) {
-            $this->roleTable = $this->getServiceLocator()->get('XtUser\Model\RoleTable');
+            $this->roleTable = $this->getServiceLocator()->get('XtAuth\Table\RoleTable');
         }
         return $this->roleTable;
     }

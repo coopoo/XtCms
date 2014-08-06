@@ -10,7 +10,7 @@
  * @FileName: UserLoggerTable.php
  */
 
-namespace XtUser\Model;
+namespace XtUser\Table;
 
 
 use XtBase\Table\AbstractBaseTableGateway;

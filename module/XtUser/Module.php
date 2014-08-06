@@ -86,12 +86,9 @@ class Module implements AutoloaderProviderInterface,
     {
         return [
             'invokables' => [
-                'XtUser\Model\UserTable' => 'XtUser\Model\UserTable',
-                'XtUser\Model\UserLoggerTable' => 'XtUser\Model\UserLoggerTable',
-                'XtUser\Model\UserDetailTable' => 'XtUser\Model\UserDetailTable',
-
-                'XtUser\Model\RoleTable' => 'XtUser\Model\RoleTable',
-                'XtUser\Model\ResourceTable' => 'XtUser\Model\ResourceTable',
+                'XtUser\Table\UserTable' => 'XtUser\Table\UserTable',
+                'XtUser\Table\UserLoggerTable' => 'XtUser\Table\UserLoggerTable',
+                'XtUser\Table\UserDetailTable' => 'XtUser\Table\UserDetailTable',
                 'XtUser\Listener\ChangePasswordListener' => 'XtUser\Listener\ChangePasswordListener',
                 'XtUser\Listener\LoginListener' => 'XtUser\Listener\LoginListener',
                 'XtUser\Listener\RegisterListener' => 'XtUser\Listener\RegisterListener',
@@ -153,8 +150,6 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Form\EditForm' => 'XtUser\Form\EditForm',
                 'XtUser\Form\DetailForm' => 'XtUser\Form\DetailForm',
                 'XtUser\Form\ChangePasswordForm' => 'XtUser\Form\ChangePasswordForm',
-                'XtUser\Form\RoleForm' => 'XtUser\Form\RoleForm',
-                'XtUser\Form\ResourceForm' => 'XtUser\Form\ResourceForm',
             ]
         ];
     }
@@ -174,9 +169,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\InputFilter\EditInputFilter' => 'XtUser\InputFilter\EditInputFilter',
                 'XtUser\InputFilter\LoginInputFilter' => 'XtUser\InputFilter\LoginInputFilter',
                 'XtUser\InputFilter\RegisterInputFilter' => 'XtUser\InputFilter\RegisterInputFilter',
-                'XtUser\InputFilter\RoleInputFilter' => 'XtUser\InputFilter\RoleInputFilter',
                 'XtUser\InputFilter\UserInputFilter' => 'XtUser\InputFilter\UserInputFilter',
-                'XtUser\InputFilter\ResourceInputFilter' => 'XtUser\InputFilter\ResourceInputFilter'
             ],
             'initializers' => [
                 'XtUser\Service\UserModuleOptionsInitializer'
