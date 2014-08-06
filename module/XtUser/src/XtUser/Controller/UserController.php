@@ -93,7 +93,6 @@ class UserController extends AbstractActionController implements UserModuleOptio
                 }
             }
         }
-
         return ['form' => $form];
     }
 

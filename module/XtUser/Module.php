@@ -48,6 +48,7 @@ class Module implements AutoloaderProviderInterface,
         $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\ChangePasswordListener'));
         $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\LoginListener'));
         $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\RegisterListener'));
+        $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\ReBuildPasswordListener'));
     }
 
     /**
@@ -92,6 +93,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Listener\ChangePasswordListener' => 'XtUser\Listener\ChangePasswordListener',
                 'XtUser\Listener\LoginListener' => 'XtUser\Listener\LoginListener',
                 'XtUser\Listener\RegisterListener' => 'XtUser\Listener\RegisterListener',
+                'XtUser\Listener\ReBuildPasswordListener' => 'XtUser\Listener\ReBuildPasswordListener',
             ],
             'factories' => [
                 'XtUser\Service\UserModuleOptions' => 'XtUser\Service\UserModuleOptionsFactory',
@@ -150,6 +152,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Form\EditForm' => 'XtUser\Form\EditForm',
                 'XtUser\Form\DetailForm' => 'XtUser\Form\DetailForm',
                 'XtUser\Form\ChangePasswordForm' => 'XtUser\Form\ChangePasswordForm',
+                'XtUser\Form\reBuildPasswordForm' => 'XtUser\Form\reBuildPasswordForm',
             ]
         ];
     }
@@ -170,6 +173,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\InputFilter\LoginInputFilter' => 'XtUser\InputFilter\LoginInputFilter',
                 'XtUser\InputFilter\RegisterInputFilter' => 'XtUser\InputFilter\RegisterInputFilter',
                 'XtUser\InputFilter\UserInputFilter' => 'XtUser\InputFilter\UserInputFilter',
+                'XtUser\InputFilter\reBuildPasswordInputFilter' => 'XtUser\InputFilter\reBuildPasswordInputFilter',
             ],
             'initializers' => [
                 'XtUser\Service\UserModuleOptionsInitializer'

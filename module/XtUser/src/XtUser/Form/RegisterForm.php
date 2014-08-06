@@ -19,6 +19,7 @@ class RegisterForm extends UserBaseForm
     {
         parent::__construct();
         $this->setAttribute('class', 'form-horizontal');
+        $this->get('user_password')->setAttribute('required', 'required');
         $this->add([
             'type' => 'password',
             'name' => 'confirm_password',

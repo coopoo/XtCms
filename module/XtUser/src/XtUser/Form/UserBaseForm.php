@@ -56,7 +56,6 @@ class UserBaseForm extends Form
             ],
             'attributes' => [
                 'id' => 'user_password',
-                'required' => 'required',
                 'placeholder' => '请输入登录密码'
             ],
         ], ['priority' => 98]);

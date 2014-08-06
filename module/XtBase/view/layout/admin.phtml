@@ -1,0 +1,124 @@
+<?php echo $this->doctype() . PHP_EOL; ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('ZF2 ' . $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) . PHP_EOL ?>
+
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') . PHP_EOL ?>
+    <!-- style -->
+    <?php
+    echo $this->headlink()->prependStylesheet($this->basepath() . '/vendor/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css')
+            ->prependStylesheet($this->basepath() . '/vendor/bootstrap-3.2.0-dist/css/bootstrap.min.css') . PHP_EOL;
+    ?>
+
+    <!-- script -->
+    <?php
+    echo $this->headscript()->prependFile($this->basepath() . '/vendor/bootstrap-3.2.0-dist/js/bootstrap.min.js')
+            ->prependFile($this->basepath() . '/vendor/jquery/jquery-1.11.1.min.js')
+            ->prependFile($this->basePath() . '/vendor/js/respond-1.4.2.min.js', 'text/javascript', [
+                'conditional' => 'lt IE 9'])
+            ->prependFile($this->basePath() . '/vendor/js/html5shiv-3.7.0.js', 'text/javascript', [
+                'conditional' => 'lt IE 9']) . PHP_EOL
+    ?>
+    <!--[if lte IE 7 ]>
+    <div class="alert alert-warning">我们注意到您使用的是过时的 Internet Explorer 版本。某些功能可能无法正常工作。对于完整的网站体验，请更新您的 Internet Explorer 8
+        或以上版本，或安装 <a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome Frame</a>。
+    </div>
+    <div class="alert alert-warning">我们注意到, 你使用的Internet
+        Explorer浏览器已设置为兼容性视图模式，而导致您可能未能使用本网站之功能，建议您把浏览器的兼容性视图模式关闭以便使用本网站。
+    </div>
+    <![endif]-->
+</head>
+<body>
+<!-- /nav -->
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="<?= $this->url('home') ?>">Brand</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <?php echo $this->navigation('manager_navigation')
+            ->menu()
+            ->setMinDepth(0)
+            ->setMaxDepth(0)
+            ->setUlClass('nav navbar-nav')
+            ->render(); ?>
+        <ul class="nav navbar-nav navbar-right">
+            <?php
+            if ($user = $this->Identity()): ?>
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎 <?= $user->display_name ?>
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_CENTER_ROUTE) ?>">个人中心</a>
+                            <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_CENTER_ROUTE, ['action' => 'edit']) ?>">修改信息</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_CENTER_ROUTE, ['action' => 'detail']) ?>">详细资料</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_CENTER_ROUTE, ['action' => 'change-password']) ?>">修改密码</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'logout']) ?>">注销</a>
+                </li>
+            <?php else: ?>
+                <li class="active">
+                    <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'login']) ?>">登录</a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url(\XtUser\Model\UserModel::USER_ROUTE, ['action' => 'register']) ?>">注册</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <?= $this->navigation('manager_navigation')
+                ->menu()
+                ->setOnlyActiveBranch(true)
+                ->setRenderParents(false)
+                ->setUlClass('nav nav-pills nav-stacked')
+                ->setMaxDepth(1)
+                ->render();
+            ?>
+        </div>
+        <div class="col-md-10">
+            <div class="breadcrumb">当前位置:
+                <a href="#">首页</a> &gt;
+                <?php echo $this->navigation()->breadcrumbs(); ?>
+            </div>
+            <?= $this->navigation('manager_navigation')->menu()->renderSubMenu(null, 'nav nav-pills', 4) ?>
+            <hr>
+            <?php echo $this->content; ?>
+        </div>
+    </div>
+
+    <hr>
+    <footer>
+        <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies
+            Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+    </footer>
+</div>
+<!-- /container -->
+<?php echo $this->inlineScript() ?>
+</body>
+</html>

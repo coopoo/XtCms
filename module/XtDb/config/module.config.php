@@ -12,7 +12,7 @@
 return [
     'router' => [
         'routes' => [
-            'XtDb-admin' => [
+            'XtDb_Admin' => [
                 'type' => 'segment',
                 'options' => [
                     'route' => '/db[/:action[/:id]].html',

@@ -26,6 +26,8 @@ use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManager;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\Strategy\ClosureStrategy;
@@ -35,8 +37,10 @@ use Zend\Stdlib\Hydrator\Strategy\ClosureStrategy;
  * @package XtBase\Table
  */
 abstract class AbstractBaseTableGateway extends AbstractTableGateway implements AdapterAwareInterface,
-    TableGatewayInitAwareInterface
+    TableGatewayInitAwareInterface,
+    ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
     /**
      *
      */
@@ -58,7 +62,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
     /**
      * @var null|HydratorInterface $hydrator
      */
-    protected $hydrator;
+    protected $hydrator = null;
 
     /**
      * @return mixed
@@ -80,11 +84,11 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
     public function setDbAdapter(Adapter $adapter)
     {
         $this->adapter = $adapter;
-        $hydrator = ($this->hydrator) ?: new ClassMethods();
         $this->init();
+        $hydrator = ($this->hydrator) ?: new ClassMethods();
         $entityClass = $this->getEntityClass();
         $this->resultSetPrototype = new HydratingResultSet($hydrator, new $entityClass());
-        $this->getSqlString();
+//        $this->getSqlString();
         $this->initialize();
     }
 
@@ -97,7 +101,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         if (empty($columns)) {
             return $this;
         }
-        if (!$this->hydrator) {
+        if (empty($this->hydrator)) {
             $this->hydrator = new ClassMethods();
         }
         if (is_array($columns)) {
@@ -106,7 +110,9 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
             }
             return $this;
         }
-        $this->hydrator->addStrategy($columns, new ClosureStrategy(null, function ($data) {
+        $this->hydrator->addStrategy($columns, new ClosureStrategy(function ($data) {
+            return strtotime($data);
+        }, function ($data) {
             return date('Y-m-d H:i:s', $data);
         }));
         return $this;

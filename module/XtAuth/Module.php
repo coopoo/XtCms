@@ -55,6 +55,12 @@ class Module implements AutoloaderProviderInterface,
         $application = $e->getApplication();
         $eventManager = $application->getEventManager();
         $eventManager->attach($application->getServiceManager()->get('XtAuth\Listener\AuthenticationListener'));
+        $sharedManager = $eventManager->getSharedManager();
+        $sharedManager->attach(__NAMESPACE__, 'dispatch', function ($e) {
+            $controller = $e->getTarget();
+            // 判断controller 加载不同的layout
+            $controller->layout('layout/admin');
+        }, 100);
     }
 
     /**

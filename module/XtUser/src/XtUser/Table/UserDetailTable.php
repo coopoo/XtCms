@@ -13,19 +13,15 @@
 namespace XtUser\Table;
 
 
-use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
 use XtUser\Entity\UserDetailEntity;
-use XtUser\Options\UserModuleOptionsAwareInterFace;
-use XtUser\Service\UserModuleOptionsTrait;
 
 /**
  * Class UserDetailTable
  * @package XtUser\Model
  */
-class UserDetailTable extends AbstractBaseTableGateway implements UserModuleOptionsAwareInterFace
+class UserDetailTable extends AbstractUserTable
 {
-    use UserModuleOptionsTrait;
     /**
      *
      */

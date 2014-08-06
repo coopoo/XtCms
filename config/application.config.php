@@ -19,8 +19,8 @@ return array(
         'XtBootstrap',
         'XtDb',
         'XtTree',
-        'XtUser'
-
+        'XtUser',
+        'XtAdmin'
     ),
 
     // These are various options for the listeners attached to the ModuleManager

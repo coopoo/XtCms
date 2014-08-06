@@ -13,20 +13,17 @@
 namespace XtUser\Table;
 
 
-use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
 use XtUser\Entity\UserEntity;
-use XtUser\Options\UserModuleOptionsAwareInterFace;
-use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Db\Sql\Select;
 
 /**
  * Class UserLoggerTable
  * @package XtUser\Model
  */
-class UserLoggerTable extends AbstractBaseTableGateway implements UserModuleOptionsAwareInterFace
+class UserLoggerTable extends AbstractUserTable
 {
-    use UserModuleOptionsTrait;
+
     /**
      *
      */

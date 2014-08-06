@@ -1,0 +1,58 @@
+<?php
+/**
+ * @Created by PhpStorm.
+ * @Project: XtCms
+ * @User: Coopoo
+ * @Copy Right: 2014
+ * @Date: 2014-08-06
+ * @Time: 9:58
+ * @QQ: 259522
+ * @FileName: list.phtml
+ */
+$this->headTitle('用户列表');
+?>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>登录帐号</th>
+        <th>用户昵称</th>
+        <th>电子邮箱</th>
+        <th>注册时间</th>
+        <th>注册IP</th>
+        <th>用户状态</th>
+        <th>管理</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($users as $user): ?>
+        <tr>
+            <td><?= $user->getId() ?></td>
+            <td><?= $user->getUsername() ?></td>
+            <td><?= $user->getDisplayName() ?></td>
+            <td><?= $user->getEmail() ?></td>
+            <td><?= $user->getRegisterTime() ?></td>
+            <td><?= $user->getRegisterIp() ?></td>
+            <td><?= $user->getStatus() ?></td>
+            <td>
+                <a href="<?= $this->url('Xt_Admin/user/default', ['action' => 'show', 'id' => $user->getId()]) ?>"
+                   class="btn btn-success">详细资料</a>
+                <a href="<?php echo $this->url('Xt_Admin/user/default', ['action' => 'reBuildPassword', 'id' => $user->getId()]) ?>"
+                   class="btn btn-default">重置密码</a>
+                <a href="<?php echo $this->url('Xt_Admin/user/default', ['action' => 'edit', 'id' => $user->getId()]) ?>"
+                   class="btn btn-info">编辑</a>
+                <a href="<?php echo $this->url('Xt_Admin/user/default', ['action' => 'delete', 'id' => $user->getId()]) ?>"
+                   class="btn btn-primary"
+                   onclick="JavaScript:return confirm('警告: 确定要删除用户 <?= $user->getUsername() ?> ?该操作不可还原!')">删除</a>
+            </td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="8">
+            <?= $this->paginationControl($users) ?>
+        </td>
+    </tr>
+    </tfoot>
+</table>

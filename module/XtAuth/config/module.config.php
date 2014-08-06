@@ -30,7 +30,7 @@ return [
                             'route' => '[:action[/:id]].html',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'id' => '[a-zA-Z0-9_-]*'
+                                'id' => '[a-zA-Z0-9_-]+'
                             ]
                         ]
                     ], //end role default
@@ -39,7 +39,7 @@ return [
                         'options' => [
                             'route' => '[:action[/page/:page]].html',
                             'constraints' => [
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => 'list',
                                 'page' => '[0-9]+'
                             ]
                         ]
@@ -65,7 +65,7 @@ return [
                             'route' => '[:action[/:id]].html',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'id' => '[a-zA-Z0-9_-]*'
+                                'id' => '[a-zA-Z0-9_-]+'
                             ]
                         ]
                     ], //end Resource default
@@ -74,7 +74,7 @@ return [
                         'options' => [
                             'route' => '[:action[/page/:page]].html',
                             'constraints' => [
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => 'list',
                                 'page' => '[0-9]+'
                             ]
                         ]

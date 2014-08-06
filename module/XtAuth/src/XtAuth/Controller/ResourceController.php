@@ -49,8 +49,11 @@ class ResourceController extends AbstractActionController
 
     public function editAction()
     {
-        $id = $this->params('id');
+        $id = (int)$this->params('id', null);
         $resource = $this->getResourceTable()->getOneByColumn($id);
+        if (!$resource) {
+            $this->redirect()->toRoute();
+        }
         $form = $this->FormElementManager()->get('XtAuth\Form\ResourceForm');
         $form->get('submit')->setValue('编辑资源');
         $form->bind($resource);
@@ -74,14 +77,14 @@ class ResourceController extends AbstractActionController
 
     public function deleteAction()
     {
-        $id = (int)$this->params('id');
+        $id = (int)$this->params('id', null);
         $this->getResourceTable()->deleteByColumn($id);
         return $this->redirect()->toRoute();
     }
 
     public function listAction()
     {
-        $page = $this->params('page', 1);
+        $page = (int)$this->params('page', 1);
         $resources = $this->getResourceTable()->getPaginator($page);
         return ['resources' => $resources];
     }

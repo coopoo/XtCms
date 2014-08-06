@@ -68,6 +68,11 @@ class UserEvent extends Event implements UserModuleOptionsAwareInterFace
      *
      */
     const USER_CHANGE_PASSWORD_FAIL = 'user.change.password.fail';
+
+    const REBUILD_PASSWORD_PRE = 'rebuild_password_pre';
+    const REBUILD_PASSWORD_POST = 'rebuild_password_post';
+    const REBUILD_PASSWORD_FAIL = 'rebuild_password_fail';
+
     /**
      * 默认用户身份数据库字段
      */

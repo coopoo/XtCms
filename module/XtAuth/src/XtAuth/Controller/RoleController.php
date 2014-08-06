@@ -59,6 +59,9 @@ class RoleController extends AbstractActionController
     {
         $id = $this->params('id');
         $role = $this->getRoleTable()->getOneByColumn($id);
+        if (!$role) {
+            $this->redirect()->toRoute();
+        }
         $form = $this->FormElementManager()->get('XtAuth\Form\RoleForm');
         $form->get('submit')->setValue('编辑角色');
         $form->bind($role);
@@ -85,7 +88,7 @@ class RoleController extends AbstractActionController
      */
     public function deleteAction()
     {
-        $id = (int)$this->params('id');
+        $id = (int)$this->params('id', null);
         $this->getRoleTable()->deleteByColumn($id);
         return $this->redirect()->toRoute();
     }
@@ -95,7 +98,7 @@ class RoleController extends AbstractActionController
      */
     public function enabledAction()
     {
-        $id = (int)$this->params('id');
+        $id = (int)$this->params('id', null);
         $this->getRoleTable()->enabledById($id);
         return $this->redirect()->toRoute();
     }
@@ -105,7 +108,7 @@ class RoleController extends AbstractActionController
      */
     public function disabledAction()
     {
-        $id = (int)$this->params('id');
+        $id = (int)$this->params('id', null);
         $this->getRoleTable()->disabledById($id);
         return $this->redirect()->toRoute();
     }

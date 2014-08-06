@@ -54,6 +54,7 @@ class AuthenticationListener implements ListenerAggregateInterface,
         $action = $routeMatch->getParam('action');
         $requestedResource = $controller . '-' . $action;
         $whiteList = [
+            'XtBase\Controller\Index-index',
             'XtUser\Controller\User-disabledLogin',
             'XtUser\Controller\User-register',
             'XtUser\Controller\User-disabledRegister'
@@ -62,7 +63,6 @@ class AuthenticationListener implements ListenerAggregateInterface,
             return;
         }
         $response = $event->getResponse();
-        $response->setStatusCode(302);
         $authentication = $this->getServiceLocator()->get('XtAuth\Service\Authenticate');
         $router = $event->getRouter();
         if ($requestedResource === 'XtUser\Controller\User-login') {
@@ -71,6 +71,7 @@ class AuthenticationListener implements ListenerAggregateInterface,
             }
             $url = $router->assemble([], ['name' => UserModel::USER_ROUTE]);
             $response->getHeaders()->addHeaderLine('Location', $url);
+            $response->setStatusCode(302);
             return $response;
         }
         if ($authentication->isAlive()) {
@@ -80,6 +81,7 @@ class AuthenticationListener implements ListenerAggregateInterface,
         $container->offsetSet('routeMatch', $routeMatch);
         $url = $router->assemble(['action' => 'login'], ['name' => UserModel::USER_ROUTE]);
         $response->getHeaders()->addHeaderLine('Location', $url);
+        $response->setStatusCode(302);
         return $response;
     }
 
