@@ -23,7 +23,6 @@ class AuthenticationPlugin extends AbstractPlugin implements ServiceLocatorAware
 
     public function __invoke()
     {
-//        return $this->getServiceLocator()->getServiceLocator()->get('XtUser\Service\Authenticate');
-        return $this->getServiceLocator()->getServiceLocator()->get('XtUser\Service\Authenticate');
+        return $this->getServiceLocator()->getServiceLocator()->get('XtAuth\Service\Authenticate');
     }
 } 

@@ -10,14 +10,14 @@
  * @FileName: DbSession.php
  */
 
-namespace XtUser\Authentication\Storage;
+namespace XtAuth\Authentication\Storage;
 
 
+use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Authentication\Storage\StorageInterface;
 use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Zend\Db\TableGateway\TableGateway;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Session\Container;
 use Zend\Session\SaveHandler\DbTableGateway;
 use Zend\Session\SaveHandler\DbTableGatewayOptions;
@@ -27,9 +27,10 @@ use Zend\Session\SessionManager;
  * Class DbSession
  * @package XtUser\Authentication\Storage
  */
-class DbSession implements StorageInterface, ServiceLocatorAwareInterface
+class DbSession implements StorageInterface,
+    UserModuleOptionsAwareInterFace
 {
-    use ServiceLocatorAwareTrait;
+    use UserModuleOptionsTrait;
     /**
      * @var null
      */
@@ -38,10 +39,7 @@ class DbSession implements StorageInterface, ServiceLocatorAwareInterface
      * @var Container
      */
     protected $session;
-    /**
-     * @var string
-     */
-    protected $table = 'xt_user_session';
+
     /**
      * @var TableGateway
      */
@@ -50,23 +48,23 @@ class DbSession implements StorageInterface, ServiceLocatorAwareInterface
     /**
      * @param null $namespace
      * @param SessionManager $sessionManager
+     * @return $this
      */
-    public function __construct($namespace = null, SessionManager $sessionManager = null)
+    public function init($namespace = null, SessionManager $sessionManager = null)
     {
-        if ($namespace !== null) {
-            $this->namespace = $namespace;
+        if ($namespace === null) {
+            $namespace = $this->userModuleOptions->getUserTable();
         }
-
         $this->session = new Container($namespace, $sessionManager);
-
-        $this->tableGateway = new TableGateway($this->table, GlobalAdapterFeature::getStaticAdapter());
-
+        $this->tableGateway = new TableGateway(
+            $this->userModuleOptions->getSessionTable(),
+            GlobalAdapterFeature::getStaticAdapter()
+        );
         $dbTableGatewayOptions = new DbTableGatewayOptions();
-
         $dbTableGateway = new DbTableGateway($this->tableGateway, $dbTableGatewayOptions);
-        $dbTableGateway->open(null, $this->namespace);
+        $dbTableGateway->open(null, $namespace);
         $this->getSessionManager()->setSaveHandler($dbTableGateway);
-
+        return $this;
     }
 
     /**
@@ -87,6 +85,7 @@ class DbSession implements StorageInterface, ServiceLocatorAwareInterface
      */
     public function getSessionManager()
     {
+
         return $this->session->getManager();
     }
 

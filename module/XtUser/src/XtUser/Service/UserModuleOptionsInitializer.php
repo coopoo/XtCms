@@ -30,7 +30,6 @@ class UserModuleOptionsInitializer implements InitializerInterface
     public function initialize($instance, ServiceLocatorInterface $serviceLocator)
     {
         if ($instance instanceof UserModuleOptionsAwareInterFace) {
-
             if ($serviceLocator instanceof ServiceLocatorAwareInterface) {
                 $serviceLocator = $serviceLocator->getServiceLocator();
             }

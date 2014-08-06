@@ -45,7 +45,6 @@ class Module implements AutoloaderProviderInterface,
     {
         $application = $e->getApplication();
         $eventManager = $application->getEventManager();
-        $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\AuthenticationListener'));
         $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\ChangePasswordListener'));
         $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\LoginListener'));
         $eventManager->attach($application->getServiceManager()->get('XtUser\Listener\RegisterListener'));
@@ -90,10 +89,9 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Model\UserTable' => 'XtUser\Model\UserTable',
                 'XtUser\Model\UserLoggerTable' => 'XtUser\Model\UserLoggerTable',
                 'XtUser\Model\UserDetailTable' => 'XtUser\Model\UserDetailTable',
-                'XtUser\Service\Authenticate' => 'XtUser\Service\AuthenticateInvokable',
+
                 'XtUser\Model\RoleTable' => 'XtUser\Model\RoleTable',
                 'XtUser\Model\ResourceTable' => 'XtUser\Model\ResourceTable',
-                'XtUser\Listener\AuthenticationListener' => 'XtUser\Listener\AuthenticationListener',
                 'XtUser\Listener\ChangePasswordListener' => 'XtUser\Listener\ChangePasswordListener',
                 'XtUser\Listener\LoginListener' => 'XtUser\Listener\LoginListener',
                 'XtUser\Listener\RegisterListener' => 'XtUser\Listener\RegisterListener',
@@ -103,10 +101,7 @@ class Module implements AutoloaderProviderInterface,
             ],
             'initializers' => [
                 'XtUser\Service\UserModuleOptionsInitializer'
-            ],
-            'aliases' => [
-                'Zend\Authentication\AuthenticationService' => 'XtUser\Service\Authenticate',
-            ],
+            ]
         ];
     }
 

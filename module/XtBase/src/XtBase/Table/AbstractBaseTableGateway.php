@@ -79,10 +79,10 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
      */
     public function setDbAdapter(Adapter $adapter)
     {
-        $entityClass = $this->getEntityClass();
         $this->adapter = $adapter;
-        $this->init();
         $hydrator = ($this->hydrator) ?: new ClassMethods();
+        $this->init();
+        $entityClass = $this->getEntityClass();
         $this->resultSetPrototype = new HydratingResultSet($hydrator, new $entityClass());
         $this->getSqlString();
         $this->initialize();
@@ -148,7 +148,8 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         $column = ($column) ?: $this->primaryKey;
         return $this->select(function (Select $select) use ($value, $column, $columns, $order) {
             $select->columns($columns);
-            $select->where([$column => $value])->$order([$column => $order]);
+            $order = ($order) ?: [$this->primaryKey => 'DESC'];
+            $select->where([$column => $value])->order($order);
         });
     }
 

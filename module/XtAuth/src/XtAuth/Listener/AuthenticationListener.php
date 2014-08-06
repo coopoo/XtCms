@@ -10,7 +10,7 @@
  * @FileName: AuthenticationListener.php
  */
 
-namespace XtUser\Listener;
+namespace XtAuth\Listener;
 
 
 use XtUser\Model\UserModel;
@@ -63,7 +63,7 @@ class AuthenticationListener implements ListenerAggregateInterface,
         }
         $response = $event->getResponse();
         $response->setStatusCode(302);
-        $authentication = $this->getServiceLocator()->get('XtUser\Service\Authenticate');
+        $authentication = $this->getServiceLocator()->get('XtAuth\Service\Authenticate');
         $router = $event->getRouter();
         if ($requestedResource === 'XtUser\Controller\User-login') {
             if (!$authentication->isAlive()) {

@@ -26,6 +26,7 @@ class UserModuleOptions extends AbstractOptions
     protected $userTable = 'user';
     protected $detailTable = 'user_detail';
     protected $loggerTable = 'user_logger';
+    protected $sessionTable = 'user_session';
     protected $roleTable = 'role';
     protected $resourceTable = 'resource';
     protected $permissionTable = 'permission';
@@ -44,6 +45,24 @@ class UserModuleOptions extends AbstractOptions
     public function getCredentialColumn()
     {
         return $this->credentialColumn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSessionTable()
+    {
+        return $this->tablePre . $this->sessionTable;
+    }
+
+    /**
+     * @param string $sessionTable
+     * @return $this
+     */
+    public function setSessionTable($sessionTable)
+    {
+        $this->sessionTable = $sessionTable;
+        return $this;
     }
 
     /**

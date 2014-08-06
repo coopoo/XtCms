@@ -10,19 +10,17 @@
  * @FileName: AuthenticateInvokable.php
  */
 
-namespace XtUser\Service;
+namespace XtAuth\Service;
 
-
-use XtUser\Authentication\Storage\DbSession;
 use XtUser\Entity\UserEntity;
 use XtUser\Model\UserModel;
 use XtUser\Options\UserModuleOptionsAwareInterFace;
+use XtUser\Service\UserModuleOptionsTrait;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
 use Zend\Authentication\Adapter\Exception\RuntimeException;
 use Zend\Authentication\AuthenticationServiceInterface;
 use Zend\Authentication\Result;
-use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Stdlib\Hydrator\ClassMethods;
@@ -227,7 +225,9 @@ class AuthenticateInvokable implements UserModuleOptionsAwareInterFace,
     public function getStorage()
     {
         if (empty($this->storage)) {
-            $this->storage = new DbSession($this->userModuleOptions->getUserTable());
+            $this->storage = $this->getServiceLocator()
+                ->get('XtAuth\Authentication\Storage\DbSession')
+                ->init();
         }
         return $this->storage;
     }
