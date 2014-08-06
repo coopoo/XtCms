@@ -17,7 +17,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
-    const DB_ROUTE = 'XtDb-admin';
     protected $dbBackAndRestore = null;
 
     public function indexAction()
@@ -36,7 +35,7 @@ class IndexController extends AbstractActionController
             $dbBackAndRestore = $this->getDbBackAndRestore();
             $dbBackAndRestore->setOptions($options)->back();
         }
-        return $this->redirect()->toRoute(static::DB_ROUTE);
+        return $this->redirect()->toRoute();
     }
 
     public function restoreAction()
@@ -44,7 +43,7 @@ class IndexController extends AbstractActionController
         $id = $this->params('id');
         $file = Tool::decode($id);
         $this->getDbBackAndRestore()->restore($file);
-        return $this->redirect()->toRoute(static::DB_ROUTE);
+        return $this->redirect()->toRoute();
     }
 
     public function unlinkAction()
@@ -52,7 +51,7 @@ class IndexController extends AbstractActionController
         $id = $this->params('id');
         $file = Tool::decode($id);
         $this->getDbBackAndRestore()->unlink($file);
-        return $this->redirect()->toRoute(static::DB_ROUTE);
+        return $this->redirect()->toRoute();
     }
 
     public function truncateAction()
@@ -60,7 +59,7 @@ class IndexController extends AbstractActionController
         $id = $this->params('id');
         $dbBackAndRestore = $this->getDbBackAndRestore();
         $dbBackAndRestore->truncateTable($id);
-        return $this->redirect()->toRoute(static::DB_ROUTE);
+        return $this->redirect()->toRoute();
     }
 
     public function dropAction()
