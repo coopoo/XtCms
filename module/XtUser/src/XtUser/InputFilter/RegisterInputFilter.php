@@ -25,7 +25,7 @@ class RegisterInputFilter extends UserInputFilter
 
         $this->add([
             'name' => 'confirm_password',
-            'required' => 'true',
+            'required' => true,
             'filters' => [
                 ['name' => 'stringTrim'],
                 ['name' => 'StripTags']

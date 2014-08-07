@@ -113,7 +113,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         $this->hydrator->addStrategy($columns, new ClosureStrategy(function ($data) {
             return (strpos($data, ' ')) ? strtotime($data) : $data;
         }, function ($data) {
-            return date('Y-m-d H:i:s', $data);
+            return ($data > 0) ? date('Y-m-d H:i:s', $data) : $data;
         }));
         return $this;
     }
@@ -184,6 +184,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
     }
 
     /**
+     * @param $page
      * @param where|\Closure|string|array|PredicateInterface $where
      * @param string|array $order
      * @param array $columns
@@ -200,7 +201,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         $select->order($order);
         $dbAdapter = new DbSelect($select, $this->adapter, $this->resultSetPrototype);
         $paginator = new Paginator($dbAdapter);
-        $paginator->setCurrentPageNumber((int)$page);
+        $paginator->setCurrentPageNumber($page);
         return $paginator;
     }
 

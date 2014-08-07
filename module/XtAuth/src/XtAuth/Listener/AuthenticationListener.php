@@ -77,8 +77,10 @@ class AuthenticationListener implements ListenerAggregateInterface,
         if ($authentication->isAlive()) {
             return;
         }
-        $container = new Container('redirect');
-        $container->offsetSet('routeMatch', $routeMatch);
+        if ($action !== 'logout') {
+            $container = new Container('redirect');
+            $container->offsetSet('routeMatch', $routeMatch);
+        }
         $url = $router->assemble(['action' => 'login'], ['name' => UserModel::USER_ROUTE]);
         $response->getHeaders()->addHeaderLine('Location', $url);
         $response->setStatusCode(302);

@@ -35,7 +35,7 @@ $this->headTitle('用户列表');
                     <td><?= $user->getEmail() ?></td>
                     <td><?= $user->getRegisterTime() ?></td>
                     <td><?= $user->getRegisterIp() ?></td>
-                    <td><?= $user->getStatus() ?></td>
+                    <td><?= $this->Status($user->getStatus(), 'Xt_Admin/user/default', ['id' => $user->getId()]) ?></td>
                     <td>
                         <a href="<?= $this->url('Xt_Admin/user/default', ['action' => 'show', 'id' => $user->getId()]) ?>"
                            class="btn btn-success">详细资料</a>

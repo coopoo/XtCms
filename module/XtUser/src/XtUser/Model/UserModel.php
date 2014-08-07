@@ -93,7 +93,7 @@ class UserModel
      */
     public static function encryption($password)
     {
-        return md5(sha1($password) . self::SALT);
+        return empty($password) ? null : md5(sha1($password) . self::SALT);
     }
 
 

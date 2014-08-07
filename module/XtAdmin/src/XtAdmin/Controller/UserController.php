@@ -15,17 +15,32 @@ namespace XtAdmin\Controller;
 
 use XtUser\Event\UserEvent;
 use XtUser\Model\UserModel;
+use XtUser\Table\UserTable;
 use Zend\Mvc\Controller\AbstractActionController;
 
+/**
+ * Class UserController
+ * @package XtAdmin\Controller
+ */
 class UserController extends AbstractActionController
 {
-    protected $userTable;
+    /**
+     * @var null|UserTable
+     */
+    protected $userTable = null;
+    protected $succeed = false;
 
+    /**
+     * @return \Zend\Http\Response
+     */
     public function indexAction()
     {
         return $this->redirect()->toRoute('Xt_Admin/user/page', ['action' => 'list']);
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function addAction()
     {
         $form = $this->FormElementManager()->get('XtUser\Form\RegisterForm');
@@ -46,17 +61,22 @@ class UserController extends AbstractActionController
                 if ($responseCollection->last() !== false) {
                     try {
                         $this->getUserTable()->save($userEntity);
+                        $this->succeed = true;
                     } catch (\Exception $e) {
                         echo $e->getMessage();
-                        return ['form' => $form];
                     }
-                    return $this->redirect()->toRoute();
+                    if ($this->succeed) {
+                        return $this->redirect()->toRoute();
+                    }
                 }
             }
         }
         return ['form' => $form];
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function editAction()
     {
         $id = (int)$this->params('id', null);
@@ -73,18 +93,22 @@ class UserController extends AbstractActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 try {
-                    $this->UserTable()->save($userEntity);
+                    $this->getUserTable()->save($userEntity);
+                    $this->succeed = true;
                 } catch (\Exception $e) {
-                    return ['form' => $form];
+                    echo $e->getMessage();
                 }
-                return $this->redirect()->toRoute();
-            } else {
-                var_dump($form->getMessages());
+                if ($this->succeed) {
+                    return $this->redirect()->toRoute();
+                }
             }
         }
         return ['form' => $form];
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function reBuildPasswordAction()
     {
         $id = (int)$this->params('id', null);
@@ -110,19 +134,22 @@ class UserController extends AbstractActionController
                 if ($responseCollection->last() !== false) {
                     try {
                         $this->getUserTable()->save($userEntity);
+                        $this->succeed = true;
                     } catch (\Exception $e) {
                         echo $e->getMessage();
-                        return ['form' => $form];
                     }
-                    return $this->redirect()->toRoute();
+                    if ($this->succeed) {
+                        return $this->redirect()->toRoute();
+                    }
                 }
             }
         }
         return ['form' => $form];
-
-
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function showAction()
     {
         $id = (int)$this->params('id', null);
@@ -133,6 +160,9 @@ class UserController extends AbstractActionController
         return ['user' => $userEntity];
     }
 
+    /**
+     * @return array
+     */
     public function listAction()
     {
         $page = (int)$this->params('page', 1);
@@ -170,10 +200,13 @@ class UserController extends AbstractActionController
         return $this->redirect()->toRoute();
     }
 
+    /**
+     * @return array|object
+     */
     protected function getUserTable()
     {
         if (!$this->userTable) {
-            $this->userTable = $this->serviceLocator->get(UserModel::USER_TABLE_CLASS);
+            $this->userTable = $this->getServiceLocator()->get(UserModel::USER_TABLE_CLASS);
         }
         return $this->userTable;
 

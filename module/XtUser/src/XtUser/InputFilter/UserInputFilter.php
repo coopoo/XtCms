@@ -64,7 +64,8 @@ class UserInputFilter extends InputFilter implements UserModuleOptionsAwareInter
 
         $this->add([
             'name' => 'user_password',
-            'required' => 'false',
+            'required' => false,
+//            'empty'=>true,
             'filters' => [
                 ['name' => 'StringTrim'],
                 ['name' => 'StripTags'],
@@ -81,7 +82,7 @@ class UserInputFilter extends InputFilter implements UserModuleOptionsAwareInter
 
         $this->add([
             'name' => 'email',
-            'required' => 'true',
+            'required' => true,
             'filters' => [
                 ['name' => 'stringTrim']
             ],

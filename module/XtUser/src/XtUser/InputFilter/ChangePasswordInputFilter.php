@@ -24,7 +24,7 @@ class ChangePasswordInputFilter extends RegisterInputFilter
         $this->remove('username')->remove('email');
         $this->add([
             'name' => 'old_password',
-            'required' => 'false',
+            'required' => true,
             'filters' => [
                 ['name' => 'StringTrim'],
                 ['name' => 'StripTags'],

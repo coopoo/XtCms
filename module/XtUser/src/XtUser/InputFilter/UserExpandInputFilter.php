@@ -20,6 +20,41 @@ class UserExpandInputFilter extends UserInputFilter
     public function __invoke(UserEntity $userEntity = null)
     {
         parent::__invoke($userEntity);
+
+        $this->add([
+            'name' => 'display_name',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StringTrim'],
+                ['name' => 'StripTags']
+            ],
+            'validators' => [
+                [
+                    'name' => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 2,
+                        'max' => 20
+                    ],
+                ]
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'last_error_time',
+            'filters' => [
+                ['name' => 'int']
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'error_count',
+            'filters' => [
+                ['name' => 'int']
+            ],
+        ]);
+
         return $this;
+
     }
 } 

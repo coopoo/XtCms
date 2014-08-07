@@ -62,8 +62,6 @@ class RegisterListener implements ListenerAggregateInterface
         return $userEntity->setDisplayName($userEntity->getUsername());
     }
 
-
-
     public function setStatus(EventInterface $event)
     {
         $userEntity = $event->getUserEntity();

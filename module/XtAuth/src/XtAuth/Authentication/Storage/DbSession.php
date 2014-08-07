@@ -53,7 +53,7 @@ class DbSession implements StorageInterface,
     public function init($namespace = null, SessionManager $sessionManager = null)
     {
         if ($namespace === null) {
-            $namespace = $this->userModuleOptions->getUserTable();
+            $namespace = $this->userModuleOptions->getUserTable() . '_Admin';
         }
         $this->session = new Container($namespace, $sessionManager);
         $this->tableGateway = new TableGateway(

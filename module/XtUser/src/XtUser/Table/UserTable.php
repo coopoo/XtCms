@@ -37,7 +37,7 @@ class UserTable extends AbstractUserTable
     public function init()
     {
         $this->table = $this->userModuleOptions->getUserTable();
-        $this->addDateTimeStrategy('register_time');
+        $this->addDateTimeStrategy(['register_time', 'last_error_time']);
     }
 
     /**

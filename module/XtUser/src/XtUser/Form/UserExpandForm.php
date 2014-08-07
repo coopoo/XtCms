@@ -20,6 +20,22 @@ class UserExpandForm extends UserBaseForm
     public function __construct()
     {
         parent::__construct();
+        $this->setAttribute('class', 'form-horizontal');
+        $this->remove('user_password');
+
+        $this->add([
+            'type' => 'text',
+            'name' => 'display_name',
+            'options' => [
+                'label' => '用户昵称'
+            ],
+            'attributes' => [
+                'id' => 'display_name',
+                'required' => 'required',
+                'placeholder' => '请输入用户昵称',
+                'maxlength' => 20
+            ],
+        ], ['priority' => 99]);
 
         $this->add([
             'type' => 'text',
@@ -33,14 +49,40 @@ class UserExpandForm extends UserBaseForm
         ]);
 
         $this->add([
-            'name' => 'status',
-            'type' => 'Select',
+            'type' => 'text',
+            'name' => 'register_ip',
             'options' => [
-                'label' => '用户状态',
-                'empty_option' => '请选择用户状态',
-                'value_options' => UserModel::getStatus(),
+                'label' => '注册IP',
+            ],
+            'attributes' => [
+                'readonly' => 'readonly'
             ]
         ]);
 
+        $this->add([
+            'type' => 'text',
+            'name' => 'last_error_time',
+            'options' => [
+                'label' => '登录错误时间',
+            ],
+        ]);
+
+        $this->add([
+            'type' => 'text',
+            'name' => 'error_count',
+            'options' => [
+                'label' => '错误次数',
+            ],
+        ]);
+
+        $this->add([
+            'type' => 'Radio',
+            'name' => 'status',
+            'options' => [
+                'label' => '用户状态',
+                'value_options' => UserModel::getStatus(),
+            ]
+        ]);
+        $this->get('submit')->setValue('编辑用户');
     }
 } 
