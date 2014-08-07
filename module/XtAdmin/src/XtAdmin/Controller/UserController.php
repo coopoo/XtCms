@@ -64,11 +64,11 @@ class UserController extends AbstractActionController
         if (!$userEntity) {
             return $this->redirect()->toRoute();
         }
-        $form = $this->FormElementManager()->get('XtUser\Form\EditForm');
+        $form = $this->FormElementManager()->get('XtUser\Form\UserExpandForm');
         $form->bind($userEntity);
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\EditInputFilter');
+            $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\UserExpandInputFilter');
             $form->setInputFilter($inputFilter($userEntity));
             $form->setData($request->getPost());
             if ($form->isValid()) {
@@ -78,6 +78,8 @@ class UserController extends AbstractActionController
                     return ['form' => $form];
                 }
                 return $this->redirect()->toRoute();
+            } else {
+                var_dump($form->getMessages());
             }
         }
         return ['form' => $form];

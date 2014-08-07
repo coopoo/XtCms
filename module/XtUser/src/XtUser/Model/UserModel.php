@@ -28,12 +28,12 @@ class UserModel
     /**
      *
      */
-    const DEFAULT_STATUS = 99;
+    const DEFAULT_STATUS = 'Y';
 
     /**
      *
      */
-    const ALLOW_STATUS = 99;
+    const ALLOW_STATUS = 'Y';
 
     /**
      *
@@ -66,11 +66,26 @@ class UserModel
      */
     const USER_CENTER_ROUTE = 'Xt_User_Center';
 
-
+    const BAN_USERNAME_MESSAGE = '用户名非法，请重新注册';
     /**
      *
      */
     const PASSWORD_FAIL_COUNT_MESSAGE = '密码连续错误%d次,请在%s秒后在进行尝试';
+
+    public static function banUsername($username = null)
+    {
+        $banList = [
+            'admin', 'manager', 'system', 'window'
+        ];
+        if ($username === null) {
+            return $banList;
+        }
+        foreach ($banList as $ban) {
+            if (strpos(strtolower($username), $ban) !== false) {
+                return true;
+            }
+        }
+    }
 
     /**
      * @param $password
@@ -79,6 +94,22 @@ class UserModel
     public static function encryption($password)
     {
         return md5(sha1($password) . self::SALT);
+    }
+
+
+    public static function getStatus($key = null, $default = null)
+    {
+        $status = [
+            'Y' => '正常',
+            'N' => '禁用'
+        ];
+
+        if ($key && array_key_exists((string)$key, $status)) {
+            return $key;
+        } else if ($key !== null) {
+            return $default;
+        }
+        return $status;
     }
 
 }

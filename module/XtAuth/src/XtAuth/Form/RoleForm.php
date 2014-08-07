@@ -14,6 +14,7 @@ namespace XtAuth\Form;
 
 
 use XtAuth\Entity\RoleEntity;
+use XtUser\Model\UserModel;
 use Zend\Form\Form;
 use Zend\Stdlib\Hydrator\ClassMethods;
 
@@ -49,13 +50,10 @@ class RoleForm extends Form
             'name' => 'status',
             'options' => [
                 'label' => '角色状态',
-                'value_options' => [
-                    0 => '禁用',
-                    99 => '启用'
-                ]
+                'value_options' => UserModel::getStatus()
             ],
             'attributes' => [
-                'value' => 99
+                'value' => UserModel::DEFAULT_STATUS
             ]
         ]);
 

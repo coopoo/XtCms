@@ -153,6 +153,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\Form\DetailForm' => 'XtUser\Form\DetailForm',
                 'XtUser\Form\ChangePasswordForm' => 'XtUser\Form\ChangePasswordForm',
                 'XtUser\Form\reBuildPasswordForm' => 'XtUser\Form\reBuildPasswordForm',
+                'XtUser\Form\UserExpandForm' => 'XtUser\Form\UserExpandForm',
             ]
         ];
     }
@@ -174,6 +175,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtUser\InputFilter\RegisterInputFilter' => 'XtUser\InputFilter\RegisterInputFilter',
                 'XtUser\InputFilter\UserInputFilter' => 'XtUser\InputFilter\UserInputFilter',
                 'XtUser\InputFilter\reBuildPasswordInputFilter' => 'XtUser\InputFilter\reBuildPasswordInputFilter',
+                'XtUser\InputFilter\UserExpandInputFilter' => 'XtUser\InputFilter\UserExpandInputFilter',
             ],
             'initializers' => [
                 'XtUser\Service\UserModuleOptionsInitializer'

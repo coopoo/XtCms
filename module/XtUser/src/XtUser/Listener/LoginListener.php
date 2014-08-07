@@ -22,6 +22,10 @@ use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\Validator\EmailAddress;
 
+/**
+ * Class LoginListener
+ * @package XtUser\Listener
+ */
 class LoginListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
@@ -59,6 +63,27 @@ class LoginListener implements ListenerAggregateInterface
 
     }
 
+    /**
+     * @param EventInterface $event
+     * @return bool
+     */
+    public function checkStatus(EventInterface $event)
+    {
+        $userEntity = $event->getUserEntity();
+        $serviceLocator = $event->getServiceLocator();
+        $userTable = $serviceLocator->get(UserModel::USER_TABLE_CLASS);
+
+        $tableUserEntity = $userTable->getOneByColumn($userEntity->getUserName(), $event->getIdentityKey());
+        if ($tableUserEntity && $tableUserEntity->getStatus() !== UserModel::ALLOW_STATUS) {
+            $event->getForm()->get('username')->setMessages([UserModel::NOT_ALLOWED_STATUS_MESSAGE]);
+            return false;
+        }
+    }
+
+    /**
+     * @param EventInterface $event
+     * @return bool
+     */
     public function checkPasswordErrorCount(EventInterface $event)
     {
         $userEntity = $event->getUserEntity();
@@ -80,19 +105,6 @@ class LoginListener implements ListenerAggregateInterface
                 $event->getForm()->get('username')->setMessages(array(sprintf(UserModel::PASSWORD_FAIL_COUNT_MESSAGE, $userModuleOptions->getPasswordFailLimit(), $waitTime)));
                 return false;
             }
-        }
-    }
-
-    public function checkStatus(EventInterface $event)
-    {
-        $userEntity = $event->getUserEntity();
-        $serviceLocator = $event->getServiceLocator();
-        $userTable = $serviceLocator->get(UserModel::USER_TABLE_CLASS);
-
-        $tableUserEntity = $userTable->getOneByColumn($userEntity->getUserName(), $event->getIdentityKey());
-        if ($tableUserEntity && (int)$tableUserEntity->getStatus() !== UserModel::ALLOW_STATUS) {
-            $event->getForm()->get('username')->setMessages(array(UserModel::NOT_ALLOWED_STATUS_MESSAGE));
-            return false;
         }
     }
 
@@ -119,6 +131,9 @@ class LoginListener implements ListenerAggregateInterface
         }
     }
 
+    /**
+     * @param EventInterface $event
+     */
     public function resetPasswordFailErrorCount(EventInterface $event)
     {
         $userEntity = $event->getUserEntity();
@@ -130,6 +145,9 @@ class LoginListener implements ListenerAggregateInterface
         $userTable->save($userEntity);
     }
 
+    /**
+     * @param EventInterface $event
+     */
     public function saveLogger(EventInterface $event)
     {
         $userEntity = $event->getUserEntity();

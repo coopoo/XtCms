@@ -20,6 +20,7 @@ use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 
 
@@ -27,7 +28,8 @@ class Module implements AutoloaderProviderInterface,
     ConfigProviderInterface,
     ControllerProviderInterface,
     ServiceProviderInterface,
-    BootstrapListenerInterface
+    BootstrapListenerInterface,
+    ViewHelperProviderInterface
 {
     /**
      * Listen to the bootstrap event
@@ -103,6 +105,22 @@ class Module implements AutoloaderProviderInterface,
             'initializers' => [
                 'XtBase\Service\AdapterInitializer' => 'XtBase\Service\AdapterInitializer'
             ]
+        ];
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getViewHelperConfig()
+    {
+        return [
+            'invokables' => [
+                'Md5func' => 'XtBase\View\Helper\Md5func',
+                'Status' => 'XtBase\View\Helper\Status',
+            ],
         ];
     }
 

@@ -47,7 +47,8 @@ class UserTable extends AbstractUserTable
     public function save(UserEntity $userEntity)
     {
         $id = (int)$userEntity->getId();
-        $userData = array_filter((array)$this->resultSetPrototype->getHydrator()->extract($userEntity), function ($value) {
+        $users = $this->resultSetPrototype->getHydrator()->extract($userEntity);
+        $userData = array_filter((array)$users, function ($value) {
             return $value !== null;
         });
         unset($userData['remember_me']);

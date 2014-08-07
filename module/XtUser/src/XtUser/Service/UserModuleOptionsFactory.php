@@ -17,7 +17,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class UserModuleOptionsFactory implements FactoryInterface
 {
-    protected $userModuleOptionsKey = 'Xt_user';
+    protected $userModuleOptionsKey = 'Xt_User';
     protected $userModuleOptionClass = 'XtUser\Options\UserModuleOptions';
     protected $tablePreConfigKey = 'pre';
     /**
@@ -29,12 +29,9 @@ class UserModuleOptionsFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('config');
-        $userModuleOptions = new $this->userModuleOptionClass(
-            (isset($config[$this->userModuleOptionsKey])) ? $config[$this->userModuleOptionsKey] : []
-        );
-        $tablePre = (isset($config['db'][$this->tablePreConfigKey])) ? $config['db'][$this->tablePreConfigKey] : '';
-        $userModuleOptions->setTablePre($tablePre);
-        return $userModuleOptions;
+        $userOptions = (isset($config[$this->userModuleOptionsKey])) ? $config[$this->userModuleOptionsKey] : [];
+        $userOptions['table_pre'] = (isset($config['db'][$this->tablePreConfigKey])) ? $config['db'][$this->tablePreConfigKey] : '';
+        return new $this->userModuleOptionClass($userOptions);
     }
 
 

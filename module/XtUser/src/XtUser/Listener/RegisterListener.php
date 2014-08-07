@@ -40,17 +40,20 @@ class RegisterListener implements ListenerAggregateInterface
     {
         $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'checkUsername']);
         $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'setDisplayName']);
-        $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'setRegisterTime']);
-        $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'setRegisterIp']);
         $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'setStatus']);
         $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'setUniqid']);
         $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'setPassword']);
+        $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'setRegisterTime']);
+        $this->listeners[] = $events->getSharedManager()->attach('*', UserEvent::USER_REGISTER_PRE, [$this, 'setRegisterIp']);
     }
 
     public function checkUsername(EventInterface $event)
     {
         $userEntity = $event->getUserEntity();
-        return true;
+        if (UserModel::banUsername($userEntity->getUsername())) {
+            $event->getForm()->get('username')->setMessages(array(UserModel::BAN_USERNAME_MESSAGE));
+            return false;
+        }
     }
 
     public function setDisplayName(EventInterface $event)
@@ -59,17 +62,7 @@ class RegisterListener implements ListenerAggregateInterface
         return $userEntity->setDisplayName($userEntity->getUsername());
     }
 
-    public function setRegisterTime(EventInterface $event)
-    {
-        $userEntity = $event->getUserEntity();
-        return $userEntity->setRegistertime(time());
-    }
 
-    public function setRegisterIp(EventInterface $event)
-    {
-        $userEntity = $event->getUserEntity();
-        return $userEntity->setRegisterip(IpAddress::getIp());
-    }
 
     public function setStatus(EventInterface $event)
     {
@@ -87,5 +80,17 @@ class RegisterListener implements ListenerAggregateInterface
     {
         $userEntity = $event->getUserEntity();
         return $userEntity->setUserPassword(md5($userEntity->getUserPassword() . $userEntity->getUniqid()));
+    }
+
+    public function setRegisterTime(EventInterface $event)
+    {
+        $userEntity = $event->getUserEntity();
+        return $userEntity->setRegisterTime(time());
+    }
+
+    public function setRegisterIp(EventInterface $event)
+    {
+        $userEntity = $event->getUserEntity();
+        return $userEntity->setRegisterIp(IpAddress::getIp());
     }
 } 

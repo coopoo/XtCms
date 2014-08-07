@@ -11,7 +11,8 @@
  */
 $this->headTitle('角色列表');
 ?>
-<table class="table">
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
     <thead>
     <tr>
         <th>ID</th>
@@ -23,32 +24,30 @@ $this->headTitle('角色列表');
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($roles as $role): ?>
+    <?php if (count($roles) > 0): ?>
+        <?php foreach ($roles as $role): ?>
+            <tr>
+                <td><?= $role->getId() ?></td>
+                <td><?= $role->getName() ?></td>
+                <td><?= $this->Status($role->getStatus(), 'Xt_Role/default', ['id' => $role->getId()]) ?></td>
+                <td><?= $role->getModifyTime() ?></td>
+                <td><?= $role->getModifyIp() ?></td>
+                <td>
+                    <a href="<?php echo $this->url('Xt_Role/default', ['action' => 'edit', 'id' => $role->getId()]) ?>"
+                       class="btn btn-default">编辑</a>
+                    <a href="<?php echo $this->url('Xt_Role/default', ['action' => 'delete', 'id' => $role->getId()]) ?>"
+                       class="btn btn-primary"
+                       onclick="JavaScript:return confirm('警告: 确定要删除角色 <?= $role->getName() ?> ?该操作不可还原!')">删除</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
         <tr>
-            <td><?= $role->getId() ?></td>
-            <td><?= $role->getName() ?></td>
-            <td>
-                <?php if ($role->getStatus() === 99): ?>
-                    <a class="btn btn-primary">正常</a> <a
-                        href="<?php echo $this->url('Xt_Role/default', ['action' => 'disabled', 'id' => $role->getId()]) ?>"
-                        class="btn btn-default">点击禁用</a>
-                <?php else: ?>
-                    <a class="btn btn-primary">禁用</a> <a
-                        href="<?php echo $this->url('Xt_Role/default', ['action' => 'enabled', 'id' => $role->getId()]) ?>"
-                        class="btn btn-default">点击启用</a>
-                <?php endif; ?>
-            </td>
-            <td><?= $role->getModifyTime() ?></td>
-            <td><?= $role->getModifyIp() ?></td>
-            <td>
-                <a href="<?php echo $this->url('Xt_Role/default', ['action' => 'edit', 'id' => $role->getId()]) ?>"
-                   class="btn btn-default">编辑</a>
-                <a href="<?php echo $this->url('Xt_Role/default', ['action' => 'delete', 'id' => $role->getId()]) ?>"
-                   class="btn btn-primary"
-                   onclick="JavaScript:return confirm('警告: 确定要删除角色 <?= $role->getName() ?> ?该操作不可还原!')">删除</a>
+            <td colspan="6">
+                没有数据
             </td>
         </tr>
-    <?php endforeach; ?>
+    <?php endif ?>
     </tbody>
     <tfoot>
     <tr>
@@ -58,3 +57,4 @@ $this->headTitle('角色列表');
     </tr>
     </tfoot>
 </table>
+</div>

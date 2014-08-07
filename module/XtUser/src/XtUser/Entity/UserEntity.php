@@ -85,7 +85,7 @@ class UserEntity
      */
     public function getRememberMe()
     {
-        return (int)$this->rememberMe;
+        return $this->rememberMe;
     }
 
     /**
@@ -229,7 +229,7 @@ class UserEntity
      */
     public function getStatus()
     {
-        return (int)$this->status;
+        return $this->status;
     }
 
     /**

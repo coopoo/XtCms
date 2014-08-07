@@ -61,13 +61,6 @@ class RoleInputFilter extends InputFilter implements UserModuleOptionsAwareInter
             ]
         ]);
 
-        $this->add([
-            'name' => 'status',
-            'required' => true,
-            'filters' => [
-                ['name' => 'int'],
-            ]
-        ]);
         return $this;
     }
 } 

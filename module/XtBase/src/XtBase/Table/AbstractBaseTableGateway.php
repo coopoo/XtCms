@@ -44,11 +44,11 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
     /**
      *
      */
-    const DEFAULT_DISABLED_STATUS = 0;
+    const DEFAULT_DISABLED_STATUS = 'N';
     /**
      *
      */
-    const DEFAULT_ENABLED_STATUS = 99;
+    const DEFAULT_ENABLED_STATUS = 'Y';
     /**
      * @var
      */
@@ -88,7 +88,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         $hydrator = ($this->hydrator) ?: new ClassMethods();
         $entityClass = $this->getEntityClass();
         $this->resultSetPrototype = new HydratingResultSet($hydrator, new $entityClass());
-//        $this->getSqlString();
+        $this->getSqlString();
         $this->initialize();
     }
 
@@ -111,7 +111,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
             return $this;
         }
         $this->hydrator->addStrategy($columns, new ClosureStrategy(function ($data) {
-            return strtotime($data);
+            return (strpos($data, ' ')) ? strtotime($data) : $data;
         }, function ($data) {
             return date('Y-m-d H:i:s', $data);
         }));

@@ -98,7 +98,7 @@ class RoleEntity
      */
     public function getStatus()
     {
-        return (int)$this->status;
+        return $this->status;
     }
 
     /**
