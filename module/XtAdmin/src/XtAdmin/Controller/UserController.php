@@ -176,7 +176,7 @@ class UserController extends AbstractActionController
     public function deleteAction()
     {
         $id = (int)$this->params('id', null);
-        $this->getUserTable()->deleteByColumn($id);
+        $this->getUserTable()->deleteUserById($id);
         return $this->redirect()->toRoute();
     }
 
