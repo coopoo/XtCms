@@ -34,9 +34,6 @@ class UserCenterController extends AbstractActionController
      */
     public function indexAction()
     {
-        //$user = $this->UserTable()->getUserById($this->getLoginUserId());
-        $this->UserTable()->deleteUserById(2);
-
         $userLogger = $this->UserTable()->getUserLogger($this->Authentication()->getUserId());
         return ['userLogger' => $userLogger];
     }
