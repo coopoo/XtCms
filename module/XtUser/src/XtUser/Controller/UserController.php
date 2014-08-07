@@ -69,7 +69,7 @@ class UserController extends AbstractActionController implements UserModuleOptio
                 if ($responseCollection->last() !== false) {
                     $authenticate = $this->Authentication();
                     $authenticate->setUserEvent($userEvent);
-                    if ($userEntity->getRememberMe() === 1) {
+                    if ((int)$userEntity->getRememberMe() === 1) {
                         $authenticate->getStorage()->getSessionManager()->rememberMe();
                     }
                     if ($authenticate->isValid()) {
