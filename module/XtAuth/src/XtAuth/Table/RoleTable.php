@@ -13,22 +13,29 @@
 namespace XtAuth\Table;
 
 
-use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
 use XtAuth\Entity\RoleEntity;
-use XtUser\Options\UserModuleOptionsAwareInterFace;
-use XtUser\Service\UserModuleOptionsTrait;
+use XtUser\Table\AbstractUserTable;
 
-class RoleTable extends AbstractBaseTableGateway implements UserModuleOptionsAwareInterFace
+/**
+ * Class RoleTable
+ * @package XtAuth\Table
+ */
+class RoleTable extends AbstractUserTable
 {
-    use UserModuleOptionsTrait;
-
+    /**
+     *
+     */
     public function init()
     {
         $this->table = $this->userModuleOptions->getRoleTable();
         $this->addDateTimeStrategy('modify_time');
     }
 
+    /**
+     * @param RoleEntity $roleEntity
+     * @return int
+     */
     public function save(RoleEntity $roleEntity)
     {
         $data = [
@@ -41,5 +48,11 @@ class RoleTable extends AbstractBaseTableGateway implements UserModuleOptionsAwa
         return $this->insertOrUpdate($data, $id);
     }
 
-
+    /**
+     * @return array
+     */
+    public function fetchRole()
+    {
+        return $this->fetchAll(['status' => static::DEFAULT_ENABLED_STATUS], ['id', 'name'])->toArray();
+    }
 } 

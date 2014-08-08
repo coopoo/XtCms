@@ -13,15 +13,12 @@
 namespace XtAuth\Table;
 
 
-use XtBase\Table\AbstractBaseTableGateway;
 use XtTool\Tool\IpAddress;
 use XtAuth\Entity\ResourceEntity;
-use XtUser\Options\UserModuleOptionsAwareInterFace;
-use XtUser\Service\UserModuleOptionsTrait;
+use XtUser\Table\AbstractUserTable;
 
-class ResourceTable extends AbstractBaseTableGateway implements UserModuleOptionsAwareInterFace
+class ResourceTable extends AbstractUserTable
 {
-    use UserModuleOptionsTrait;
 
     public function init()
     {

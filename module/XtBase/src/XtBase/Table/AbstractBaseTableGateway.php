@@ -24,6 +24,7 @@ use Zend\Db\TableGateway\Feature\EventFeature;
 use Zend\Db\TableGateway\Feature\FeatureSet;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManager;
+use Zend\InputFilter\InputFilterInterface;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -149,7 +150,7 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
      * @param array $columns
      * @return \Zend\Db\ResultSet\ResultSet
      */
-    public function getByColumn($value, $column = null, $order = 'DESC', $columns = ['*'])
+    public function getByColumn($value, $column = null, $columns = ['*'], $order = null)
     {
         $column = ($column) ?: $this->primaryKey;
         return $this->select(function (Select $select) use ($value, $column, $columns, $order) {
@@ -159,6 +160,23 @@ abstract class AbstractBaseTableGateway extends AbstractTableGateway implements 
         });
     }
 
+    /**
+     * @param null $where
+     * @param array $columns
+     * @param null $order
+     * @return \Zend\Db\ResultSet\ResultSet
+     */
+    public function fetchAll($where = null, $columns = ['*'], $order = null)
+    {
+        return $this->select(function (Select $select) use ($where, $columns, $order) {
+            $select->columns($columns);
+            if ($where !== null) {
+                $select->where($where);
+            }
+            $order = ($order) ?: [$this->primaryKey => 'DESC'];
+            $select->order($order);
+        });
+    }
     /**
      * @param $value
      * @param null $column
