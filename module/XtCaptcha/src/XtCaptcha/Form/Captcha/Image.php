@@ -494,9 +494,6 @@ class Image extends AbstractWord
 
         $this->headerImg($img);
     }
-
-
-    // 输出图片
     /**
      * @param $img
      */

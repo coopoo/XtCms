@@ -1,0 +1,17 @@
+form添加元素
+<code>
+ $this->add([
+    'type' => 'XtCaptcha',
+    'name' => 'captcha',
+    'options' => [
+        'label' => '请输入验证码',
+    ]
+]);
+</code>
+
+
+viewHelper视图
+<code>
+    $element = $form->get('captcha');
+    $this->XtFormCaptcha($element);
+</code>

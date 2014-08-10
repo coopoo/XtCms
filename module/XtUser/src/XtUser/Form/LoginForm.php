@@ -13,7 +13,6 @@
 namespace XtUser\Form;
 
 
-use XtCaptcha\Form\Image;
 
 class LoginForm extends UserBaseForm
 {
