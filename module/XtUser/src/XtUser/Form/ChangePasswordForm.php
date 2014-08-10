@@ -15,9 +15,9 @@ namespace XtUser\Form;
 class ChangePasswordForm extends RegisterForm
 {
 
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
+        parent::init();
         $this->setAttribute('class', 'form-horizontal');
         $this->remove('username')->remove('email');
         $this->add([

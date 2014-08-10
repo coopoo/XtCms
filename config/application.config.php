@@ -17,6 +17,7 @@ return array(
         'XtAuth',
         'XtTool',
         'XtBootstrap',
+        'XtCaptcha',
         'XtDb',
         'XtTree',
         'XtUser',

@@ -13,38 +13,35 @@
 namespace XtUser\Form;
 
 
+use XtCaptcha\Form\Image;
+
 class LoginForm extends UserBaseForm
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
+        parent::init();
 
         $this->setAttribute('class', 'form-horizontal')->remove('email');
         $this->get('username')->setOption('tips', '');
         $this->get('user_password')->setOption('tips', '');
         $this->get('submit')->setValue('登录网站');
 
+
+        $this->add([
+            'type' => 'XtCaptcha',
+            'name' => 'captcha',
+            'options' => [
+                'label' => '请输入验证码',
+            ]
+        ]);
+
         $this->add([
             'type' => 'checkBox',
             'name' => 'rememberMe',
             'options' => [
-                'label' => 'rememberMe',
-                'tips' => '两周内免登录'
+                'label' => '自动登录',
+                'tips' => '两周内自动登录'
             ]
         ]);
-
-//        $this->add([
-//            'type'=>'captcha',
-//            'name'=>'captcha',
-//            'options'=>[
-//                'label'=>'请输入验证码',
-//                'captcha'=>[
-//                    'class'=>'image',
-//                    'font'=>__DIR__.'/World_Colors.ttf',
-//                    'wordlen'=>4
-//                ]
-//            ]
-//        ]);
-
     }
 } 

@@ -15,9 +15,9 @@ namespace XtUser\Form;
 
 class EditForm extends UserBaseForm
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
+        parent::init();
         $this->setAttribute('class', 'form-horizontal');
         $this->remove('user_password');
         $this->add([

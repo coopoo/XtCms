@@ -17,9 +17,9 @@ use XtUser\Model\UserModel;
 
 class UserExpandForm extends UserBaseForm
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
+        parent::init();
         $this->setAttribute('class', 'form-horizontal');
         $this->remove('user_password');
 

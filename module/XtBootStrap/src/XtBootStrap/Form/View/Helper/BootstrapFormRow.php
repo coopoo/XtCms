@@ -39,6 +39,12 @@ class BootstrapFormRow extends FormRow
 
     public function render(ElementInterface $element, $labelPosition = null)
     {
+
+        //captcha
+        if ($element->getAttribute('type') == 'captcha') {
+            return $this->getView()->XtFormCaptcha($element);
+        }
+
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper = $this->getLabelHelper();
         $elementHelper = $this->getElementHelper();

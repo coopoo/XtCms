@@ -19,9 +19,9 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 
 class DetailForm extends Form
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct('user_detail');
+        parent::init('user_detail');
 
         $this->setHydrator(new ClassMethods())->setObject(new UserDetailEntity());
         $this->setAttributes(['role' => 'form', 'class' => 'form-horizontal']);

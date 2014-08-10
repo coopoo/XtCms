@@ -19,9 +19,9 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 
 class UserBaseForm extends Form
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct('user_form');
+        parent::init('user_form');
 
         $this->setHydrator(new ClassMethods())->setObject(new UserEntity());
 

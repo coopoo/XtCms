@@ -15,9 +15,9 @@ namespace XtUser\Form;
 
 class reBuildPasswordForm extends RegisterForm
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
+        parent::init();
         $this->setAttribute('class', 'form-horizontal');
         $this->remove('email');
 

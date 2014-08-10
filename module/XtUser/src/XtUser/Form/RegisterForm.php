@@ -15,9 +15,9 @@ namespace XtUser\Form;
 
 class RegisterForm extends UserBaseForm
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct();
+        parent::init();
         $this->setAttribute('class', 'form-horizontal');
         $this->get('user_password')->setAttribute('required', 'required');
         $this->add([

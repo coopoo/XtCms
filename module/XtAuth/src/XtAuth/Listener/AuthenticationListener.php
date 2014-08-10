@@ -57,7 +57,8 @@ class AuthenticationListener implements ListenerAggregateInterface,
             'XtBase\Controller\Index-index',
             'XtUser\Controller\User-disabledLogin',
             'XtUser\Controller\User-register',
-            'XtUser\Controller\User-disabledRegister'
+            'XtUser\Controller\User-disabledRegister',
+            'XtCaptcha\Controller\Index-show'
         ];
         if (in_array($requestedResource, $whiteList)) {
             return;
