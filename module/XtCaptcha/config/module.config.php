@@ -15,7 +15,7 @@ return [
             'Xt_Captcha' => [
                 'type' => 'segment',
                 'options' => [
-                    'route' => '/captcha[/:action[/:id]].html',
+                    'route' => '/captcha[/:action[/:id]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9]*',
                         'id' => '[a-zA-Z0-9_-]*'

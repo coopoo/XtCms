@@ -59,7 +59,7 @@ class Module implements AutoloaderProviderInterface,
     {
         return [
             'invokables' => [
-                'XtCaptcha' => 'XtCaptcha\Form\Captcha'
+                'XtCaptcha' => 'XtCaptcha\Form\Element\Captcha'
             ]
         ];
     }

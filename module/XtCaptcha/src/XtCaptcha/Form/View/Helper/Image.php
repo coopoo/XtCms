@@ -40,7 +40,6 @@ class Image extends FormRow
 
     public function render(ElementInterface $element, $labelPosition = null)
     {
-
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper = $this->getLabelHelper();
         $elementHelper = $this->getElementHelper();
@@ -89,7 +88,7 @@ class Image extends FormRow
         $this->getView()->inlinescript()->captureStart();
         echo '$("#' . $id . '").css("cursor","pointer");';
         echo '$("#' . $id . '").click(function(){
-	        $(this).children("img").attr("src","/captcha/show/"+ Math.round(Math.random() * 10000)+".html");
+	        $(this).children("img").attr("src","/captcha/show/"+ Math.round(Math.random() * 10000));
 	       });';
         echo '$("#' . $inputId . '").click(function(){
                 $(this).val("");

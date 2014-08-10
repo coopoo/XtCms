@@ -10,7 +10,7 @@
  * @FileName: Captcha.php
  */
 
-namespace XtCaptcha\Form;
+namespace XtCaptcha\Form\Element;
 
 
 use XtCaptcha\Form\Captcha\Image;
