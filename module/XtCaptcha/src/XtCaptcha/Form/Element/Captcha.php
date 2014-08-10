@@ -13,59 +13,94 @@
 namespace XtCaptcha\Form\Element;
 
 
+use Traversable;
 use XtCaptcha\Form\Captcha\Image;
+use Zend\Captcha as ZendCaptcha;
 use Zend\Form\Element;
+use Zend\Form\Exception;
 use Zend\InputFilter\InputProviderInterface;
-use Zend\Validator\ValidatorInterface;
 
 class Captcha extends Element implements InputProviderInterface
 {
     protected $attributes = array(
         'type' => 'captcha',
     );
-
-    protected $validator;
-
     /**
-     * @return mixed
+     * @var \Zend\Captcha\AdapterInterface
      */
-    public function getValidator()
-    {
-        if (null === $this->validator) {
-            $this->setValidator(new Image());
-        }
-        return $this->validator;
-    }
+    protected $captcha;
 
     /**
-     * @param mixed $validator
+     * Accepted options for XtCaptcha:
+     * - captcha: a valid Zend\XtCaptcha\AdapterInterface
      *
-     * @return $this;
+     * @param array|Traversable $options
+     * @return Captcha
      */
-    public function setValidator(ValidatorInterface $validator)
+    public function setOptions($options)
     {
-        $this->validator = $validator;
+        parent::setOptions($options);
+        $captcha = (isset($this->options['captcha'])) ? $this->options['captcha'] : new Image();
+        $this->setCaptcha($captcha);
         return $this;
     }
 
     /**
-     * Should return an array specification compatible with
-     * {@link Zend\InputFilter\Factory::createInput()}.
+     * Set captcha
+     *
+     * @param  array|ZendCaptcha\AdapterInterface $captcha
+     * @throws Exception\InvalidArgumentException
+     * @return Captcha
+     */
+    public function setCaptcha($captcha)
+    {
+        if (is_array($captcha) || $captcha instanceof Traversable) {
+            $captcha = ZendCaptcha\Factory::factory($captcha);
+        } elseif (!$captcha instanceof ZendCaptcha\AdapterInterface) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                '%s expects either a Zend\Captcha\AdapterInterface or specification to pass to Zend\Captcha\Factory; received "%s"',
+                __METHOD__,
+                (is_object($captcha) ? get_class($captcha) : gettype($captcha))
+            ));
+        }
+        $this->captcha = $captcha;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve captcha (if any)
+     *
+     * @return null|ZendCaptcha\AdapterInterface
+     */
+    public function getCaptcha()
+    {
+        return $this->captcha;
+    }
+
+    /**
+     * Provide default input rules for this element
+     *
+     * Attaches the captcha as a validator.
      *
      * @return array
      */
     public function getInputSpecification()
     {
-        return array(
+        $spec = array(
             'name' => $this->getName(),
             'required' => true,
             'filters' => array(
                 array('name' => 'Zend\Filter\StringTrim'),
             ),
-            'validators' => array(
-                $this->getValidator(),
-            ),
         );
-    }
 
-} 
+        // Test that we have a captcha before adding it to the spec
+        $captcha = $this->getCaptcha();
+        if ($captcha instanceof ZendCaptcha\AdapterInterface) {
+            $spec['validators'] = array($captcha);
+        }
+
+        return $spec;
+    }
+}

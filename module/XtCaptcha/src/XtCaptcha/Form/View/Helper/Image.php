@@ -46,9 +46,7 @@ class Image extends FormRow
         $errorHelper = $this->getElementErrorsHelper();
         $labelHtml = $labelHelper($element);
 
-        $attributes = $element->getAttributes();
-
-        $captcha = (isset($attributes['captcha'])) ? $attributes['captcha'] : new \XtCaptcha\Form\Captcha\Image();
+        $captcha = $element->getCaptcha();
 
         $imgAttributes = array(
             'width' => $captcha->getWidth(),

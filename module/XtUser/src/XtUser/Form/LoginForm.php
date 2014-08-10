@@ -13,7 +13,6 @@
 namespace XtUser\Form;
 
 
-
 class LoginForm extends UserBaseForm
 {
     public function init()
