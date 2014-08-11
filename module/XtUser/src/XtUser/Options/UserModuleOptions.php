@@ -38,6 +38,46 @@ class UserModuleOptions extends AbstractOptions
     protected $passwordFailTime = 3600;
     protected $credentialColumn = 'user_password';
     protected $credentialType = 'md5(CONCAT(?,uniqid))';
+    protected $loginCaptcha = true;
+    protected $registerCaptcha = true;
+
+    /**
+     * @return boolean
+     */
+    public function isLoginCaptcha()
+    {
+        return $this->loginCaptcha;
+    }
+
+    /**
+     * @param boolean $loginCaptcha
+     *
+     * @return $this;
+     */
+    public function setLoginCaptcha($loginCaptcha)
+    {
+        $this->loginCaptcha = $loginCaptcha;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRegisterCaptcha()
+    {
+        return $this->registerCaptcha;
+    }
+
+    /**
+     * @param boolean $registerCaptcha
+     *
+     * @return $this;
+     */
+    public function setRegisterCaptcha($registerCaptcha)
+    {
+        $this->registerCaptcha = $registerCaptcha;
+        return $this;
+    }
 
     /**
      * @return string

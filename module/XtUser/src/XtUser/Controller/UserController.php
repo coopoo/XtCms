@@ -53,6 +53,9 @@ class UserController extends AbstractActionController implements UserModuleOptio
             return $this->redirect()->toRoute(null, ['action' => 'disabledLogin']);
         }
         $form = $this->FormElementManager()->get('XtUser\Form\LoginForm');
+        if (!$this->getUserModuleOptions()->isLoginCaptcha()) {
+            $form->remove('captcha');
+        }
         $request = $this->getRequest();
         if ($request->isPost()) {
             $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\LoginInputFilter');
@@ -115,6 +118,9 @@ class UserController extends AbstractActionController implements UserModuleOptio
             return $this->redirect()->toRoute(null, ['action' => 'disabledRegister']);
         }
         $form = $this->FormElementManager()->get('XtUser\Form\RegisterForm');
+        if (!$this->getUserModuleOptions()->isRegisterCaptcha()) {
+            $form->remove('captcha');
+        }
         $request = $this->getRequest();
         if ($request->isPost()) {
             $inputFilter = $this->InputFilterManager()->get('XtUser\InputFilter\RegisterInputFilter');

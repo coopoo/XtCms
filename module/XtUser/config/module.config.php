@@ -68,5 +68,7 @@ return [
         'password_fail_time' => 3600,
         'credential_column' => 'user_password',
         'credential_type' => 'md5(CONCAT(?,uniqid))',
+        'login_captcha' => false,
+        'register_captcha' => true
     ]
 ];
