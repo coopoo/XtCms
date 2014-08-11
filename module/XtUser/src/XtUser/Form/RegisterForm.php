@@ -33,6 +33,14 @@ class RegisterForm extends UserBaseForm
             ],
         ], ['priority' => 98]);
 
+        $this->add([
+            'type' => 'XtCaptcha',
+            'name' => 'captcha',
+            'options' => [
+                'label' => '请输入验证码',
+            ]
+        ]);
+
         $this->get('submit')->setValue('注册帐号');
     }
 } 
