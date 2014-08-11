@@ -17,7 +17,6 @@ use Zend\Form\ElementInterface;
 use Zend\Form\Form;
 use Zend\Form\FormInterface;
 use Zend\Form\View\Helper\FormElementErrors;
-use Zend\Form\View\Helper\FormRadio;
 use Zend\Form\View\Helper\FormRow;
 
 class BootstrapFormRow extends FormRow
@@ -40,11 +39,6 @@ class BootstrapFormRow extends FormRow
     public function render(ElementInterface $element, $labelPosition = null)
     {
 
-        //captcha
-        if ($element->getAttribute('type') == 'captcha') {
-            return $this->getView()->XtFormCaptcha($element);
-        }
-
         $escapeHtmlHelper = $this->getEscapeHtmlHelper();
         $labelHelper = $this->getLabelHelper();
         $elementHelper = $this->getElementHelper();
@@ -55,6 +49,11 @@ class BootstrapFormRow extends FormRow
 
         if (is_null($labelPosition)) {
             $labelPosition = $this->labelPosition;
+        }
+
+        //captcha
+        if ($element->getAttribute('type') == 'captcha') {
+            return $this->getView()->XtFormCaptcha($element);
         }
 
         if (isset($label) && '' !== $label) {
@@ -76,9 +75,9 @@ class BootstrapFormRow extends FormRow
             $form = new Form();
         }
 
-//        if($element->getAttribute('type')=='radio'){
-//            return $this->getView()->formRadio($element);
-//        }
+        if ($element->getAttribute('type') == 'radio') {
+            return $this->getView()->formRadio($element);
+        }
         /**
          * @除submit 以外的元素增加class
          */

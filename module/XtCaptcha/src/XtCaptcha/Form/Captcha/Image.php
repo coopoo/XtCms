@@ -566,5 +566,4 @@ class Image extends AbstractWord
         return true;
     }
 
-
 }
