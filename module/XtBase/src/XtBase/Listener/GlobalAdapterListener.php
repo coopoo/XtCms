@@ -50,8 +50,8 @@ class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocato
     public function attach(EventManagerInterface $events)
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'setGlobalAdapter'], -99);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'setGlobalTablePre'], -99);
     }
-
     /**
      * @param EventInterface $event
      */
@@ -64,11 +64,17 @@ class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocato
             exit('数据库连接失败!');
         }
         GlobalAdapterFeature::setStaticAdapter($adapter);
+    }
+
+    /**
+     * @param EventInterface $event
+     */
+    public function setGlobalTablePre(EventInterface $event)
+    {
         $config = $this->getServiceLocator()->get('config');
         $tablePre = (isset($config['db'][$this->tablePreConfigKey])) ? $config['db'][$this->tablePreConfigKey] : '';
         if ($tablePre) {
             GlobalConfig::setTablePre($tablePre);
         }
     }
-
 } 
