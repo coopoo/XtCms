@@ -15,7 +15,7 @@ namespace XtBase\Service;
 
 class GlobalConfig
 {
-    protected static $tablePre;
+    protected static $tablePre = '';
 
     /**
      * @return mixed

@@ -56,7 +56,9 @@ class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocato
         GlobalAdapterFeature::setStaticAdapter($adapter);
         $config = $this->getServiceLocator()->get('config');
         $tablePre = (isset($config['db'][$this->tablePreConfigKey])) ? $config['db'][$this->tablePreConfigKey] : '';
-        GlobalConfig::setTablePre($tablePre);
+        if ($tablePre) {
+            GlobalConfig::setTablePre($tablePre);
+        }
     }
 
 } 
