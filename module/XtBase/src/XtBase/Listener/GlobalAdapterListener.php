@@ -13,6 +13,7 @@
 namespace XtBase\Listener;
 
 
+use XtBase\Service\GlobalConfig;
 use Zend\Db\TableGateway\Feature\GlobalAdapterFeature;
 use Zend\EventManager\EventInterface;
 use Zend\EventManager\EventManagerInterface;
@@ -26,6 +27,8 @@ class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocato
 {
     use ListenerAggregateTrait;
     use ServiceLocatorAwareTrait;
+
+    protected $tablePreConfigKey = 'pre';
 
     /**
      * Attach one or more listeners
@@ -51,6 +54,9 @@ class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocato
             exit('数据库连接失败!');
         }
         GlobalAdapterFeature::setStaticAdapter($adapter);
+        $config = $this->getServiceLocator()->get('config');
+        $tablePre = (isset($config['db'][$this->tablePreConfigKey])) ? $config['db'][$this->tablePreConfigKey] : '';
+        GlobalConfig::setTablePre($tablePre);
     }
 
 } 

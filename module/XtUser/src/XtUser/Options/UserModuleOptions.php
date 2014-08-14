@@ -13,6 +13,7 @@
 namespace XtUser\Options;
 
 
+use XtBase\Service\GlobalConfig;
 use Zend\Stdlib\AbstractOptions;
 
 /**
@@ -92,7 +93,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getSessionTable()
     {
-        return $this->tablePre . $this->sessionTable;
+        return $this->getTablePre() . $this->sessionTable;
     }
 
     /**
@@ -138,7 +139,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getDetailTable()
     {
-        return $this->tablePre . $this->detailTable;
+        return $this->getTablePre() . $this->detailTable;
     }
 
     /**
@@ -192,7 +193,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getLoggerTable()
     {
-        return $this->tablePre . $this->loggerTable;
+        return $this->getTablePre() . $this->loggerTable;
     }
 
     /**
@@ -246,7 +247,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getPermissionTable()
     {
-        return $this->tablePre . $this->permissionTable;
+        return $this->getTablePre() . $this->permissionTable;
     }
 
     /**
@@ -264,7 +265,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getResourceTable()
     {
-        return $this->tablePre . $this->resourceTable;
+        return $this->getTablePre() . $this->resourceTable;
     }
 
     /**
@@ -282,7 +283,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getRolePermissionTable()
     {
-        return $this->tablePre . $this->rolePermissionTable;
+        return $this->getTablePre() . $this->rolePermissionTable;
     }
 
     /**
@@ -300,7 +301,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getRoleTable()
     {
-        return $this->tablePre . $this->roleTable;
+        return $this->getTablePre() . $this->roleTable;
     }
 
     /**
@@ -318,17 +319,10 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getTablePre()
     {
+        if (!$this->tablePre) {
+            $this->tablePre = GlobalConfig::getTablePre();
+        }
         return $this->tablePre;
-    }
-
-    /**
-     * @param string $tablePre
-     * @return $this
-     */
-    public function setTablePre($tablePre)
-    {
-        $this->tablePre = $tablePre;
-        return $this;
     }
 
     /**
@@ -336,7 +330,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getUserRoleTable()
     {
-        return $this->tablePre . $this->userRoleTable;
+        return $this->getTablePre() . $this->userRoleTable;
     }
 
     /**
@@ -354,7 +348,7 @@ class UserModuleOptions extends AbstractOptions
      */
     public function getUserTable()
     {
-        return $this->tablePre . $this->userTable;
+        return $this->getTablePre() . $this->userTable;
     }
 
     /**
