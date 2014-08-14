@@ -43,7 +43,7 @@ class ResourceInputFilter extends InputFilter implements UserModuleOptionsAwareI
                     'options' => [
                         'encoding' => 'UTF-8',
                         'min' => 2,
-                        'max' => 20
+                        'max' => 30
                     ],
                 ],
                 [

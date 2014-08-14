@@ -43,7 +43,7 @@ class RoleInputFilter extends InputFilter implements UserModuleOptionsAwareInter
                     'options' => [
                         'encoding' => 'UTF-8',
                         'min' => 2,
-                        'max' => 20
+                        'max' => 30
                     ],
                 ],
                 [

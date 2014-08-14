@@ -35,7 +35,7 @@ class ResourceForm extends Form
             'name' => 'name',
             'options' => [
                 'label' => '资源名称',
-                'tips' => '2-20字符',
+                'tips' => '2-30字符',
             ],
             'attributes' => [
                 'id' => 'name',
