@@ -11,7 +11,6 @@
  */
 $time = 2;
 $url = $this->url('home');
-
+$this->headMeta()->appendHttpEquiv('refresh', $time . ';url=' . $url);
 echo 'disabled-register,<br/>' . $time . '秒后,将自动跳转,如果没有跳转请<a href="' . $url . '">点击刷新</a>';
 
-$this->headMeta()->appendHttpEquiv('refresh', $time . ';url=' . $url);
