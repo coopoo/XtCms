@@ -23,11 +23,18 @@ use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
+/**
+ * Class GlobalAdapterListener
+ * @package XtBase\Listener
+ */
 class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocatorAwareInterface
 {
     use ListenerAggregateTrait;
     use ServiceLocatorAwareTrait;
 
+    /**
+     * @var string
+     */
     protected $tablePreConfigKey = 'pre';
 
     /**
@@ -45,6 +52,9 @@ class GlobalAdapterListener implements ListenerAggregateInterface, ServiceLocato
         $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'setGlobalAdapter'], -99);
     }
 
+    /**
+     * @param EventInterface $event
+     */
     public function setGlobalAdapter(EventInterface $event)
     {
         $adapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
