@@ -69,6 +69,7 @@ return [
         'credential_column' => 'user_password',
         'credential_type' => 'md5(CONCAT(?,uniqid))',
         'login_captcha' => false,
-        'register_captcha' => true
+        'register_captcha' => true,
+        'table_pre' => '',//会覆盖全局变量,慎用
     ]
 ];

@@ -326,6 +326,16 @@ class UserModuleOptions extends AbstractOptions
     }
 
     /**
+     * @param $tablePre
+     * @return $this
+     */
+    public function setTablePre($tablePre)
+    {
+        $this->tablePre = $tablePre;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getUserRoleTable()
