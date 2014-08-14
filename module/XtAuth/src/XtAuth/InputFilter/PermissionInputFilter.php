@@ -60,7 +60,36 @@ class PermissionInputFilter extends InputFilter implements UserModuleOptionsAwar
                 ]
             ]
         ]);
-
+        $this->add([
+            'name' => 'action',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StringTrim'],
+                ['name' => 'StripTags']
+            ],
+            'validators' => [
+                [
+                    'name' => 'StringLength',
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 2,
+                        'max' => 100
+                    ],
+                ],
+                [
+                    'name' => 'Db\NoRecordExists',
+                    'options' => [
+                        'table' => $this->userModuleOptions->getPermissionTable(),
+                        'field' => 'action',
+                        'adapter' => GlobalAdapterFeature::getStaticAdapter(),
+                        'exclude' => [
+                            'field' => 'id',
+                            'value' => $permissionEntity && $permissionEntity->getId() ? $permissionEntity->getId() : 0
+                        ],
+                    ],
+                ]
+            ]
+        ]);
         return $this;
     }
 } 

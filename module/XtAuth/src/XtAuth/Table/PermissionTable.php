@@ -29,6 +29,7 @@ class PermissionTable extends AbstractUserTable
     {
         $data = [
             'name' => $permissionEntity->getName(),
+            'action' => $permissionEntity->getAction(),
             'resource_id' => $permissionEntity->getResourceId(),
             'modify_time' => time(),
             'modify_ip' => IpAddress::getIp()

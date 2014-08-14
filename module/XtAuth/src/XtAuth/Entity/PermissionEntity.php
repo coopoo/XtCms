@@ -17,9 +17,29 @@ class PermissionEntity
 {
     protected $id;
     protected $name;
+    protected $action;
     protected $resourceId;
     protected $modifyTime;
     protected $modifyIp;
+
+    /**
+     * @return mixed
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param mixed $action
+     *
+     * @return $this;
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+        return $this;
+    }
 
     /**
      * @return mixed

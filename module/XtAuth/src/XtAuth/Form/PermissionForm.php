@@ -52,6 +52,18 @@ class PermissionForm extends AbstractAuthForm
             ]
         ]);
 
+        $this->add([
+            'type' => 'text',
+            'name' => 'action',
+            'options' => [
+                'label' => '权限action',
+                'tips' => '2-100字符',
+            ],
+            'attributes' => [
+                'id' => 'name',
+                'required' => 'required'
+            ]
+        ]);
 
         $this->add([
                 'type' => 'submit',
