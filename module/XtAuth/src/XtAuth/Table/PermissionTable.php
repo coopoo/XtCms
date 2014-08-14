@@ -13,6 +13,8 @@
 namespace XtAuth\Table;
 
 
+use XtAuth\Entity\PermissionEntity;
+use XtTool\Tool\IpAddress;
 use XtUser\Table\AbstractUserTable;
 
 class PermissionTable extends AbstractUserTable
@@ -20,5 +22,18 @@ class PermissionTable extends AbstractUserTable
     public function init()
     {
         $this->table = $this->getUserModuleOptions()->getPermissionTable();
+        $this->addDateTimeStrategy(['modify_time']);
+    }
+
+    public function save(PermissionEntity $permissionEntity)
+    {
+        $data = [
+            'name' => $permissionEntity->getName(),
+            'resource_id' => $permissionEntity->getResourceId(),
+            'modify_time' => time(),
+            'modify_ip' => IpAddress::getIp()
+        ];
+        $id = (int)$permissionEntity->getId();
+        return $this->insertOrUpdate($data, $id);
     }
 } 

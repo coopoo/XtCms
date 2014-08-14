@@ -19,7 +19,7 @@ class PermissionController extends AbstractActionController implements CrudContr
 {
     const DEFAULT_ROUTE = '';
     const PAGE_ROUTE = 'Xt_Permission/page';
-
+    protected $permissionTable;
     public function indexAction()
     {
         return $this->redirect()->toRoute(static::PAGE_ROUTE, ['action' => 'list']);
@@ -27,22 +27,74 @@ class PermissionController extends AbstractActionController implements CrudContr
 
     public function addAction()
     {
-        // TODO: Implement addAction() method.
+        $form = $this->FormElementManager()->get('XtAuth\Form\PermissionForm');
+        $form->get('submit')->setValue('增加权限');
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $inputFilter = $this->InputFilterManager()->get('XtAuth\InputFilter\PermissionInputFilter');
+            $form->setInputFilter($inputFilter());
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                try {
+                    $this->getPermissionTable()->save($form->getData());
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                    return ['form' => $form];
+                }
+                $this->redirect()->toRoute();
+            }
+        }
+
+        return ['form' => $form];
     }
 
     public function editAction()
     {
-        // TODO: Implement editAction() method.
+        $id = $this->params('id');
+        $permission = $this->getPermissionTable()->getOneByColumn($id);
+        if (!$permission) {
+            $this->redirect()->toRoute();
+        }
+        $form = $this->FormElementManager()->get('XtAuth\Form\PermissionForm');
+        $form->get('submit')->setValue('编辑角色');
+        $form->bind($permission);
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $inputFilter = $this->InputFilterManager()->get('XtAuth\InputFilter\PermissionInputFilter');
+            $form->setInputFilter($inputFilter($permission));
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                try {
+                    $this->getPermissionTable()->save($form->getData());
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                    return ['form' => $form];
+                }
+                $this->redirect()->toRoute();
+            }
+        }
+        return ['form' => $form];
     }
 
     public function listAction()
     {
-        // TODO: Implement listAction() method.
+        $page = $this->params('page', 1);
+        $permissions = $this->getPermissionTable()->getPaginator($page);
+        return ['permissions' => $permissions];
     }
 
     public function deleteAction()
     {
-        // TODO: Implement deleteAction() method.
+        $id = (int)$this->params('id', null);
+        $this->getPermissionTable()->deleteByColumn($id);
+        return $this->redirect()->toRoute();
     }
 
+    protected function getPermissionTable()
+    {
+        if (!$this->permissionTable) {
+            $this->permissionTable = $this->getServiceLocator()->get('XtAuth\Table\PermissionTable');
+        }
+        return $this->permissionTable;
+    }
 } 

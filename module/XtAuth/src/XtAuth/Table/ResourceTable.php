@@ -38,5 +38,13 @@ class ResourceTable extends AbstractUserTable
         return $this->insertOrUpdate($data, $id);
     }
 
-
+    public function getResourceList()
+    {
+        $resultSet = $this->fetchAll();
+        $resourceList = [];
+        foreach ($resultSet as $resource) {
+            $resourceList[$resource->getId()] = $resource->getName();
+        }
+        return $resourceList;
+    }
 } 

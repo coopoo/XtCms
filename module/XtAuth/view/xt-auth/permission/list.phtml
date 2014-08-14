@@ -10,3 +10,49 @@
  * @FileName: list.phtml
  */
 $this->headTitle('权限列表');
+?>
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>资源名称</th>
+            <th>编辑时间</th>
+            <th>编辑IP</th>
+            <th>管理</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if (count($permissions) > 0): ?>
+            <?php foreach ($permissions as $permission): ?>
+                <tr>
+                    <td><?= $permission->getId() ?></td>
+                    <td><?= $permission->getName() ?></td>
+                    <td><?= $permission->getModifyTime() ?></td>
+                    <td><?= $permission->getModifyIp() ?></td>
+                    <td>
+                        <a href="<?php echo $this->url('Xt_Permission/default', ['action' => 'edit', 'id' => $permission->getId()]) ?>"
+                           class="btn btn-default">编辑</a>
+                        <a href="<?php echo $this->url('Xt_Permission/default', ['action' => 'delete', 'id' => $permission->getId()]) ?>"
+                           class="btn btn-primary"
+                           onclick="JavaScript:return confirm('警告: 确定要删除资源 <?= $permission->getName() ?> ?该操作不可还原!')">删除</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="5">
+                    没有数据
+                </td>
+            </tr>
+        <?php endif ?>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5">
+                <?= $this->paginationControl($permissions) ?>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

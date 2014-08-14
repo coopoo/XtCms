@@ -88,6 +88,9 @@ class Module implements AutoloaderProviderInterface,
                 'XtAuth\Service\Authenticate' => 'XtAuth\Service\AuthenticateInvokable',
                 'XtAuth\Table\RoleTable' => 'XtAuth\Table\RoleTable',
                 'XtAuth\Table\ResourceTable' => 'XtAuth\Table\ResourceTable',
+                'XtAuth\Table\PermissionTable' => 'XtAuth\Table\PermissionTable',
+                'XtAuth\Table\UserRoleTable' => 'XtAuth\Table\UserRoleTable',
+                'XtAuth\Table\RolePermissionTable' => 'XtAuth\Table\RolePermissionTable',
             ],
             'aliases' => [
                 'Zend\Authentication\AuthenticationService' => 'XtAuth\Service\Authenticate',
@@ -110,6 +113,7 @@ class Module implements AutoloaderProviderInterface,
             'invokables' => [
                 'XtAuth\Form\RoleForm' => 'XtAuth\Form\RoleForm',
                 'XtAuth\Form\ResourceForm' => 'XtAuth\Form\ResourceForm',
+                'XtAuth\Form\PermissionForm' => 'XtAuth\Form\PermissionForm',
             ]
         ];
     }
