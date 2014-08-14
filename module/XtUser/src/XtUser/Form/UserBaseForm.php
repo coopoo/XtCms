@@ -21,7 +21,7 @@ class UserBaseForm extends Form
 {
     public function init()
     {
-        parent::init('user_form');
+        $this->setName('user_form');
 
         $this->setHydrator(new ClassMethods())->setObject(new UserEntity());
 

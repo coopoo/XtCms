@@ -21,8 +21,7 @@ class DetailForm extends Form
 {
     public function init()
     {
-        parent::init('user_detail');
-
+        $this->setName('user_detail');
         $this->setHydrator(new ClassMethods())->setObject(new UserDetailEntity());
         $this->setAttributes(['role' => 'form', 'class' => 'form-horizontal']);
         $this->add([

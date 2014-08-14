@@ -19,10 +19,9 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 
 class ResourceForm extends Form
 {
-    public function __construct()
+    public function init()
     {
-        parent::__construct('resource_form');
-
+        $this->setName('resource_form');
         $this->setHydrator(new ClassMethods())->setObject(new ResourceEntity());
         $this->setAttributes(['role' => 'form', 'class' => 'form-horizontal']);
 

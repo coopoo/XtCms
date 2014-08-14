@@ -18,7 +18,6 @@ class LoginForm extends UserBaseForm
     public function init()
     {
         parent::init();
-
         $this->setAttribute('class', 'form-horizontal')->remove('email');
         $this->get('username')->setOption('tips', '');
         $this->get('user_password')->setOption('tips', '');

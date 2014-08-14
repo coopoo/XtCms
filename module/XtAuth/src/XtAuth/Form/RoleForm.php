@@ -21,9 +21,9 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 class RoleForm extends Form
 {
 
-    public function __construct()
+    public function init()
     {
-        parent::__construct('role_form');
+        $this->setName('role_form');
         $this->setHydrator(new ClassMethods())->setObject(new RoleEntity());
         $this->setAttributes(['role' => 'form', 'class' => 'form-horizontal']);
 

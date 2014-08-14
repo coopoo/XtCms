@@ -103,6 +103,27 @@ return [
                             ]
                         ]
                     ], //end Xt_Resource
+                    [
+                        'label' => '权限管理',
+                        'route' => 'Xt_Permission',
+                        'pages' => [
+                            [
+                                'label' => '权限添加',
+                                'route' => 'Xt_Permission/default',
+                                'action' => 'add'
+                            ],
+                            [
+                                'label' => '权限编辑',
+                                'route' => 'Xt_Permission/default',
+                                'action' => 'edit'
+                            ],
+                            [
+                                'label' => '权限管理',
+                                'route' => 'Xt_Permission/page',
+                                'action' => 'list'
+                            ]
+                        ]
+                    ], //end Xt_Permission
                 ]
             ]
         ]
