@@ -51,8 +51,9 @@ class RoleTable extends AbstractUserTable
     /**
      * @return array
      */
-    public function fetchRole()
+    public function fetchAllRole()
     {
         return $this->fetchAll(['status' => static::DEFAULT_ENABLED_STATUS], ['id', 'name'])->toArray();
     }
+
 } 

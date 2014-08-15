@@ -20,6 +20,7 @@ class UserRoleTable extends AbstractUserTable
     public function init()
     {
         $this->table = $this->getUserModuleOptions()->getUserRoleTable();
+        $this->primaryKey = 'user_id';
     }
 
 } 

@@ -46,15 +46,13 @@ class UserModel
      */
     const USER_TABLE_CLASS = 'XtUser\Table\UserTable';
 
-    /**
-     *
-     */
     const USER_LOGGER_TABLE_CLASS = 'XtUser\Table\UserLoggerTable';
 
-    /**
-     *
-     */
     const USER_DETAIL_TABLE_CLASS = 'XtUser\Table\UserDetailTable';
+
+    const USER_ROLE_TABLE_CLASS = 'XtAuth\Table\UserRoleTable';
+
+    const ROLE_TABLE_CLASS = 'XtAuth\Table\RoleTable';
 
     /**
      *

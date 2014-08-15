@@ -18,6 +18,7 @@ use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Predicate\PredicateInterface;
 use Zend\Db\Sql\Select;
+use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\TableGateway\Feature\EventFeature;

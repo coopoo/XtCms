@@ -14,7 +14,6 @@ namespace XtUser\Table;
 
 
 use XtUser\Entity\UserEntity;
-use XtUser\Model\UserModel;
 
 /**
  * Class UserTable
@@ -22,15 +21,6 @@ use XtUser\Model\UserModel;
  */
 class UserTable extends AbstractUserTable
 {
-    /**
-     * @var UserDetailTable
-     */
-    protected $userDetailTable;
-    /**
-     * @var UserLoggerTable
-     */
-    protected $userLoggerTable;
-
     /**
      *
      */
@@ -67,6 +57,8 @@ class UserTable extends AbstractUserTable
         if ($userDetail) {
             $userEntity->setUserDetail($userDetail);
         }
+        $userEntity->setRole($this->getRoleById($id));
+
         $userLogger = $this->getUserLoggerTable()->getLastLoggerById($id, 1)->current();
         if ($userLogger) {
             $userEntity->setUserLogger($userLogger);
@@ -74,32 +66,32 @@ class UserTable extends AbstractUserTable
         return $userEntity;
     }
 
+    /**
+     * @param $id
+     * @return array|null
+     */
+    public function getRoleById($id)
+    {
+        $userRoles = $this->getUserRoleTable()->getByColumn($id);
+        if (0 < $userRoles->count()) {
+            $RoleArray = [];
+            foreach ($userRoles as $userRole) {
+                $RoleArray[] = $this->getRoleTable()->getOneByColumn($userRole->getRoleId());
+            }
+        }
+        return !empty($RoleArray) ? $RoleArray : null;
+    }
+
+    /**
+     * @param $id
+     * @param int $times
+     * @return \Zend\Db\ResultSet\ResultSet
+     */
     public function getUserLogger($id, $times = 15)
     {
         return $this->getUserLoggerTable()->getLastLoggerById($id, $times);
     }
 
-    /**
-     * @return array|object
-     */
-    protected function getUserDetailTable()
-    {
-        if (!$this->userDetailTable) {
-            $this->userDetailTable = $this->serviceLocator->get(UserModel::USER_DETAIL_TABLE_CLASS);
-        }
-        return $this->userDetailTable;
-    }
-
-    /**
-     * @return UserLoggerTable
-     */
-    protected function getUserLoggerTable()
-    {
-        if (!$this->userLoggerTable) {
-            $this->userLoggerTable = $this->serviceLocator->get(UserModel::USER_LOGGER_TABLE_CLASS);
-        }
-        return $this->userLoggerTable;
-    }
 
     /**
      * @param $id

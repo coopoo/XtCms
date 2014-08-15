@@ -60,6 +60,8 @@ class UserEntity
      */
     protected $registerIp;
 
+    protected $role;
+
     /**
      * @var null | UserDetailEntity
      */
@@ -79,6 +81,25 @@ class UserEntity
     protected $errorCount;
 
     protected $rememberMe;
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     *
+     * @return $this;
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+        return $this;
+    }
 
     /**
      * @return mixed

@@ -20,5 +20,6 @@ class RolePermissionTable extends AbstractUserTable
     public function init()
     {
         $this->table = $this->getUserModuleOptions()->getRolePermissionTable();
+        $this->primaryKey = 'role_id';
     }
 } 
