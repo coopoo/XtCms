@@ -38,8 +38,8 @@ class UserModel
     /**
      *
      */
-    const NOT_ALLOWED_STATUS_MESSAGE = '用户禁止登陆';
-
+    const NOT_ALLOWED_STATUS_MESSAGE = '该用户不存在或禁止登陆';
+    const PASSWORD_ERROR_MESSAGE = '用户名或密码错误!';
 
     /**
      *

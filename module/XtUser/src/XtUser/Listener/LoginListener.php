@@ -74,7 +74,7 @@ class LoginListener implements ListenerAggregateInterface
         $userTable = $serviceLocator->get(UserModel::USER_TABLE_CLASS);
 
         $tableUserEntity = $userTable->getOneByColumn($userEntity->getUserName(), $event->getIdentityKey());
-        if ($tableUserEntity && $tableUserEntity->getStatus() !== UserModel::ALLOW_STATUS) {
+        if (!$tableUserEntity || $tableUserEntity->getStatus() !== UserModel::ALLOW_STATUS) {
             $event->getForm()->get('username')->setMessages([UserModel::NOT_ALLOWED_STATUS_MESSAGE]);
             return false;
         }
@@ -109,8 +109,8 @@ class LoginListener implements ListenerAggregateInterface
     }
 
     /**
-     * 设置密码错误登陆次数
      * @param EventInterface $event
+     * @return bool
      */
     public function setPasswordFailErrorCount(EventInterface $event)
     {
@@ -127,6 +127,8 @@ class LoginListener implements ListenerAggregateInterface
                 $userEntity->setErrorCount(++$errorCount);
                 $userEntity->setLastErrorTime(time());
                 $userTable->save($userEntity);
+                $event->getForm()->get('username')->setMessages([UserModel::PASSWORD_ERROR_MESSAGE]);
+                return false;
             }
         }
     }
