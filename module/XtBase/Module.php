@@ -104,7 +104,7 @@ class Module implements AutoloaderProviderInterface,
                 'XtBase\Listener\PaginationListener' => 'XtBase\Listener\PaginationListener',
             ],
             'initializers' => [
-                'XtBase\Service\AdapterInitializer' => 'XtBase\Service\AdapterInitializer'
+                'XtBase\Service\AdapterInitializer'
             ]
         ];
     }

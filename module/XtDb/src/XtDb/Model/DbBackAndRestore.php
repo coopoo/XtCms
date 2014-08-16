@@ -105,6 +105,7 @@ class DbBackAndRestore implements AdapterAwareInterface,
         if (!$this->sql) {
             $this->sql = new Sql($adapter);
         }
+        $this->getDbName();
         $this->init();
     }
 
@@ -114,7 +115,7 @@ class DbBackAndRestore implements AdapterAwareInterface,
      */
     public function init()
     {
-        $this->getDbName();
+
     }
 
     /**
