@@ -29,9 +29,7 @@ class AdapterInitializer implements InitializerInterface
     public function initialize($instance, ServiceLocatorInterface $serviceLocator)
     {
         if ($instance instanceof AdapterAwareInterface) {
-            $dbAdapter = $serviceLocator->get('Zend\Db\Adapter\Adapter');
-            //var_dump($dbAdapter);
-            $instance->setDbAdapter($dbAdapter);
+            $instance->setDbAdapter($serviceLocator->get('Zend\Db\Adapter\Adapter'));
         }
     }
 
